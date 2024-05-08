@@ -18,6 +18,7 @@ Download the .exe from releases and run it, no further configuration required
 - [x] Save charts in a custom json format
 - [x] Read the original game format (.csv)
 - [ ] Editing charts inside the application
+- [ ] Figure out how to properly play sound for drum rolls
 - [ ] Snap editing
 - [ ] Adjust volume of instruments/music individually
 - [ ] Adjustable client settings (scroll speed, note size etc)
