@@ -1,0 +1,132 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdd5so8gpgl0q"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/ui_controller.gd" id="1_hk45x"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hk45x")
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(500, 300)
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.json, *.csv")
+use_native_dialog = true
+
+[node name="SaveDialog" type="FileDialog" parent="."]
+size = Vector2i(392, 159)
+dialog_hide_on_ok = true
+access = 2
+filters = PackedStringArray("*.json, *.csv")
+use_native_dialog = true
+
+[node name="MenuBar" type="MenuBar" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="File" type="PopupMenu" parent="MenuBar"]
+title = "Test"
+size = Vector2i(194, 100)
+hide_on_state_item_selection = true
+item_count = 3
+item_0/text = "New project (Ctrl + N)"
+item_0/id = 0
+item_1/text = "Load File(Ctrl + L)"
+item_1/id = 1
+item_2/text = "Save File (Ctrl + S)"
+item_2/id = 2
+
+[node name="Properties" type="PopupMenu" parent="MenuBar"]
+size = Vector2i(151, 100)
+item_count = 2
+item_0/text = "Song Properties"
+item_0/id = 0
+item_1/text = "Client Options"
+item_1/id = 1
+
+[node name="SongProperties" type="Window" parent="."]
+title = "Song Properties"
+initial_position = 1
+size = Vector2i(1000, 300)
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="SongProperties"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.43134, 0.43134, 0.43134, 1)
+
+[node name="SongPropertiesValues" type="VBoxContainer" parent="SongProperties/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongName" type="LineEdit" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Song Name"
+
+[node name="ArtistName" type="LineEdit" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Artist Name"
+
+[node name="Difficulty" type="OptionButton" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
+layout_mode = 2
+size_flags_vertical = 3
+item_count = 4
+selected = 0
+popup/item_0/text = "Easy"
+popup/item_0/id = 0
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "Hard"
+popup/item_2/id = 2
+popup/item_3/text = "Extreme"
+popup/item_3/id = 3
+
+[node name="Map" type="OptionButton" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
+layout_mode = 2
+size_flags_vertical = 3
+item_count = 3
+selected = 0
+popup/item_0/text = "Volcano"
+popup/item_0/id = 0
+popup/item_1/text = "Desert"
+popup/item_1/id = 1
+popup/item_2/text = "Storm"
+popup/item_2/id = 2
+
+[node name="SongLocation" type="LineEdit" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Song Location"
+
+[node name="BPM" type="LineEdit" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "BPM"
+
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
+[connection signal="index_pressed" from="MenuBar/File" to="." method="_on_file_index_pressed"]
+[connection signal="index_pressed" from="MenuBar/Properties" to="." method="_on_properties_index_pressed"]
+[connection signal="about_to_popup" from="SongProperties" to="." method="_on_song_properties_about_to_popup"]
+[connection signal="close_requested" from="SongProperties" to="." method="_on_song_properties_close_requested"]
