@@ -77,6 +77,8 @@ func play_notes(new_time : float) -> void:
 			i.visible = false
 
 func clear_all_notes() -> void:
-	for i : Node2D in note_nodes:
-		i.queue_free()
+	print("clearing all nodes")
+	for i in note_nodes:
+		i.free()
+	note_nodes.clear()
 		
