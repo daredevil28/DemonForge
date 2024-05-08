@@ -66,7 +66,7 @@ func reset_note_y(instance : Node2D, color : int) -> void:
 func play_notes(new_time : float) -> void:
 	for i : Node2D in note_nodes:
 		#Check if note still has to come up, else make it invisible
-		if i.time > new_time:
+		if i.time >= new_time:
 			i.visible = true
 			#(-TimePassed + NoteTimestamp) * scroll_speed + offset
 			i.position.x = (-manager.music_time_to_screen_time(new_time) + manager.music_time_to_screen_time(i.time)) * manager.scroll_speed + offset
