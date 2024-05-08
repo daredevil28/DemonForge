@@ -17,11 +17,11 @@ Download the .exe from releases and run it, no further configuration required
 - [x] Visualise the notes in sync with the music
 - [x] Save charts in a custom json format
 - [x] Read the original game format (.csv)
-- [] Editing charts inside the application
-- [] Snap editing
-- [] Adjust volume of instruments/music individually
-- [] Adjustable client settings (scroll speed, note size etc)
-- [] Make scroll speed not dependant on screen size
+- [ ] Editing charts inside the application
+- [ ] Snap editing
+- [ ] Adjust volume of instruments/music individually
+- [ ] Adjustable client settings (scroll speed, note size etc)
+- [ ] Make scroll speed not dependant on screen size
 
 # Possible future features
 
