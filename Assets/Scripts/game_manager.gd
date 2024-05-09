@@ -53,7 +53,8 @@ func stop_music() -> void:
 	current_pos = audio_player.get_playback_position()
 	audio_player.stop()
 	
-	#Get the location of the note based on how long the song is and the width of the window
+	
+#Get the location of the note based on how long the song is and the width of the window
 func music_time_to_screen_time(time : float) -> float:
 	var percentage_elapsed : float = 0.0
 	var songLength : float
@@ -62,8 +63,7 @@ func music_time_to_screen_time(time : float) -> float:
 	if audio_stream_set:
 		songLength = audio_player.stream.get_length()
 	else:
-		#Song length could be temporary "wrong", this should be fine even if the final note in the array is not the latest note
-		songLength = note_manager.note_nodes.back().time
+		songLength = 60
 		
 	if time > 0:
 		percentage_elapsed = time / songLength
@@ -139,15 +139,15 @@ func _process(_delta : float) -> void:
 			stop_music()
 		else:
 			play_music()
-			
+	var bps = 60 / bpm
 	if(Input.is_action_just_pressed("ScrollUp")):
 		if current_pos < audio_player.stream.get_length():
-			current_pos += 0.25
+			current_pos += bps
 			note_manager.play_notes(current_pos)
 	if(Input.is_action_just_pressed("ScrollDown")):
+		current_pos -= bps
 		if current_pos < 0:
 			current_pos = 0
-		else:
-			current_pos -= 0.25
+			
 		note_manager.play_notes(current_pos)
 

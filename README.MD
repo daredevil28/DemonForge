@@ -23,6 +23,8 @@ Download the .exe from releases and run it, no further configuration required
 - [ ] Adjust volume of instruments/music individually
 - [ ] Adjustable client settings (scroll speed, note size etc)
 - [ ] Make scroll speed not dependant on screen size
+- [ ] Custom asset support for audio/sprites
+- [ ] Undo/Redo button
 
 # Possible future features
 

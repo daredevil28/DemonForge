@@ -75,6 +75,7 @@ func _on_song_properties_close_requested() -> void:
 	#Path for the song file
 	manager.song_file = property_nodes[4].text
 	manager.bpm = float(property_nodes[5].text)
+	get_tree().root.get_child(0).queue_redraw()
 
 func csv_to_json(csv_file : String) -> Array:
 	#Time,Enemy Type(1normal,2dual,3fat),Color1,Color2,1,Drumroll amount,Aux

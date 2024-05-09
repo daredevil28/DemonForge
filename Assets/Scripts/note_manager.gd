@@ -64,6 +64,7 @@ func reset_note_y(instance : Node2D, color : int) -> void:
 				push_warning("No color found")
 
 func play_notes(new_time : float) -> void:
+	get_tree().root.get_child(0).queue_redraw()
 	for i : Node2D in note_nodes:
 		#Check if note still has to come up, else make it invisible
 		if i.time >= new_time:
