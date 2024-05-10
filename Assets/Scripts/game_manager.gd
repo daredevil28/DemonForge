@@ -1,6 +1,7 @@
 extends Node
 
 @onready var audio_player : AudioStreamPlayer = $"../SongAudio"
+@onready var note_manager : Node = %NoteManager
 
 var song_name : String = ""
 var artist_name : String = ""
@@ -10,16 +11,20 @@ var song_file : String = "" :
 	get:
 		return song_file
 	set(value):
-		song_file = value
-		setup_audio(value)
+		if value != song_file:
+			song_file = value
+			setup_audio(value)
 var preview_file : String = ""
 var custom_songs_folder : String = ""
 var bpm : float = 60.0
 
-var current_pos : float = 0
-var previous_pos : float = 0
 
-@onready var note_manager : Node = %NoteManager
+var current_pos : float = 0 :
+	get:
+		return current_pos
+	set(value):
+		current_pos = value
+		note_manager.play_notes(current_pos)
 
 var scroll_speed : int = 50
 
@@ -43,7 +48,6 @@ func setup_project(jsonString : Dictionary) -> void:
 	bpm = metadata["bpm"]
 
 	note_manager.initialise_notes(jsonString["notes"])
-	note_manager.play_notes(0.0)
 	current_pos = 0
 	
 func play_music() -> void:
@@ -53,6 +57,8 @@ func stop_music() -> void:
 	current_pos = audio_player.get_playback_position()
 	audio_player.stop()
 	
+	for i : Node2D in note_manager.note_nodes:
+		i.visible = true
 	
 #Get the location of the note based on how long the song is and the width of the window
 func music_time_to_screen_time(time : float) -> float:
@@ -127,27 +133,27 @@ func save_project(path : String) -> void:
 	file.store_string(json_string)
 	file.close()
 
+func get_closest_snap_value() -> float:
+	var bps : float = 60 / bpm
+	var snap_value : float
+	
+	return floorf((current_pos-bps / 4) / bps) * bps
+	
 func _process(_delta : float) -> void:
 	if(audio_player.playing):
 		current_pos = audio_player.get_playback_position() + AudioServer.get_time_since_last_mix()
-		if (current_pos > previous_pos):
-			previous_pos = current_pos
-		note_manager.play_notes(current_pos)
-	
+	var bps = 60 / bpm
 	if(Input.is_action_just_pressed("TogglePlay")):
 		if(audio_player.playing):
 			stop_music()
+			current_pos = get_closest_snap_value()
+			print(get_closest_snap_value())
 		else:
 			play_music()
-	var bps = 60 / bpm
-	if(Input.is_action_just_pressed("ScrollUp")):
+	if(Input.is_action_just_pressed("ScrollUp") && !audio_player.playing):
 		if current_pos < audio_player.stream.get_length():
 			current_pos += bps
-			note_manager.play_notes(current_pos)
-	if(Input.is_action_just_pressed("ScrollDown")):
+	if(Input.is_action_just_pressed("ScrollDown") && !audio_player.playing):
 		current_pos -= bps
 		if current_pos < 0:
 			current_pos = 0
-			
-		note_manager.play_notes(current_pos)
-
