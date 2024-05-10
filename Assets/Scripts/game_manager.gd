@@ -134,26 +134,30 @@ func save_project(path : String) -> void:
 	file.close()
 
 func get_closest_snap_value() -> float:
-	var bps : float = 60 / bpm
-	var snap_value : float
+	var original_pos : float = current_pos
+	var seconds_per_beat : float = 60 / bpm
+	var before_snap : float = floorf((original_pos-seconds_per_beat / 4) / seconds_per_beat) * seconds_per_beat
+	var ahead_snap : float = before_snap + seconds_per_beat
 	
-	return floorf((current_pos-bps / 4) / bps) * bps
+	if(abs(original_pos - ahead_snap) < abs(original_pos - before_snap)):
+		return ahead_snap
+	else:
+		return before_snap
 	
 func _process(_delta : float) -> void:
 	if(audio_player.playing):
 		current_pos = audio_player.get_playback_position() + AudioServer.get_time_since_last_mix()
-	var bps = 60 / bpm
+	var seconds_per_beat : float = 60 / bpm
 	if(Input.is_action_just_pressed("TogglePlay")):
 		if(audio_player.playing):
 			stop_music()
 			current_pos = get_closest_snap_value()
-			print(get_closest_snap_value())
 		else:
 			play_music()
 	if(Input.is_action_just_pressed("ScrollUp") && !audio_player.playing):
 		if current_pos < audio_player.stream.get_length():
-			current_pos += bps
+			current_pos += seconds_per_beat
 	if(Input.is_action_just_pressed("ScrollDown") && !audio_player.playing):
-		current_pos -= bps
+		current_pos -= seconds_per_beat
 		if current_pos < 0:
 			current_pos = 0
