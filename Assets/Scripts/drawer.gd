@@ -7,7 +7,6 @@ func _draw() -> void:
 	#The judgement line
 	draw_line(Vector2(%NoteManager.offset, 0), Vector2(%NoteManager.offset,DisplayServer.window_get_size().y), lineColor, 2)
 	var bps = 60 / manager.bpm
-	print(bps)
 	var new_time = bps
 	for i in range(0,500):
 		var marker_distance = (-manager.music_time_to_screen_time(manager.current_pos) + manager.music_time_to_screen_time(new_time)) * manager.scroll_speed + note_manager.offset
