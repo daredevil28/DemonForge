@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdd5so8gpgl0q"]
+[gd_scene load_steps=6 format=3 uid="uid://cdd5so8gpgl0q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ui_controller.gd" id="1_hk45x"]
-[ext_resource type="Texture2D" uid="uid://pokip0nsccq2" path="res://Assets/Sprites/Notes.png" id="2_7ucnv"]
 [ext_resource type="PackedScene" uid="uid://bxv46rdbd272o" path="res://Assets/Scenes/progress_bar.tscn" id="2_t6ae7"]
+[ext_resource type="Texture2D" uid="uid://cskljke58e2fj" path="res://Assets/Sprites/FolderIcon.png" id="3_m2luq"]
+[ext_resource type="Texture2D" uid="uid://cxqqsd1lraejc" path="res://Assets/Sprites/FolderIconPressed.png" id="4_6ftkc"]
+[ext_resource type="Texture2D" uid="uid://cse04ob740oo4" path="res://Assets/Sprites/FolderIconHover.png" id="5_16p63"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -33,6 +35,16 @@ size = Vector2i(392, 159)
 dialog_hide_on_ok = true
 access = 2
 filters = PackedStringArray("*.json, *.csv")
+use_native_dialog = true
+
+[node name="SongFileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+position = Vector2i(0, 36)
+size = Vector2i(335, 159)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.ogg")
 use_native_dialog = true
 
 [node name="MenuBar" type="MenuBar" parent="."]
@@ -121,6 +133,7 @@ popup/item_2/text = "Storm"
 popup/item_2/id = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SongProperties/ColorRect/SongPropertiesValues"]
+custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
@@ -131,10 +144,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 placeholder_text = "Song Location"
 
-[node name="TextureButton" type="TextureButton" parent="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer"]
+[node name="SongSelectFile" type="TextureButton" parent="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
-texture_normal = ExtResource("2_7ucnv")
+texture_normal = ExtResource("3_m2luq")
+texture_pressed = ExtResource("4_6ftkc")
+texture_hover = ExtResource("5_16p63")
 
 [node name="BPM" type="LineEdit" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
 layout_mode = 2
@@ -143,7 +158,9 @@ placeholder_text = "BPM"
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
+[connection signal="file_selected" from="SongFileDialog" to="." method="_on_song_file_dialog_file_selected"]
 [connection signal="index_pressed" from="MenuBar/File" to="." method="_on_file_index_pressed"]
 [connection signal="index_pressed" from="MenuBar/Properties" to="." method="_on_properties_index_pressed"]
 [connection signal="about_to_popup" from="SongProperties" to="." method="_on_song_properties_about_to_popup"]
 [connection signal="close_requested" from="SongProperties" to="." method="_on_song_properties_close_requested"]
+[connection signal="button_up" from="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer/SongSelectFile" to="." method="_on_song_select_file_button_up"]

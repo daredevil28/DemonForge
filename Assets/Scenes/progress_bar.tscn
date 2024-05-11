@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bxv46rdbd272o"]
 
-[ext_resource type="Script" path="res://Assets/Scenes/progress_bar.gd" id="1_hec1t"]
+[ext_resource type="Script" path="res://Assets/Scripts/progress_bar.gd" id="1_ynsex"]
 
 [node name="MarginContainer" type="MarginContainer"]
 anchors_preset = 12
@@ -19,4 +19,4 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 value = 50.0
 show_percentage = false
-script = ExtResource("1_hec1t")
+script = ExtResource("1_ynsex")

@@ -2,6 +2,7 @@ extends Control
 
 @onready var file_dialog : FileDialog = $FileDialog
 @onready var save_dialog : FileDialog = $SaveDialog
+@onready var song_file_dialog : FileDialog = $SongFileDialog
 @onready var song_properties_panel : Window = $SongProperties
 @onready var property_nodes : Array = get_tree().get_nodes_in_group("SongProperties")
 
@@ -29,6 +30,9 @@ func _on_properties_index_pressed(index : int) -> void:
 		1:
 			print("Client Options")
 
+func _on_song_select_file_button_up():
+	song_file_dialog.popup()
+	
 func _on_file_dialog_file_selected(path : String) -> void:
 	var regex : RegEx = RegEx.new()
 	regex.compile("\\.(json|csv)")
@@ -45,6 +49,10 @@ func _on_file_dialog_file_selected(path : String) -> void:
 
 func _on_save_dialog_file_selected(path : String) -> void:
 	GameManager.save_project(path)
+
+func _on_song_file_dialog_file_selected(path : String) -> void:
+	GameManager.song_file = path
+	get_node("SongProperties/ColorRect/SongPropertiesValues/HBoxContainer/SongLocation").text = path
 	
 func _on_song_properties_about_to_popup() -> void:
 	#Song name property
