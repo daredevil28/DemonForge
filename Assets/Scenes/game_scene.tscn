@@ -11,40 +11,42 @@
 [ext_resource type="AudioStream" uid="uid://c4p1y72ti8ebf" path="res://Assets/DrumKit/CrashL.wav" id="9_3opps"]
 [ext_resource type="AudioStream" uid="uid://bae2fu377vmfw" path="res://Assets/DrumKit/Ride.wav" id="10_ob81e"]
 
-[node name="GameScene" type="Node2D"]
+[node name="Node" type="Node"]
+
+[node name="GameScene" type="Node2D" parent="."]
 script = ExtResource("1_avsu0")
 
-[node name="ui" parent="." instance=ExtResource("1_obr5d")]
-
-[node name="GameManager" type="Node" parent="."]
+[node name="GameManager" type="Node" parent="GameScene"]
 unique_name_in_owner = true
 script = ExtResource("2_itica")
 
-[node name="NoteManager" type="Node" parent="."]
+[node name="NoteManager" type="Node" parent="GameScene"]
 unique_name_in_owner = true
 script = ExtResource("3_wirgy")
 
-[node name="SongAudio" type="AudioStreamPlayer" parent="."]
+[node name="SongAudio" type="AudioStreamPlayer" parent="GameScene"]
 volume_db = -6.0
 
-[node name="DrumKit" type="Node" parent="."]
+[node name="DrumKit" type="Node" parent="GameScene"]
 
-[node name="Snare" type="AudioStreamPlayer" parent="DrumKit" groups=["Instruments"]]
+[node name="Snare" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("5_klm7p")
 
-[node name="Kick" type="AudioStreamPlayer" parent="DrumKit" groups=["Instruments"]]
+[node name="Kick" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("5_cgcp7")
 bus = &"SFX"
 
-[node name="TomHigh" type="AudioStreamPlayer" parent="DrumKit" groups=["Instruments"]]
+[node name="TomHigh" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("7_h73ft")
 
-[node name="TomLow" type="AudioStreamPlayer" parent="DrumKit" groups=["Instruments"]]
+[node name="TomLow" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("8_f62j3")
 
-[node name="CrashL" type="AudioStreamPlayer" parent="DrumKit" groups=["Instruments"]]
+[node name="CrashL" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("9_3opps")
 volume_db = -4.0
 
-[node name="Ride" type="AudioStreamPlayer" parent="DrumKit" groups=["Instruments"]]
+[node name="Ride" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("10_ob81e")
+
+[node name="ui" parent="." instance=ExtResource("1_obr5d")]

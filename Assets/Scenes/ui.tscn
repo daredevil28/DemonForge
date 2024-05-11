@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cdd5so8gpgl0q"]
+[gd_scene load_steps=4 format=3 uid="uid://cdd5so8gpgl0q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ui_controller.gd" id="1_hk45x"]
+[ext_resource type="Texture2D" uid="uid://pokip0nsccq2" path="res://Assets/Sprites/Notes.png" id="2_7ucnv"]
+[ext_resource type="PackedScene" uid="uid://bxv46rdbd272o" path="res://Assets/Scenes/progress_bar.tscn" id="2_t6ae7"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -10,6 +12,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hk45x")
+
+[node name="MarginContainer" parent="." instance=ExtResource("2_t6ae7")]
+layout_mode = 1
+offset_top = -4.0
 
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"
@@ -114,10 +120,21 @@ popup/item_1/id = 1
 popup/item_2/text = "Storm"
 popup/item_2/id = 2
 
-[node name="SongLocation" type="LineEdit" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="SongProperties/ColorRect/SongPropertiesValues"]
 layout_mode = 2
 size_flags_vertical = 3
+alignment = 1
+
+[node name="SongLocation" type="LineEdit" parent="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer" groups=["SongProperties"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 placeholder_text = "Song Location"
+
+[node name="TextureButton" type="TextureButton" parent="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("2_7ucnv")
 
 [node name="BPM" type="LineEdit" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
 layout_mode = 2

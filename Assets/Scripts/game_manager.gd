@@ -7,6 +7,7 @@ var song_name : String = ""
 var artist_name : String = ""
 var difficulty : int = 0
 var map : int = 0
+#Set up audiostreamplayer as soon as it's set
 var song_file : String = "" :
 	get:
 		return song_file
@@ -14,11 +15,20 @@ var song_file : String = "" :
 		if value != song_file:
 			song_file = value
 			setup_audio(value)
+
 var preview_file : String = ""
 var custom_songs_folder : String = ""
 var bpm : float = 60.0
 
+#Return length of audio, if audio empty return default value
+var audio_length : float :
+	get:
+		if(audio_player.stream != null):
+			return audio_player.stream.get_length()
+		else:
+			return 60.0
 
+#Automatically move the notes whenever we play the position
 var current_pos : float = 0 :
 	get:
 		return current_pos
@@ -63,16 +73,9 @@ func stop_music() -> void:
 #Get the location of the note based on how long the song is and the width of the window
 func music_time_to_screen_time(time : float) -> float:
 	var percentage_elapsed : float = 0.0
-	var songLength : float
-	
-	#Check if the audio is set, and else use the last note in the array to determine song length
-	if audio_stream_set:
-		songLength = audio_player.stream.get_length()
-	else:
-		songLength = 60
 		
 	if time > 0:
-		percentage_elapsed = time / songLength
+		percentage_elapsed = time / audio_length
 	else:
 		percentage_elapsed = 0
 	
@@ -85,7 +88,8 @@ func setup_audio(audio_file : String) -> void:
 	else:
 		audio_player.stream = AudioStreamOggVorbis.load_from_file(song_file)
 		audio_stream_set = true
-	
+		current_pos = 0
+
 func clean_project() -> void:
 	setup_audio("")
 	note_manager.clear_all_notes()
@@ -155,7 +159,7 @@ func _process(_delta : float) -> void:
 		else:
 			play_music()
 	if(Input.is_action_just_pressed("ScrollUp") && !audio_player.playing):
-		if current_pos < audio_player.stream.get_length():
+		if current_pos < audio_length:
 			current_pos += seconds_per_beat
 	if(Input.is_action_just_pressed("ScrollDown") && !audio_player.playing):
 		current_pos -= seconds_per_beat

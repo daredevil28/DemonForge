@@ -38,7 +38,7 @@ func reset_note_location() -> void:
 		reset_note_y(i, i.color)
 	play_notes(manager.current_pos)
 	#Redraw the judgement line in drawer.gd
-	get_tree().root.get_child(0).queue_redraw()
+	get_tree().root.get_child(0).get_child(0).queue_redraw()
 
 func reset_note_y(instance : Node2D, color : int) -> void:
 	match color:
@@ -64,7 +64,7 @@ func reset_note_y(instance : Node2D, color : int) -> void:
 				push_warning("No color found")
 
 func play_notes(new_time : float) -> void:
-	get_tree().root.get_child(0).queue_redraw()
+	get_tree().root.get_child(0).get_child(0).queue_redraw()
 	for i : Node2D in note_nodes:
 		#(-TimePassed + NoteTimestamp) * scroll_speed + offset
 		i.position.x = (-manager.music_time_to_screen_time(new_time) + manager.music_time_to_screen_time(i.time)) * manager.scroll_speed + offset
