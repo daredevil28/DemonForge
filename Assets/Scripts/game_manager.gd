@@ -148,8 +148,7 @@ func save_project(path : String) -> void:
 	file.store_string(json_string)
 	file.close()
 
-func get_closest_snap_value() -> float:
-	var original_pos : float = current_pos
+func get_closest_snap_value(original_pos : float) -> float:
 	var seconds_per_beat : float = 60 / bpm
 	var before_snap : float = floorf((original_pos-seconds_per_beat / 4) / seconds_per_beat) * seconds_per_beat
 	var ahead_snap : float = before_snap + seconds_per_beat
@@ -166,14 +165,16 @@ func _process(_delta : float) -> void:
 	if(Input.is_action_just_pressed("TogglePlay")):
 		if(audio_player.playing):
 			stop_music()
-			current_pos = get_closest_snap_value()
+			current_pos = get_closest_snap_value(current_pos)
 		else:
 			play_music()
 	if(Input.is_action_just_pressed("ScrollUp") && !audio_player.playing):
 		current_pos += seconds_per_beat
+		current_pos = get_closest_snap_value(current_pos)
 		if current_pos > audio_length:
 			current_pos = audio_length
 	if(Input.is_action_just_pressed("ScrollDown") && !audio_player.playing):
 		current_pos -= seconds_per_beat
+		current_pos = get_closest_snap_value(current_pos)
 		if current_pos < 0:
 			current_pos = 0
