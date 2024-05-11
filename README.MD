@@ -20,8 +20,7 @@ Download the .exe from releases and run it, no further configuration required
 - [ ] Editing charts inside the application
 - [ ] Figure out how to properly play sound for drum rolls
 - [ ] Snap editing
-- [ ] Adjust volume of instruments/music individually
-- [ ] Adjustable client settings (scroll speed, note size etc)
+- [ ] Adjustable client settings (scroll speed, note size,volume etc)
 - [ ] Make scroll speed not dependant on screen size
 - [ ] Custom asset support for audio/sprites
 - [ ] Undo/Redo button
@@ -30,6 +29,7 @@ Download the .exe from releases and run it, no further configuration required
 # Possible future features
 
 * Use a cache of notes instead of instantiating every note seperately
+* Dynamic BPM changes
 
 # Contributing
 

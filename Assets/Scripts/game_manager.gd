@@ -167,8 +167,9 @@ func _process(_delta : float) -> void:
 		else:
 			play_music()
 	if(Input.is_action_just_pressed("ScrollUp") && !audio_player.playing):
-		if current_pos < audio_length:
-			current_pos += seconds_per_beat
+		current_pos += seconds_per_beat
+		if current_pos > audio_length:
+			current_pos = audio_length
 	if(Input.is_action_just_pressed("ScrollDown") && !audio_player.playing):
 		current_pos -= seconds_per_beat
 		if current_pos < 0:
