@@ -31,6 +31,7 @@ func initialise_notes(json_notes : Array) -> void:
 		reset_note_y(instance, note["color"])
 		note_nodes.append(instance)
 	GameManager.current_pos = 0
+	GameManager.audio_length = note_nodes.back().time
 
 func reset_note_location() -> void:
 	for i : Node2D in note_nodes:

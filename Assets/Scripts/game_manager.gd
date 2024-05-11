@@ -31,7 +31,10 @@ var audio_length : float :
 		if(audio_player.stream != null):
 			return audio_player.stream.get_length()
 		else:
-			return 60.0
+			return audio_length
+	set(value):
+		if(audio_player.stream == null):
+			audio_length = value
 
 #Automatically move the notes whenever we play the position
 var current_pos : float = 0 :
