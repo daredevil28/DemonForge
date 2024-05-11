@@ -1,9 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bcoi5hfer5b8e"]
+[gd_scene load_steps=10 format=3 uid="uid://bcoi5hfer5b8e"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/drawer.gd" id="1_avsu0"]
 [ext_resource type="PackedScene" uid="uid://cdd5so8gpgl0q" path="res://Assets/Scenes/ui.tscn" id="1_obr5d"]
-[ext_resource type="Script" path="res://Assets/Scripts/game_manager.gd" id="2_itica"]
-[ext_resource type="Script" path="res://Assets/Scripts/note_manager.gd" id="3_wirgy"]
+[ext_resource type="Script" path="res://Assets/Scenes/audio_player_script.gd" id="2_w8v26"]
 [ext_resource type="AudioStream" uid="uid://dlwjgvij7hkhd" path="res://Assets/DrumKit/Kick.wav" id="5_cgcp7"]
 [ext_resource type="AudioStream" uid="uid://gdwmjr0n54nd" path="res://Assets/DrumKit/Snare.wav" id="5_klm7p"]
 [ext_resource type="AudioStream" uid="uid://b38qqrrk0bsa" path="res://Assets/DrumKit/TomHigh.wav" id="7_h73ft"]
@@ -11,21 +10,15 @@
 [ext_resource type="AudioStream" uid="uid://c4p1y72ti8ebf" path="res://Assets/DrumKit/CrashL.wav" id="9_3opps"]
 [ext_resource type="AudioStream" uid="uid://bae2fu377vmfw" path="res://Assets/DrumKit/Ride.wav" id="10_ob81e"]
 
-[node name="Node" type="Node"]
+[node name="MainNode" type="Node"]
 
 [node name="GameScene" type="Node2D" parent="."]
+z_index = -1
 script = ExtResource("1_avsu0")
-
-[node name="GameManager" type="Node" parent="GameScene"]
-unique_name_in_owner = true
-script = ExtResource("2_itica")
-
-[node name="NoteManager" type="Node" parent="GameScene"]
-unique_name_in_owner = true
-script = ExtResource("3_wirgy")
 
 [node name="SongAudio" type="AudioStreamPlayer" parent="GameScene"]
 volume_db = -6.0
+script = ExtResource("2_w8v26")
 
 [node name="DrumKit" type="Node" parent="GameScene"]
 

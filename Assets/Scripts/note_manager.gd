@@ -1,14 +1,13 @@
 extends Node
 
 var note_nodes : Array = []
-@onready var manager : Node = %GameManager
 
-@export var yellow : Color = Color.YELLOW
-@export var red : Color = Color.RED
-@export var orange : Color = Color.ORANGE
-@export var purple : Color = Color.PURPLE
-@export var blue : Color = Color.BLUE
-@export var green : Color = Color.GREEN
+var yellow : Color = Color.YELLOW
+var red : Color = Color.RED
+var orange : Color = Color.ORANGE
+var purple : Color = Color.PURPLE
+var blue : Color = Color.BLUE
+var green : Color = Color.GREEN
 
 var offset : float = 200
 
@@ -31,14 +30,14 @@ func initialise_notes(json_notes : Array) -> void:
 		instance.interval = note["interval"]
 		reset_note_y(instance, note["color"])
 		note_nodes.append(instance)
-	manager.current_pos = 0
+	GameManager.current_pos = 0
 
 func reset_note_location() -> void:
 	for i : Node2D in note_nodes:
 		reset_note_y(i, i.color)
-	play_notes(manager.current_pos)
-	#Redraw the judgement line in drawer.gd
-	get_tree().root.get_child(0).get_child(0).queue_redraw()
+	play_notes(GameManager.current_pos)
+	#Redraw the lines in drawer.gd
+	GameManager.redraw_scene()
 
 func reset_note_y(instance : Node2D, color : int) -> void:
 	match color:
@@ -64,17 +63,17 @@ func reset_note_y(instance : Node2D, color : int) -> void:
 				push_warning("No color found")
 
 func play_notes(new_time : float) -> void:
-	get_tree().root.get_child(0).get_child(0).queue_redraw()
+	GameManager.redraw_scene()
 	for i : Node2D in note_nodes:
 		#(-TimePassed + NoteTimestamp) * scroll_speed + offset
-		i.position.x = (-manager.music_time_to_screen_time(new_time) + manager.music_time_to_screen_time(i.time)) * manager.scroll_speed + offset
+		i.position.x = (-GameManager.music_time_to_screen_time(new_time) + GameManager.music_time_to_screen_time(i.time)) * GameManager.scroll_speed + offset
 		#Check if note still has to come up, else make it invisible
 		if i.time >= new_time:
 			i.visible = true
 		else:
-			if i.visible && manager.audio_player.playing:
+			if i.visible && GameManager.audio_player.playing:
 				#Make sure the note is actually close enough to the bar before playing the sound
-				if manager.audio_player.playing && i.time > manager.current_pos - 0.01:
+				if GameManager.audio_player.playing && i.time > GameManager.current_pos - 0.01:
 					get_tree().get_nodes_in_group("Instruments")[i.color - 1].play()
 				i.visible = false
 

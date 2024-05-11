@@ -21,6 +21,11 @@ config/icon="res://Assets/icon.svg"
 
 buses/default_bus_layout="res://Assets/default_bus_layout.tres"
 
+[autoload]
+
+GameManager="*res://Assets/Scripts/game_manager.gd"
+NoteManager="*res://Assets/Scripts/note_manager.gd"
+
 [debug]
 
 gdscript/warnings/untyped_declaration=1

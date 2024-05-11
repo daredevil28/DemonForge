@@ -1,7 +1,12 @@
 extends Node
 
-@onready var audio_player : AudioStreamPlayer = $"../SongAudio"
-@onready var note_manager : Node = %NoteManager
+var audio_player : AudioStreamPlayer :
+	get:
+		return audio_player
+	set(value):
+		audio_player = value
+
+var game_scene_node : Node2D
 
 var song_name : String = ""
 var artist_name : String = ""
@@ -34,7 +39,7 @@ var current_pos : float = 0 :
 		return current_pos
 	set(value):
 		current_pos = value
-		note_manager.play_notes(current_pos)
+		NoteManager.play_notes(current_pos)
 
 var scroll_speed : int = 50
 
@@ -57,7 +62,7 @@ func setup_project(jsonString : Dictionary) -> void:
 	preview_file = metadata["previewFile"]
 	bpm = metadata["bpm"]
 
-	note_manager.initialise_notes(jsonString["notes"])
+	NoteManager.initialise_notes(jsonString["notes"])
 	current_pos = 0
 	
 func play_music() -> void:
@@ -67,7 +72,7 @@ func stop_music() -> void:
 	current_pos = audio_player.get_playback_position()
 	audio_player.stop()
 	
-	for i : Node2D in note_manager.note_nodes:
+	for i : Node2D in NoteManager.note_nodes:
 		i.visible = true
 	
 #Get the location of the note based on how long the song is and the width of the window
@@ -92,7 +97,7 @@ func setup_audio(audio_file : String) -> void:
 
 func clean_project() -> void:
 	setup_audio("")
-	note_manager.clear_all_notes()
+	NoteManager.clear_all_notes()
 	song_name = ""
 	artist_name = ""
 	difficulty = 0
@@ -103,7 +108,10 @@ func clean_project() -> void:
 	bpm = 60.0
 
 	current_pos = 0
-	
+
+func redraw_scene():
+	game_scene_node.queue_redraw()
+
 func save_project(path : String) -> void:
 	var json_data : Dictionary = {
 		"metaData":
@@ -124,7 +132,7 @@ func save_project(path : String) -> void:
 		]
 	}
 	var note_array : Array = []
-	for i : Node2D in note_manager.note_nodes:
+	for i : Node2D in NoteManager.note_nodes:
 		var individual_note : Dictionary = {
 		"time" : i.time,
 		"color" : i.color,
