@@ -2,7 +2,7 @@ extends Node2D
 
 var lineColor : Color = Color.WHITE
 
-func _ready():
+func _ready() -> void:
 	GameManager.game_scene_node = self
 	
 func _draw() -> void:

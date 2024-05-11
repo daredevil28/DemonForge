@@ -9,7 +9,10 @@ var purple : Color = Color.PURPLE
 var blue : Color = Color.BLUE
 var green : Color = Color.GREEN
 
-var offset : float = 200
+var offset : float = 200 :
+	set(value):
+		offset = value
+		GameManager.redraw_scene()
 
 func _ready() -> void:
 	#Reset the notes whenever the window is resized
@@ -74,7 +77,7 @@ func play_notes(new_time : float) -> void:
 		else:
 			if i.visible && GameManager.audio_player.playing:
 				#Make sure the note is actually close enough to the bar before playing the sound
-				if GameManager.audio_player.playing && i.time > GameManager.current_pos - 0.01:
+				if GameManager.audio_player.playing && i.time > GameManager.current_pos - 0.02:
 					get_tree().get_nodes_in_group("Instruments")[i.color - 1].play()
 				i.visible = false
 

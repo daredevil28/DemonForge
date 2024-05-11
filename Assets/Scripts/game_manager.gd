@@ -1,10 +1,6 @@
 extends Node
 
-var audio_player : AudioStreamPlayer :
-	get:
-		return audio_player
-	set(value):
-		audio_player = value
+var audio_player : AudioStreamPlayer
 
 var game_scene_node : Node2D
 
@@ -12,6 +8,17 @@ var song_name : String = ""
 var artist_name : String = ""
 var difficulty : int = 0
 var map : int = 0
+var custom_songs_folder : String = ""
+var bpm : float = 60.0
+
+var is_another_window_focused : bool = false #ui_controller.gd -> check_for_window_focused()
+
+var scroll_speed : int = 50 :
+	set(value):
+		scroll_speed = value
+		redraw_scene()
+		current_pos = current_pos
+		
 #Set up audiostreamplayer as soon as it's set
 var song_file : String = "" :
 	get:
@@ -20,10 +27,6 @@ var song_file : String = "" :
 		if value != song_file:
 			song_file = value
 			setup_audio(value)
-
-var preview_file : String = ""
-var custom_songs_folder : String = ""
-var bpm : float = 60.0
 
 #Return length of audio, if audio empty return default value
 var audio_length : float :
@@ -44,11 +47,6 @@ var current_pos : float = 0 :
 		current_pos = value
 		NoteManager.play_notes(current_pos)
 
-var scroll_speed : int = 50
-
-#_audio_player.has_stream_playback() doesn't return true if called on the same frame that the stream gets set so we have to track it myself
-var audio_stream_set : bool = false
-
 func _ready() -> void:
 	#Default custom song location
 	if(OS.get_name() == "Windows"):
@@ -62,7 +60,6 @@ func setup_project(jsonString : Dictionary) -> void:
 	difficulty = metadata["difficulty"]
 	map = metadata["map"]
 	song_file = metadata["songFile"]
-	preview_file = metadata["previewFile"]
 	bpm = metadata["bpm"]
 
 	NoteManager.initialise_notes(jsonString["notes"])
@@ -92,10 +89,8 @@ func music_time_to_screen_time(time : float) -> float:
 func setup_audio(audio_file : String) -> void:
 	if audio_file == "":
 		audio_player.stream = null
-		audio_stream_set = false
 	else:
 		audio_player.stream = AudioStreamOggVorbis.load_from_file(song_file)
-		audio_stream_set = true
 		current_pos = 0
 
 func clean_project() -> void:
@@ -106,13 +101,12 @@ func clean_project() -> void:
 	difficulty = 0
 	map = 0
 	song_file = ""
-	preview_file = ""
 	custom_songs_folder = ""
 	bpm = 60.0
 
 	current_pos = 0
 
-func redraw_scene():
+func redraw_scene() -> void:
 	game_scene_node.queue_redraw()
 
 func save_project(path : String) -> void:
@@ -125,7 +119,6 @@ func save_project(path : String) -> void:
 				"difficulty" : difficulty,
 				"map" : map,
 				"songFile" : song_file,
-				"previewFile" : preview_file,
 				"bpm" : bpm
 			}
 		],
@@ -162,18 +155,18 @@ func _process(_delta : float) -> void:
 	if(audio_player.playing):
 		current_pos = audio_player.get_playback_position() + AudioServer.get_time_since_last_mix()
 	var seconds_per_beat : float = 60 / bpm
-	if(Input.is_action_just_pressed("TogglePlay")):
+	if(Input.is_action_just_pressed("TogglePlay") && is_another_window_focused == false):
 		if(audio_player.playing):
 			stop_music()
 			current_pos = get_closest_snap_value(current_pos)
 		else:
 			play_music()
-	if(Input.is_action_just_pressed("ScrollUp") && !audio_player.playing):
+	if(Input.is_action_just_pressed("ScrollUp") && !audio_player.playing && !is_another_window_focused):
 		current_pos += seconds_per_beat
 		current_pos = get_closest_snap_value(current_pos)
 		if current_pos > audio_length:
 			current_pos = audio_length
-	if(Input.is_action_just_pressed("ScrollDown") && !audio_player.playing):
+	if(Input.is_action_just_pressed("ScrollDown") && !audio_player.playing && !is_another_window_focused):
 		current_pos -= seconds_per_beat
 		current_pos = get_closest_snap_value(current_pos)
 		if current_pos < 0:

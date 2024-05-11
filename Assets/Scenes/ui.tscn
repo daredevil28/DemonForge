@@ -156,6 +156,109 @@ layout_mode = 2
 size_flags_vertical = 3
 placeholder_text = "BPM"
 
+[node name="ClientSettings" type="Window" parent="."]
+title = "Client Settings"
+initial_position = 1
+size = Vector2i(500, 300)
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="ClientSettings"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.252028, 0.252028, 0.252027, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ClientSettings/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="ContainerLeft" type="PanelContainer" parent="ClientSettings/ColorRect/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft"]
+layout_mode = 2
+
+[node name="LabelVolume" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer"]
+layout_mode = 2
+text = "Volume Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelMaster" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer"]
+layout_mode = 2
+text = "Master Volume:"
+
+[node name="MasterSlider" type="HSlider" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer" groups=["VolumeSliders"]]
+layout_mode = 2
+value = 100.0
+
+[node name="LabelMusic" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer"]
+layout_mode = 2
+text = "Music Volume:"
+
+[node name="MusicSlider" type="HSlider" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer" groups=["VolumeSliders"]]
+layout_mode = 2
+value = 100.0
+
+[node name="LabelSFX" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer"]
+layout_mode = 2
+text = "SFX Volume:"
+
+[node name="SFXSlider" type="HSlider" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer" groups=["VolumeSliders"]]
+layout_mode = 2
+value = 100.0
+
+[node name="ContainerRight" type="PanelContainer" parent="ClientSettings/ColorRect/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="ScrollSpeedContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/ScrollSpeedContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Scrollspeed"
+
+[node name="ScrollSpeed" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/ScrollSpeedContainer" groups=["ClientSettings"]]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+max_value = 1000.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Judgement line offset"
+
+[node name="Offset" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/HBoxContainer2" groups=["ClientSettings"]]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+max_value = 1000.0
+
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
 [connection signal="file_selected" from="SongFileDialog" to="." method="_on_song_file_dialog_file_selected"]
@@ -164,3 +267,10 @@ placeholder_text = "BPM"
 [connection signal="about_to_popup" from="SongProperties" to="." method="_on_song_properties_about_to_popup"]
 [connection signal="close_requested" from="SongProperties" to="." method="_on_song_properties_close_requested"]
 [connection signal="button_up" from="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer/SongSelectFile" to="." method="_on_song_select_file_button_up"]
+[connection signal="about_to_popup" from="ClientSettings" to="." method="_on_client_settings_about_to_popup"]
+[connection signal="close_requested" from="ClientSettings" to="." method="_on_client_settings_close_requested"]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/MasterSlider" to="." method="_on_slider_changed" binds= [0]]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/MusicSlider" to="." method="_on_slider_changed" binds= [1]]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/SFXSlider" to="." method="_on_slider_changed" binds= [2]]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/ScrollSpeedContainer/ScrollSpeed" to="." method="_on_scroll_speed_value_changed"]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/HBoxContainer2/Offset" to="." method="_on_offset_value_changed"]
