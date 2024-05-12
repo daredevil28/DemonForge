@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bcoi5hfer5b8e"]
+[gd_scene load_steps=11 format=3 uid="uid://bcoi5hfer5b8e"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/drawer.gd" id="1_avsu0"]
 [ext_resource type="PackedScene" uid="uid://cdd5so8gpgl0q" path="res://Assets/Scenes/ui.tscn" id="1_obr5d"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://b38qqrrk0bsa" path="res://Assets/DrumKit/TomHigh.wav" id="7_h73ft"]
 [ext_resource type="AudioStream" uid="uid://dl3tnd05upukf" path="res://Assets/DrumKit/TomLow.wav" id="8_f62j3"]
 [ext_resource type="AudioStream" uid="uid://c4p1y72ti8ebf" path="res://Assets/DrumKit/CrashL.wav" id="9_3opps"]
+[ext_resource type="PackedScene" uid="uid://dnoutqfa7vh6h" path="res://Assets/Scenes/note_lane.tscn" id="9_52jsw"]
 [ext_resource type="AudioStream" uid="uid://bae2fu377vmfw" path="res://Assets/DrumKit/Ride.wav" id="10_ob81e"]
 
 [node name="MainNode" type="Node"]
@@ -47,5 +48,31 @@ bus = &"SFX"
 [node name="Ride" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("10_ob81e")
 bus = &"SFX"
+
+[node name="NodeLanes" type="Node" parent="GameScene"]
+
+[node name="PurpleNote" parent="GameScene/NodeLanes" groups=["NoteColliders"] instance=ExtResource("9_52jsw")]
+position = Vector2(596, 138)
+note_color = 4
+
+[node name="GreenNote" parent="GameScene/NodeLanes" groups=["NoteColliders"] instance=ExtResource("9_52jsw")]
+position = Vector2(598, 237)
+note_color = 6
+
+[node name="RedNote" parent="GameScene/NodeLanes" groups=["NoteColliders"] instance=ExtResource("9_52jsw")]
+position = Vector2(605, 332)
+note_color = 2
+
+[node name="YellowNote" parent="GameScene/NodeLanes" groups=["NoteColliders"] instance=ExtResource("9_52jsw")]
+position = Vector2(601, 422)
+note_color = 1
+
+[node name="BlueNote" parent="GameScene/NodeLanes" groups=["NoteColliders"] instance=ExtResource("9_52jsw")]
+position = Vector2(603, 502)
+note_color = 5
+
+[node name="OrangeNote" parent="GameScene/NodeLanes" groups=["NoteColliders"] instance=ExtResource("9_52jsw")]
+position = Vector2(602, 598)
+note_color = 3
 
 [node name="ui" parent="." instance=ExtResource("1_obr5d")]

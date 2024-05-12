@@ -20,16 +20,19 @@ Download the .exe from releases and run it, no further configuration required
 - [ ] Editing charts inside the application
 - [ ] Figure out how to properly play sound for drum rolls
 - [ ] Snap editing
-- [ ] Adjustable client settings (scroll speed, note size,volume etc)
+- [x] Adjustable client settings (scroll speed, note size,volume etc)
 - [ ] Make scroll speed not dependant on screen size
 - [ ] Custom asset support for audio/sprites
 - [ ] Undo/Redo button
 - [ ] Support other timing signatures
+- [ ] Set preview time stamp and length
+- [ ] Export project to the custom songs folder
 
 # Possible future features
 
 * Use a cache of notes instead of instantiating every note seperately
 * Dynamic BPM changes
+* Drum track seperation with something like [OpenVINO](https://github.com/openvinotoolkit/openvino)
 
 # Contributing
 

@@ -130,7 +130,7 @@ func save_project(path : String) -> void:
 	var note_array : Array = []
 	for i : Node2D in NoteManager.note_nodes:
 		var individual_note : Dictionary = {
-		"time" : i.time,
+		"time" : i.time,	
 		"color" : i.color,
 		"interval" : i.interval
 		}
@@ -150,7 +150,7 @@ func get_closest_snap_value(original_pos : float) -> float:
 		return ahead_snap
 	else:
 		return before_snap
-	
+
 func _process(_delta : float) -> void:
 	if(audio_player.playing):
 		current_pos = audio_player.get_playback_position() + AudioServer.get_time_since_last_mix()

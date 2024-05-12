@@ -9,6 +9,8 @@ var purple : Color = Color.PURPLE
 var blue : Color = Color.BLUE
 var green : Color = Color.GREEN
 
+@onready var note_colliders : Array = get_tree().get_nodes_in_group("NoteColliders")
+
 var offset : float = 200 :
 	set(value):
 		offset = value
@@ -16,7 +18,9 @@ var offset : float = 200 :
 
 func _ready() -> void:
 	#Reset the notes whenever the window is resized
-	print(get_viewport().size_changed.connect(reset_note_location))
+	get_viewport().size_changed.connect(reset_note_location)
+	for i in note_colliders:
+		reset_collision_location(i, i.note_color)
 	
 #Instantiate all the notes
 func initialise_notes(json_notes : Array) -> void:
@@ -39,6 +43,8 @@ func initialise_notes(json_notes : Array) -> void:
 func reset_note_location() -> void:
 	for i : Node2D in note_nodes:
 		reset_note_y(i, i.color)
+	for i in note_colliders:
+		reset_collision_location(i, i.note_color)
 	play_notes(GameManager.current_pos)
 	#Redraw the lines in drawer.gd
 	GameManager.redraw_scene()
@@ -47,25 +53,44 @@ func reset_note_y(instance : Node2D, color : int) -> void:
 	match color:
 			1:
 				instance.modulate = yellow
-				instance.position.y = DisplayServer.window_get_size().y / 1.8
+				instance.position.y = 0.55 * DisplayServer.window_get_size().y
 			2:
 				instance.modulate = red
-				instance.position.y = DisplayServer.window_get_size().y / 2.2
+				instance.position.y = 0.45 * DisplayServer.window_get_size().y
 			3:
 				instance.modulate = orange
-				instance.position.y = DisplayServer.window_get_size().y / 1.4
+				instance.position.y = 0.75 * DisplayServer.window_get_size().y
 			4:
 				instance.modulate = purple
-				instance.position.y = DisplayServer.window_get_size().y / 2.6
+				instance.position.y = 0.25 * DisplayServer.window_get_size().y
 			5:
 				instance.modulate = blue
-				instance.position.y = DisplayServer.window_get_size().y / 1.6
+				instance.position.y = 0.65 * DisplayServer.window_get_size().y
 			6:
 				instance.modulate = green
-				instance.position.y = DisplayServer.window_get_size().y / 2.4
+				instance.position.y = 0.35 * DisplayServer.window_get_size().y
 			_:
 				push_warning("No color found")
 
+func reset_collision_location(instance : Node2D, color : int) -> void:
+	instance.position = DisplayServer.window_get_size() / 2
+	instance.scale.x = DisplayServer.window_get_size().x / 2 / 10
+	match color:
+		1:
+			instance.position.y = 0.55 * DisplayServer.window_get_size().y
+		2:
+			instance.position.y = 0.45 * DisplayServer.window_get_size().y
+		3:
+			instance.position.y = 0.75 * DisplayServer.window_get_size().y
+		4:
+			instance.position.y = 0.25 * DisplayServer.window_get_size().y
+		5:
+			instance.position.y = 0.65 * DisplayServer.window_get_size().y
+		6:
+			instance.position.y = 0.35 * DisplayServer.window_get_size().y
+		_:
+			push_warning("No color found")
+	
 func play_notes(new_time : float) -> void:
 	GameManager.redraw_scene()
 	for i : Node2D in note_nodes:

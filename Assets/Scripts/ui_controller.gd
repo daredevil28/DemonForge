@@ -47,7 +47,6 @@ func _on_file_dialog_file_selected(path : String) -> void:
 		".json":
 			print(".json")
 			var json_file : Dictionary = JSON.parse_string(FileAccess.get_file_as_string(path))
-			
 			GameManager.setup_project(json_file)
 		".csv":
 			print(".csv")
@@ -58,7 +57,8 @@ func _on_save_dialog_file_selected(path : String) -> void:
 
 func _on_song_file_dialog_file_selected(path : String) -> void:
 	GameManager.song_file = path
-	get_node("SongProperties/ColorRect/SongPropertiesValues/HBoxContainer/SongLocation").text = path
+	#Song file
+	song_properties[4].text = path
 	
 func _on_song_properties_about_to_popup() -> void:
 	#Song name property
@@ -90,7 +90,7 @@ func _on_song_properties_close_requested() -> void:
 	GameManager.bpm = float(song_properties[5].text)
 	GameManager.redraw_scene()
 	
-func _on_client_settings_about_to_popup():
+func _on_client_settings_about_to_popup() -> void:
 	client_settings[0].value = GameManager.scroll_speed
 	client_settings[1].value = NoteManager.offset
 	
@@ -99,19 +99,18 @@ func _on_client_settings_close_requested() -> void:
 	GameManager.scroll_speed = client_settings[0].value
 	NoteManager.offset = client_settings[1].value
 
-func _on_slider_changed(value, slider):
-	var new_db_value = value / 100 * 24
-	print(new_db_value)
+func _on_slider_changed(value : float, slider : int) -> void:
+	var new_db_value : float = value / 100 * 24
 	if new_db_value == 0:
 		AudioServer.set_bus_mute(slider, true)
 	else:
 		AudioServer.set_bus_mute(slider, false)
 		AudioServer.set_bus_volume_db(slider,new_db_value-24)
 
-func _on_scroll_speed_value_changed(value):
+func _on_scroll_speed_value_changed(value : float) -> void:
 	GameManager.scroll_speed = value
 
-func _on_offset_value_changed(value):
+func _on_offset_value_changed(value : float) -> void:
 	NoteManager.offset = value
 
 func csv_to_json(csv_file : String) -> Array:
@@ -145,11 +144,11 @@ func csv_to_json(csv_file : String) -> Array:
 				note_array.append(temp_array)
 	return note_array
 
-func check_for_window_focus():
+func check_for_window_focus() -> void:
 	if song_properties_panel.has_focus() || client_settings_panel.has_focus():
 		GameManager.is_another_window_focused = true
 	else:
 		GameManager.is_another_window_focused = false
 		
-func _process(delta):
+func _process(_delta : float) -> void:
 	check_for_window_focus()
