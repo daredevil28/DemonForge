@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bcoi5hfer5b8e"]
+[gd_scene load_steps=13 format=3 uid="uid://bcoi5hfer5b8e"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/drawer.gd" id="1_avsu0"]
 [ext_resource type="PackedScene" uid="uid://cdd5so8gpgl0q" path="res://Assets/Scenes/ui.tscn" id="1_obr5d"]
@@ -9,6 +9,8 @@
 [ext_resource type="AudioStream" uid="uid://dl3tnd05upukf" path="res://Assets/DrumKit/TomLow.wav" id="8_f62j3"]
 [ext_resource type="AudioStream" uid="uid://c4p1y72ti8ebf" path="res://Assets/DrumKit/CrashL.wav" id="9_3opps"]
 [ext_resource type="PackedScene" uid="uid://dnoutqfa7vh6h" path="res://Assets/Scenes/note_lane.tscn" id="9_52jsw"]
+[ext_resource type="Script" path="res://Assets/Scripts/cursor_note.gd" id="10_2cfoa"]
+[ext_resource type="Texture2D" uid="uid://pokip0nsccq2" path="res://Assets/Sprites/Notes.png" id="10_b56au"]
 [ext_resource type="AudioStream" uid="uid://bae2fu377vmfw" path="res://Assets/DrumKit/Ride.wav" id="10_ob81e"]
 
 [node name="MainNode" type="Node"]
@@ -52,27 +54,32 @@ bus = &"SFX"
 [node name="NodeLanes" type="Node" parent="GameScene"]
 
 [node name="PurpleNote" parent="GameScene/NodeLanes" groups=["NoteColliders"] instance=ExtResource("9_52jsw")]
-position = Vector2(596, 138)
+position = Vector2(600, 180)
 note_color = 4
 
 [node name="GreenNote" parent="GameScene/NodeLanes" groups=["NoteColliders"] instance=ExtResource("9_52jsw")]
-position = Vector2(598, 237)
+position = Vector2(600, 252)
 note_color = 6
 
 [node name="RedNote" parent="GameScene/NodeLanes" groups=["NoteColliders"] instance=ExtResource("9_52jsw")]
-position = Vector2(605, 332)
+position = Vector2(600, 324)
 note_color = 2
 
 [node name="YellowNote" parent="GameScene/NodeLanes" groups=["NoteColliders"] instance=ExtResource("9_52jsw")]
-position = Vector2(601, 422)
+position = Vector2(600, 396)
 note_color = 1
 
 [node name="BlueNote" parent="GameScene/NodeLanes" groups=["NoteColliders"] instance=ExtResource("9_52jsw")]
-position = Vector2(603, 502)
+position = Vector2(600, 468)
 note_color = 5
 
 [node name="OrangeNote" parent="GameScene/NodeLanes" groups=["NoteColliders"] instance=ExtResource("9_52jsw")]
-position = Vector2(602, 598)
+position = Vector2(600, 540)
 note_color = 3
+
+[node name="CursorNote" type="Sprite2D" parent="GameScene"]
+position = Vector2(468, 348)
+texture = ExtResource("10_b56au")
+script = ExtResource("10_2cfoa")
 
 [node name="ui" parent="." instance=ExtResource("1_obr5d")]
