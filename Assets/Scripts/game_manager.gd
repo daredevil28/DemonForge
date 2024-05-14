@@ -92,9 +92,6 @@ func stop_music() -> void:
 	current_pos = audio_player.get_playback_position()
 	audio_player.stop()
 
-	for i : Node2D in NoteManager.note_nodes:
-		i.visible = true
-
 func redraw_scene() -> void:
 	game_scene_node.queue_redraw()
 	
@@ -165,13 +162,13 @@ func _process(_delta : float) -> void:
 			play_music()
 			
 	if(Input.is_action_just_pressed("ScrollUp") && !audio_player.playing && !is_another_window_focused):
-		current_pos += seconds_per_beat / GameManager.snapping_frequency
+		current_pos += seconds_per_beat / snapping_frequency
 		current_pos = get_closest_snap_value(current_pos)
 		if current_pos > audio_length:
 			current_pos = audio_length
 			
 	if(Input.is_action_just_pressed("ScrollDown") && !audio_player.playing && !is_another_window_focused):
-		current_pos -= seconds_per_beat / GameManager.snapping_frequency
+		current_pos -= seconds_per_beat / snapping_frequency
 		current_pos = get_closest_snap_value(current_pos)
 		if current_pos < 0:
 			current_pos = 0

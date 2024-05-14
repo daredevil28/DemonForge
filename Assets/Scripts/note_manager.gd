@@ -41,6 +41,7 @@ func initialise_notes(json_notes : Array) -> void:
 		instance.color = note["color"]
 		instance.interval = note["interval"]
 		instance.position.y = reset_note_y(instance, note["color"])
+		instance.visible = false
 		note_nodes.append(instance)
 	GameManager.current_pos = 0
 	GameManager.audio_length = note_nodes.back().time
@@ -110,16 +111,24 @@ func play_notes(new_time : float) -> void:
 	GameManager.redraw_scene()
 	for i : Node2D in note_nodes:
 		#(NoteTimestamp - TimePassed ) * scroll_speed + offset
-		i.position.x = (GameManager.music_time_to_screen_time(i.time) - GameManager.music_time_to_screen_time(new_time)) + offset
+		var new_pos : float = (GameManager.music_time_to_screen_time(i.time) - GameManager.music_time_to_screen_time(new_time)) + offset
 		#Check if note still has to come up, else make it invisible
-		if i.time >= new_time:
-			i.visible = true
+		if(new_pos > DisplayServer.window_get_size().x + 100 || new_pos < 0):
+			
+			i.visible = false
+			continue
+		i.visible = true
+		if(GameManager.audio_player.playing):
+			if i.time >= new_time:
+				i.position.x = new_pos
+			else:
+				if i.visible && GameManager.audio_player.playing:
+					#Make sure the note is actually close enough to the bar before playing the sound
+					if GameManager.audio_player.playing && i.time > GameManager.current_pos - 0.02:
+						get_tree().get_nodes_in_group("Instruments")[i.color - 1].play()
+					i.visible = false
 		else:
-			if i.visible && GameManager.audio_player.playing:
-				#Make sure the note is actually close enough to the bar before playing the sound
-				if GameManager.audio_player.playing && i.time > GameManager.current_pos - 0.02:
-					get_tree().get_nodes_in_group("Instruments")[i.color - 1].play()
-				i.visible = false
+			i.position.x = new_pos
 
 func _process(_delta : float) -> void:
 	if current_lane == 0:
