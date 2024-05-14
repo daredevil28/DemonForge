@@ -23,7 +23,7 @@ func _ready() -> void:
 	#Reset the notes whenever the window is resized
 	get_viewport().size_changed.connect(reset_note_location)
 	#Reset width
-	for i in note_colliders:
+	for i : Node in note_colliders:
 		reset_collision_location(i, i.note_color)
 	
 #region Note manipulation
@@ -48,7 +48,7 @@ func initialise_notes(json_notes : Array) -> void:
 func reset_note_location() -> void:
 	for i : Node2D in note_nodes:
 		i.position.y = reset_note_y(i, i.color)
-	for i in note_colliders:
+	for i : Node in note_colliders:
 		reset_collision_location(i, i.note_color)
 	play_notes(GameManager.current_pos)
 	#Redraw the lines in drawer.gd
@@ -130,3 +130,4 @@ func _process(_delta : float) -> void:
 		var mouse_screen_x : float = get_viewport().get_mouse_position().x - offset
 		var music_time : float = GameManager.get_closest_snap_value(GameManager.screen_time_to_music_time(mouse_screen_x) + GameManager.current_pos)
 		cursor_note.position.x = (GameManager.music_time_to_screen_time(music_time - GameManager.current_pos)) + offset
+		

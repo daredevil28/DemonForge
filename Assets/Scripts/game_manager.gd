@@ -10,7 +10,7 @@ var difficulty : int = 0
 var map : int = 0
 var custom_songs_folder : String = ""
 var bpm : float = 60.0
-
+var snapping_frequency : int = 4
 var is_another_window_focused : bool = false #ui_controller.gd -> check_for_window_focused()
 
 #region Getter/Setters
@@ -111,8 +111,8 @@ func screen_time_to_music_time(location : float) -> float:
 	return location / DisplayServer.window_get_size().x * audio_length / GameManager.scroll_speed
 
 func get_closest_snap_value(original_pos : float) -> float:
-	var seconds_per_beat : float = 60 / bpm
-	var before_snap : float = floorf((original_pos-seconds_per_beat / 4) / seconds_per_beat) * seconds_per_beat
+	var seconds_per_beat : float = 60 / bpm / snapping_frequency
+	var before_snap : float = floorf((original_pos-seconds_per_beat / snapping_frequency) / seconds_per_beat) * seconds_per_beat
 	var ahead_snap : float = before_snap + seconds_per_beat
 	
 	if(abs(original_pos - ahead_snap) < abs(original_pos - before_snap)):
@@ -165,13 +165,13 @@ func _process(_delta : float) -> void:
 			play_music()
 			
 	if(Input.is_action_just_pressed("ScrollUp") && !audio_player.playing && !is_another_window_focused):
-		current_pos += seconds_per_beat
+		current_pos += seconds_per_beat / GameManager.snapping_frequency
 		current_pos = get_closest_snap_value(current_pos)
 		if current_pos > audio_length:
 			current_pos = audio_length
 			
 	if(Input.is_action_just_pressed("ScrollDown") && !audio_player.playing && !is_another_window_focused):
-		current_pos -= seconds_per_beat
+		current_pos -= seconds_per_beat / GameManager.snapping_frequency
 		current_pos = get_closest_snap_value(current_pos)
 		if current_pos < 0:
 			current_pos = 0

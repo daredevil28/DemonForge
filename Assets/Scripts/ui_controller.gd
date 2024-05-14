@@ -111,7 +111,7 @@ func _on_song_properties_about_to_popup() -> void:
 	
 func _on_song_properties_close_requested() -> void:
 	song_properties_panel.visible = false
-	for i in song_properties:
+	for i : Node in song_properties:
 		print(i.name + ": " + i.text)
 	#Song name property
 	GameManager.song_name = song_properties[0].text
