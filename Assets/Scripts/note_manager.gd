@@ -9,10 +9,8 @@ var purple : Color = Color.PURPLE
 var blue : Color = Color.BLUE
 var green : Color = Color.GREEN
 
-var current_lane : int
-var cursor_note : Node2D
-
 @onready var note_colliders : Array = get_tree().get_nodes_in_group("NoteColliders")
+var note_scene : Resource = load("res://Assets/Scenes/note.tscn")
 
 var offset : float = 200 :
 	set(value):
@@ -30,7 +28,6 @@ func _ready() -> void:
 #Instantiate all the notes
 func initialise_notes(json_notes : Array) -> void:
 	clear_all_notes()
-	var note_scene : Resource = load("res://Assets/Scenes/note.tscn")
 	
 	for i : int in json_notes.size():
 		var note : Dictionary = json_notes[i]
@@ -100,6 +97,31 @@ func reset_collision_location(instance : Node2D, color : int) -> void:
 		_:
 			push_warning("No color found")
 
+func add_new_note(time : float, color : int) -> void:
+	var instance : Node = note_scene.instantiate()
+	
+	add_child(instance)
+	
+	instance.time = time
+	instance.color = color
+	instance.position.y = reset_note_y(instance, color)
+	note_nodes.append(instance)
+	GameManager.current_pos = GameManager.current_pos
+
+func remove_note_at_time(time : float, color : int) -> void:
+	for i : int in note_nodes.size():
+		if(note_nodes[i].time == time && note_nodes[i].color == color):
+			print("Deleting note at: " + str(time) + " color: " + str(color))
+			note_nodes[i].queue_free()
+			note_nodes.remove_at(i)
+			break;
+
+func check_if_note_exists(time : float, color : int) -> bool:
+	for i : int in note_nodes.size():
+		if(note_nodes[i].time == time && note_nodes[i].color == color):
+			return true
+	return false
+
 func clear_all_notes() -> void:
 	print("clearing all notes")
 	for i : Object in note_nodes:
@@ -112,31 +134,21 @@ func play_notes(new_time : float) -> void:
 	for i : Node2D in note_nodes:
 		#(NoteTimestamp - TimePassed ) * scroll_speed + offset
 		var new_pos : float = (GameManager.music_time_to_screen_time(i.time) - GameManager.music_time_to_screen_time(new_time)) + offset
-		#Check if note still has to come up, else make it invisible
-		if(new_pos > DisplayServer.window_get_size().x + 100 || new_pos < 0):
-			
+		#Check if the note is outside the frame, hide and skip the iteration if we do
+		if(new_pos > DisplayServer.window_get_size().x + 100 || new_pos < -20):
 			i.visible = false
 			continue
-		i.visible = true
 		if(GameManager.audio_player.playing):
-			if i.time >= new_time:
+			if (i.time >= new_time):
+				i.visible = true
 				i.position.x = new_pos
 			else:
-				if i.visible && GameManager.audio_player.playing:
+				if(i.visible):
 					#Make sure the note is actually close enough to the bar before playing the sound
-					if GameManager.audio_player.playing && i.time > GameManager.current_pos - 0.02:
+					if(i.time >= GameManager.current_pos - 0.02):
 						get_tree().get_nodes_in_group("Instruments")[i.color - 1].play()
-					i.visible = false
+						print("play audio")
+						i.visible = false
 		else:
 			i.position.x = new_pos
-
-func _process(_delta : float) -> void:
-	if current_lane == 0:
-		cursor_note.visible = false
-	else:
-		cursor_note.visible = true
-		cursor_note.position.y = reset_note_y(cursor_note, current_lane)
-		var mouse_screen_x : float = get_viewport().get_mouse_position().x - offset
-		var music_time : float = GameManager.get_closest_snap_value(GameManager.screen_time_to_music_time(mouse_screen_x) + GameManager.current_pos)
-		cursor_note.position.x = (GameManager.music_time_to_screen_time(music_time - GameManager.current_pos)) + offset
-		
+			i.visible = true

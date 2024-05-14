@@ -17,9 +17,9 @@ Download the .exe from releases and run it, no further configuration required
 - [x] Visualise the notes in sync with the music
 - [x] Save charts in a custom json format
 - [x] Read the original game format (.csv)
-- [ ] Editing charts inside the application
+- [x] Editing charts inside the application
 - [ ] Figure out how to properly play sound for drum rolls
-- [ ] Snap editing
+- [x] Snap editing
 - [x] Adjustable client settings (scroll speed, note size,volume etc)
 - [ ] Make scroll speed not dependant on screen size
 - [ ] Custom asset support for audio/sprites

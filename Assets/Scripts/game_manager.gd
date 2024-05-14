@@ -13,6 +13,9 @@ var bpm : float = 60.0
 var snapping_frequency : int = 4
 var is_another_window_focused : bool = false #ui_controller.gd -> check_for_window_focused()
 
+var cursor_note : Node2D #cursor_note.gd -> _ready()
+var current_lane : int
+
 #region Getter/Setters
 var scroll_speed : int = 50 :
 	set(value):
@@ -104,6 +107,7 @@ func music_time_to_screen_time(time : float) -> float:
 
 	return percentage_elapsed * DisplayServer.window_get_size().x * GameManager.scroll_speed
 
+#Like previous function but in reverse
 func screen_time_to_music_time(location : float) -> float:
 	return location / DisplayServer.window_get_size().x * audio_length / GameManager.scroll_speed
 
@@ -116,6 +120,13 @@ func get_closest_snap_value(original_pos : float) -> float:
 		return ahead_snap
 	else:
 		return before_snap
+
+#Get the right music time and position
+func mouse_snapped_screen_pos(pos : Vector2) -> Dictionary:
+	var offset_pos : float = pos.x - NoteManager.offset
+	var music_time : float = get_closest_snap_value(screen_time_to_music_time(offset_pos) + current_pos)
+	var snapped_pos : float = GameManager.music_time_to_screen_time(music_time - current_pos) + NoteManager.offset
+	return {"screen_pos": snapped_pos,"time_pos":music_time}
 #endregion
 
 func save_project(path : String) -> void:
@@ -153,22 +164,49 @@ func save_project(path : String) -> void:
 func _process(_delta : float) -> void:
 	if(audio_player.playing):
 		current_pos = audio_player.get_playback_position() + AudioServer.get_time_since_last_mix()
-	var seconds_per_beat : float = 60 / bpm
-	if(Input.is_action_just_pressed("TogglePlay") && is_another_window_focused == false):
+		
+	if current_lane == 0:
+		cursor_note.visible = false
+	else:
+		cursor_note.visible = true
+		cursor_note.position.y = NoteManager.reset_note_y(cursor_note, current_lane)
+		var note_pos = mouse_snapped_screen_pos(get_viewport().get_mouse_position())
+		cursor_note.position.x = note_pos["screen_pos"]
+			
+func _input(event):
+	if(event is InputEventMouseButton):
+		var seconds_per_beat : float = 60 / bpm
+		if(current_lane != 0):
+			var new_pos : Dictionary = mouse_snapped_screen_pos(get_viewport().get_mouse_position())
+			var note_exists: bool = NoteManager.check_if_note_exists(new_pos["time_pos"], current_lane)
+			if(event.is_action_pressed("LeftClick")):
+				if(!note_exists):
+					NoteManager.add_new_note(new_pos["time_pos"], current_lane)
+			if(event.is_action_pressed("RightClick")):
+				if(note_exists):
+					NoteManager.remove_note_at_time(new_pos["time_pos"], current_lane)
+
+		if(event.is_action_pressed("ScrollUp") && !audio_player.playing && !is_another_window_focused):
+			current_pos += seconds_per_beat / snapping_frequency
+			current_pos = get_closest_snap_value(current_pos)
+			if current_pos > audio_length:
+				current_pos = audio_length
+
+		if(event.is_action_pressed("ScrollDown") && !audio_player.playing && !is_another_window_focused):
+			current_pos -= seconds_per_beat / snapping_frequency
+			current_pos = get_closest_snap_value(current_pos)
+			if current_pos < 0:
+				current_pos = 0
+
+	if(event.is_action_pressed("TogglePlay") && is_another_window_focused == false):
 		if(audio_player.playing):
 			stop_music()
 			current_pos = get_closest_snap_value(current_pos)
 		else:
-			play_music()
-			
-	if(Input.is_action_just_pressed("ScrollUp") && !audio_player.playing && !is_another_window_focused):
-		current_pos += seconds_per_beat / snapping_frequency
-		current_pos = get_closest_snap_value(current_pos)
-		if current_pos > audio_length:
-			current_pos = audio_length
-			
-	if(Input.is_action_just_pressed("ScrollDown") && !audio_player.playing && !is_another_window_focused):
-		current_pos -= seconds_per_beat / snapping_frequency
-		current_pos = get_closest_snap_value(current_pos)
-		if current_pos < 0:
-			current_pos = 0
+			if(audio_player.stream != null):
+				for i in NoteManager.note_nodes:
+					if(i.time < current_pos):
+						i.visible = false
+					else:
+						continue
+				play_music()
