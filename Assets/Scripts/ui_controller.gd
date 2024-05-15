@@ -131,11 +131,13 @@ func _on_song_properties_close_requested() -> void:
 func _on_client_settings_about_to_popup() -> void:
 	client_settings[0].value = GameManager.scroll_speed
 	client_settings[1].value = NoteManager.offset
+	client_settings[2].value = Engine.max_fps
+	client_settings[3].value = OS.low_processor_usage_mode_sleep_usec
 	
 func _on_client_settings_close_requested() -> void:
 	client_settings_panel.visible = false
-	GameManager.scroll_speed = client_settings[0].value
-	NoteManager.offset = client_settings[1].value
+	Engine.max_fps = client_settings[2].value
+	OS.low_processor_usage_mode_sleep_usec = client_settings[3].value
 
 func _on_slider_changed(value : float, slider : int) -> void:
 	var new_db_value : float = value / 100 * 24

@@ -14,7 +14,6 @@ config/name="Demon Forge (A Drums Rock Editor)"
 run/main_scene="res://Assets/Scenes/game_scene.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 run/low_processor_mode=true
-run/low_processor_mode_sleep_usec=2000
 config/icon="res://Assets/icon.svg"
 
 [audio]
@@ -35,6 +34,7 @@ gdscript/warnings/inferred_declaration=1
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/vsync/vsync_mode=0
 
 [input]
 

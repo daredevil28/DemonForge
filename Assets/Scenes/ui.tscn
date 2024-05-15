@@ -35,7 +35,7 @@ use_native_dialog = true
 size = Vector2i(392, 159)
 dialog_hide_on_ok = true
 access = 2
-filters = PackedStringArray("*.json, *.csv")
+filters = PackedStringArray("*.json")
 use_native_dialog = true
 
 [node name="SongFileDialog" type="FileDialog" parent="."]
@@ -57,13 +57,15 @@ offset_bottom = 40.0
 title = "Test"
 size = Vector2i(194, 100)
 hide_on_state_item_selection = true
-item_count = 3
+item_count = 4
 item_0/text = "New project (Ctrl + N)"
 item_0/id = 0
 item_1/text = "Load File(Ctrl + L)"
 item_1/id = 1
 item_2/text = "Save File (Ctrl + S)"
 item_2/id = 2
+item_3/text = "Export Project"
+item_3/id = 3
 
 [node name="Properties" type="PopupMenu" parent="MenuBar"]
 size = Vector2i(151, 100)
@@ -100,16 +102,19 @@ grow_vertical = 2
 [node name="SongName" type="LineEdit" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
 layout_mode = 2
 size_flags_vertical = 3
+tooltip_text = "Name of the song"
 placeholder_text = "Song Name"
 
 [node name="ArtistName" type="LineEdit" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
 layout_mode = 2
 size_flags_vertical = 3
+tooltip_text = "Name of the song artist"
 placeholder_text = "Artist Name"
 
 [node name="Difficulty" type="OptionButton" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
 layout_mode = 2
 size_flags_vertical = 3
+tooltip_text = "Difficulty of the map (affects scroll speed in-game)"
 item_count = 4
 selected = 0
 popup/item_0/text = "Easy"
@@ -124,6 +129,7 @@ popup/item_3/id = 3
 [node name="Map" type="OptionButton" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
 layout_mode = 2
 size_flags_vertical = 3
+tooltip_text = "The map the level is played on"
 item_count = 3
 selected = 0
 popup/item_0/text = "Volcano"
@@ -143,11 +149,13 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+tooltip_text = "Path to the song file (only .ogg is supported)"
 placeholder_text = "Song Location"
 
 [node name="SongSelectFile" type="TextureButton" parent="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
+tooltip_text = "File Select"
 texture_normal = ExtResource("3_m2luq")
 texture_pressed = ExtResource("4_6ftkc")
 texture_hover = ExtResource("5_16p63")
@@ -155,6 +163,7 @@ texture_hover = ExtResource("5_16p63")
 [node name="BPM" type="LineEdit" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
 layout_mode = 2
 size_flags_vertical = 3
+tooltip_text = "The Beats Per Minute of the song"
 placeholder_text = "BPM"
 
 [node name="ClientSettings" type="Window" parent="."]
@@ -243,22 +252,57 @@ text = "Scrollspeed"
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
-max_value = 1000.0
+tooltip_text = "Affects how fast the note goes by"
+max_value = 10000.0
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
+[node name="OffsetContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 2
+size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/OffsetContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "Judgement line offset"
 
-[node name="Offset" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/HBoxContainer2" groups=["ClientSettings"]]
+[node name="Offset" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/OffsetContainer" groups=["ClientSettings"]]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
-max_value = 1000.0
+tooltip_text = "Changes offset of the judgement line in px"
+max_value = 10000.0
+
+[node name="MaxFPSContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/MaxFPSContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Max FPS"
+
+[node name="MaxFPS" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/MaxFPSContainer" groups=["ClientSettings"]]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+tooltip_text = "Max FPS (0 = infinite)"
+max_value = 10000.0
+value = 15.0
+
+[node name="TimeBetweenFramesContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/TimeBetweenFramesContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Time between frames"
+
+[node name="TimeBetweenFrames" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/TimeBetweenFramesContainer" groups=["ClientSettings"]]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+tooltip_text = "The time between frames in microseconds (Lower values mean more FPS but higher power usage)"
+max_value = 100000.0
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
@@ -274,4 +318,4 @@ max_value = 1000.0
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/MusicSlider" to="." method="_on_slider_changed" binds= [1]]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/SFXSlider" to="." method="_on_slider_changed" binds= [2]]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/ScrollSpeedContainer/ScrollSpeed" to="." method="_on_scroll_speed_value_changed"]
-[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/HBoxContainer2/Offset" to="." method="_on_offset_value_changed"]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/OffsetContainer/Offset" to="." method="_on_offset_value_changed"]

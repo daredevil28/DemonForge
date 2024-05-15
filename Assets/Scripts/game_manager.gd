@@ -164,6 +164,9 @@ func save_project(path : String) -> void:
 	file.store_string(json_string)
 	file.close()
 
+func export_project(path : String) -> void:
+	pass
+
 func _process(_delta : float) -> void:
 	if(audio_player.playing):
 		current_pos = audio_player.get_playback_position() + AudioServer.get_time_since_last_mix()
@@ -173,10 +176,10 @@ func _process(_delta : float) -> void:
 	else:
 		cursor_note.visible = true
 		cursor_note.position.y = NoteManager.reset_note_y(cursor_note, current_lane)
-		var note_pos = mouse_snapped_screen_pos(get_viewport().get_mouse_position())
+		var note_pos : Dictionary = mouse_snapped_screen_pos(get_viewport().get_mouse_position())
 		cursor_note.position.x = note_pos["screen_pos"]
 			
-func _input(event):
+func _input(event : InputEvent) -> void:
 	if(event is InputEventMouseButton):
 		var seconds_per_beat : float = 60 / bpm
 		if(current_lane != 0):

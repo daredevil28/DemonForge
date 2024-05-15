@@ -78,8 +78,9 @@ func reset_note_y(instance : Node2D, color : int) -> float:
 
 func reset_collision_location(instance : Node2D, color : int) -> void:
 	instance.position = DisplayServer.window_get_size() / 2
+	@warning_ignore("integer_division")
 	instance.scale.x = DisplayServer.window_get_size().x / 2 / 10
-	instance.scale.y = 0.004 * DisplayServer.window_get_size().y
+	instance.scale.y = 0.0048 * DisplayServer.window_get_size().y
 	match color:
 		1:
 			instance.position.y = 0.55 * DisplayServer.window_get_size().y
@@ -147,7 +148,7 @@ func play_notes(new_time : float) -> void:
 			else:
 				if(i.visible):
 					#Make sure the note is actually close enough to the bar before playing the sound
-					if(i.time >= GameManager.current_pos - 0.02):
+					if(i.time >= GameManager.current_pos - 0.02 || new_pos < offset):
 						i.disable_collision()
 						get_tree().get_nodes_in_group("Instruments")[i.color - 1].play()
 						i.visible = false

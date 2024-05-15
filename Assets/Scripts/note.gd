@@ -21,12 +21,12 @@ func enable_collision() -> void:
 func disable_collision() -> void:
 	collider.disabled = true
 	
-func _on_mouse_shape_entered(id : int):
+func _on_mouse_shape_entered(_id : int) -> void:
 	if(GameManager.current_hovered_note == null):
 		modulate = Color(1,1,1)
 		GameManager.current_hovered_note = self
 
-func _on_mouse_shape_exited(id : int):
+func _on_mouse_shape_exited(_id : int) -> void:
 	if(GameManager.current_hovered_note == self):
 		GameManager.current_hovered_note = null
 	modulate = canvas_color
