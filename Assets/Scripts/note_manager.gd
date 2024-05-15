@@ -12,7 +12,7 @@ var green : Color = Color.GREEN
 @onready var note_lanes : Array = get_tree().get_nodes_in_group("NodeLanes")
 var note_scene : Resource = load("res://Assets/Scenes/note.tscn")
 
-var offset : float = 200 :
+var offset : int = 200 :
 	set(value):
 		offset = value
 		GameManager.redraw_scene()

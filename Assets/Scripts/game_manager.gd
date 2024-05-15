@@ -9,9 +9,11 @@ var artist_name : String = ""
 var difficulty : int = 0
 var map : int = 0
 var custom_songs_folder : String = ""
+var folder_name : String = ""
 var bpm : float = 60.0
 var snapping_frequency : int = 4
 var is_another_window_focused : bool = false #ui_controller.gd -> check_for_window_focused()
+
 
 var current_hovered_note : Note
 var current_selected_note : Note
@@ -132,6 +134,9 @@ func mouse_snapped_screen_pos(pos : Vector2) -> Dictionary:
 	return {"screen_pos": snapped_pos,"time_pos":music_time}
 #endregion
 
+func check_for_errors() -> String:
+	return "Errors go here"
+	
 func save_project(path : String) -> void:
 	var json_data : Dictionary = {
 		"metaData":
@@ -142,7 +147,8 @@ func save_project(path : String) -> void:
 				"difficulty" : difficulty,
 				"map" : map,
 				"songFile" : song_file,
-				"bpm" : bpm
+				"bpm" : bpm,
+				"folderName" : folder_name
 			}
 		],
 		"notes" : 
@@ -164,14 +170,16 @@ func save_project(path : String) -> void:
 	file.store_string(json_string)
 	file.close()
 
-func export_project(path : String) -> void:
+func export_project() -> void:
+	print("Exporting project")
+	#var file : FileAccess = FileAccess.open(path, FileAccess.WRITE)
 	pass
 
 func _process(_delta : float) -> void:
 	if(audio_player.playing):
 		current_pos = audio_player.get_playback_position() + AudioServer.get_time_since_last_mix()
 		
-	if current_lane == 0:
+	if current_lane == 0 || is_another_window_focused:
 		cursor_note.visible = false
 	else:
 		cursor_note.visible = true

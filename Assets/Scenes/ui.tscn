@@ -20,7 +20,7 @@ script = ExtResource("1_hk45x")
 layout_mode = 1
 offset_top = -4.0
 
-[node name="FileDialog" type="FileDialog" parent="."]
+[node name="OpenDialog" type="FileDialog" parent="."]
 title = "Open a File"
 initial_position = 2
 size = Vector2i(500, 300)
@@ -32,7 +32,7 @@ filters = PackedStringArray("*.json, *.csv")
 use_native_dialog = true
 
 [node name="SaveDialog" type="FileDialog" parent="."]
-size = Vector2i(392, 159)
+size = Vector2i(452, 159)
 dialog_hide_on_ok = true
 access = 2
 filters = PackedStringArray("*.json")
@@ -46,6 +46,15 @@ ok_button_text = "Open"
 file_mode = 0
 access = 2
 filters = PackedStringArray("*.ogg")
+use_native_dialog = true
+
+[node name="FolderDialog" type="FileDialog" parent="."]
+title = "Open a Directory"
+position = Vector2i(0, 36)
+size = Vector2i(392, 159)
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
 use_native_dialog = true
 
 [node name="MenuBar" type="MenuBar" parent="."]
@@ -304,9 +313,119 @@ size_flags_vertical = 4
 tooltip_text = "The time between frames in microseconds (Lower values mean more FPS but higher power usage)"
 max_value = 100000.0
 
-[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
+[node name="ExportPanel" type="Window" parent="."]
+initial_position = 1
+size = Vector2i(900, 500)
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="ExportPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.435192, 0.435192, 0.435192, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ExportPanel/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ExportPanel/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "Export"
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="ExportPanel/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.321728, 0.321728, 0.321728, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "Custom song folder location"
+
+[node name="CustomFolderSelect" type="TextureButton" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+texture_normal = ExtResource("3_m2luq")
+texture_pressed = ExtResource("4_6ftkc")
+texture_hover = ExtResource("5_16p63")
+
+[node name="CustomFolderLocation" type="LineEdit" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer" groups=["ExportSettings"]]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Folder name"
+
+[node name="FolderName" type="LineEdit" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer" groups=["ExportSettings"]]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="ExportProjectButton" type="Button" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+text = "Export project"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Issues"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer2/ScrollContainer"]
+layout_mode = 2
+
+[node name="Errors" type="Label" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer" groups=["ExportSettings"]]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 3
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\" \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+autowrap_mode = 2
+
+[connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
 [connection signal="file_selected" from="SongFileDialog" to="." method="_on_song_file_dialog_file_selected"]
+[connection signal="dir_selected" from="FolderDialog" to="." method="_on_folder_dialog_dir_selected"]
 [connection signal="index_pressed" from="MenuBar/File" to="." method="_on_file_index_pressed"]
 [connection signal="index_pressed" from="MenuBar/Properties" to="." method="_on_properties_index_pressed"]
 [connection signal="about_to_popup" from="SongProperties" to="." method="_on_song_properties_about_to_popup"]
@@ -319,3 +438,7 @@ max_value = 100000.0
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/SFXSlider" to="." method="_on_slider_changed" binds= [2]]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/ScrollSpeedContainer/ScrollSpeed" to="." method="_on_scroll_speed_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/OffsetContainer/Offset" to="." method="_on_offset_value_changed"]
+[connection signal="about_to_popup" from="ExportPanel" to="." method="_on_export_panel_about_to_popup"]
+[connection signal="close_requested" from="ExportPanel" to="." method="_on_export_panel_close_requested"]
+[connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer/CustomFolderSelect" to="." method="_on_custom_folder_button_up"]
+[connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/ExportProjectButton" to="." method="_on_export_project_button_up"]

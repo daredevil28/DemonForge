@@ -1,13 +1,16 @@
 extends Control
 
-@onready var file_dialog : FileDialog = $FileDialog
+@onready var open_dialog : FileDialog = $OpenDialog
 @onready var save_dialog : FileDialog = $SaveDialog
 @onready var song_file_dialog : FileDialog = $SongFileDialog
+@onready var folder_dialog : FileDialog = $FolderDialog
 @onready var song_properties_panel : Window = $SongProperties
 @onready var client_settings_panel : Window = $ClientSettings
+@onready var export_panel : Window = $ExportPanel
 @onready var song_properties : Array = get_tree().get_nodes_in_group("SongProperties")
 @onready var volume_sliders : Array = get_tree().get_nodes_in_group("VolumeSliders")
 @onready var client_settings : Array = get_tree().get_nodes_in_group("ClientSettings")
+@onready var export_settings : Array = get_tree().get_nodes_in_group("ExportSettings")
 
 #region MenuBar
 func _on_file_index_pressed(index : int) -> void:
@@ -17,32 +20,32 @@ func _on_file_index_pressed(index : int) -> void:
 			GameManager.clean_project()
 		1:
 			print("Load File")
-			file_dialog.popup()# > _on_file_dialog_file_selected()
+			open_dialog.popup()# > _on_open_dialog_file_selected()
 		2:
 			print("Save File")
 			save_dialog.popup()# > _on_save_dialog_file_selected()
+		3:
+			print("Export project")
+			export_panel.popup()# > _on_open_dialog_file_selected
 
 func _on_properties_index_pressed(index : int) -> void:
 	match index:
 		0:
 			print("Song Properties")
 			if !song_properties_panel.visible:
-				song_properties_panel.popup()
+				song_properties_panel.popup()# > _on_song_properties_about_to_popup
 			else:
 				song_properties_panel.visible = false
 		1:
 			print("Client Options")
 			if !client_settings_panel.visible:
-				client_settings_panel.popup()
+				client_settings_panel.popup()# > _on_client_settings_about_to_popup
 			else:
 				client_settings_panel.visible = false
 #endregion
 
 #region Everything related to files
-func _on_song_select_file_button_up() -> void:
-	song_file_dialog.popup()
-
-func _on_file_dialog_file_selected(path : String) -> void:
+func _on_open_dialog_file_selected(path : String) -> void:
 	var regex : RegEx = RegEx.new()
 	regex.compile("\\.(json|csv)")
 	var result : RegExMatch = regex.search(path)
@@ -57,11 +60,6 @@ func _on_file_dialog_file_selected(path : String) -> void:
 
 func _on_save_dialog_file_selected(path : String) -> void:
 	GameManager.save_project(path)
-
-func _on_song_file_dialog_file_selected(path : String) -> void:
-	GameManager.song_file = path
-	#Song file
-	song_properties[4].text = path
 
 func csv_to_json(csv_file : String) -> Array:
 	#Time,Enemy Type(1normal,2dual,3fat),Color1,Color2,1,Drumroll amount,Aux
@@ -125,6 +123,14 @@ func _on_song_properties_close_requested() -> void:
 	GameManager.song_file = song_properties[4].text
 	GameManager.bpm = float(song_properties[5].text)
 	GameManager.redraw_scene()
+
+func _on_song_file_dialog_file_selected(path : String) -> void:
+	GameManager.song_file = path
+	#Song file
+	song_properties[4].text = path
+	
+func _on_song_select_file_button_up() -> void:
+	song_file_dialog.popup()# > _on_song_file_dialog_file_selected
 #endregion
 	
 #region Client settings panel
@@ -148,14 +154,34 @@ func _on_slider_changed(value : float, slider : int) -> void:
 		AudioServer.set_bus_volume_db(slider,new_db_value-24)
 
 func _on_scroll_speed_value_changed(value : float) -> void:
-	GameManager.scroll_speed = value
+	GameManager.scroll_speed = roundi(value)
 
 func _on_offset_value_changed(value : float) -> void:
-	NoteManager.offset = value
+	NoteManager.offset = roundi(value)
+#endregion
+
+#region Export panel
+func _on_export_panel_about_to_popup() -> void:
+	export_settings[0].text = GameManager.custom_songs_folder
+	export_settings[1].text = GameManager.folder_name
+	export_settings[2].text = GameManager.check_for_errors()
+	
+func _on_export_panel_close_requested() -> void:
+	export_panel.visible = false
+
+func _on_custom_folder_button_up() -> void:
+	folder_dialog.popup()
+	
+func _on_export_project_button_up() -> void:
+	GameManager.export_project()
+
+func _on_folder_dialog_dir_selected(dir : String) -> void:
+	GameManager.custom_songs_folder = dir
+	export_settings[0].text = dir
 #endregion
 
 func check_for_window_focus() -> void:
-	if song_properties_panel.has_focus() || client_settings_panel.has_focus():
+	if song_properties_panel.has_focus() || client_settings_panel.has_focus() || export_panel.has_focus():
 		GameManager.is_another_window_focused = true
 	else:
 		GameManager.is_another_window_focused = false
