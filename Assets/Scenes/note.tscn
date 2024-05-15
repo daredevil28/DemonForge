@@ -8,6 +8,7 @@ outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0r3w7"]
+size = Vector2(32, 32)
 
 [node name="Note" type="Node2D"]
 script = ExtResource("1_pn0ml")
@@ -26,8 +27,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Area2D" type="Area2D" parent="."]
+monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_0r3w7")
-disabled = true
+
+[connection signal="mouse_shape_entered" from="Area2D" to="." method="_on_mouse_shape_entered"]
+[connection signal="mouse_shape_exited" from="Area2D" to="." method="_on_mouse_shape_exited"]

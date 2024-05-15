@@ -1,6 +1,6 @@
 extends Node
 
-var note_nodes : Array = []
+var note_nodes : Array[Note] = []
 
 var yellow : Color = Color.YELLOW
 var red : Color = Color.RED
@@ -9,7 +9,7 @@ var purple : Color = Color.PURPLE
 var blue : Color = Color.BLUE
 var green : Color = Color.GREEN
 
-@onready var note_colliders : Array = get_tree().get_nodes_in_group("NoteColliders")
+@onready var note_lanes : Array = get_tree().get_nodes_in_group("NodeLanes")
 var note_scene : Resource = load("res://Assets/Scenes/note.tscn")
 
 var offset : float = 200 :
@@ -20,8 +20,8 @@ var offset : float = 200 :
 func _ready() -> void:
 	#Reset the notes whenever the window is resized
 	get_viewport().size_changed.connect(reset_note_location)
-	#Reset width
-	for i : Node in note_colliders:
+	#Reset width of colliders
+	for i : Node in note_lanes:
 		reset_collision_location(i, i.note_color)
 	
 #region Note manipulation
@@ -31,12 +31,11 @@ func initialise_notes(json_notes : Array) -> void:
 	
 	for i : int in json_notes.size():
 		var note : Dictionary = json_notes[i]
-		var instance : Node = note_scene.instantiate()
+		var instance : Note = note_scene.instantiate()
 		add_child(instance)
 		
 		instance.time = note["time"]
 		instance.color = note["color"]
-		instance.interval = note["interval"]
 		instance.position.y = reset_note_y(instance, note["color"])
 		instance.visible = false
 		note_nodes.append(instance)
@@ -44,9 +43,9 @@ func initialise_notes(json_notes : Array) -> void:
 	GameManager.audio_length = note_nodes.back().time
 
 func reset_note_location() -> void:
-	for i : Node2D in note_nodes:
+	for i : Note in note_nodes:
 		i.position.y = reset_note_y(i, i.color)
-	for i : Node in note_colliders:
+	for i : Node in note_lanes:
 		reset_collision_location(i, i.note_color)
 	play_notes(GameManager.current_pos)
 	#Redraw the lines in drawer.gd
@@ -56,22 +55,22 @@ func reset_note_y(instance : Node2D, color : int) -> float:
 	var position : float
 	match color:
 			1:
-				instance.modulate = yellow
+				instance.canvas_color = yellow
 				position = 0.55 * DisplayServer.window_get_size().y
 			2:
-				instance.modulate = red
+				instance.canvas_color = red
 				position = 0.45 * DisplayServer.window_get_size().y
 			3:
-				instance.modulate = orange
+				instance.canvas_color = orange
 				position = 0.75 * DisplayServer.window_get_size().y
 			4:
-				instance.modulate = purple
+				instance.canvas_color = purple
 				position = 0.25 * DisplayServer.window_get_size().y
 			5:
-				instance.modulate = blue
+				instance.canvas_color = blue
 				position = 0.65 * DisplayServer.window_get_size().y
 			6:
-				instance.modulate = green
+				instance.canvas_color = green
 				position = 0.35 * DisplayServer.window_get_size().y
 			_:
 				push_warning("No color found")
@@ -98,7 +97,7 @@ func reset_collision_location(instance : Node2D, color : int) -> void:
 			push_warning("No color found")
 
 func add_new_note(time : float, color : int) -> void:
-	var instance : Node = note_scene.instantiate()
+	var instance : Note = note_scene.instantiate()
 	
 	add_child(instance)
 	
@@ -116,7 +115,7 @@ func remove_note_at_time(time : float, color : int) -> void:
 			note_nodes.remove_at(i)
 			break;
 
-func check_if_note_exists(time : float, color : int) -> bool:
+func check_if_note_exists_at_mouse_location(time : float, color : int) -> bool:
 	for i : int in note_nodes.size():
 		if(note_nodes[i].time == time && note_nodes[i].color == color):
 			return true
@@ -124,31 +123,36 @@ func check_if_note_exists(time : float, color : int) -> bool:
 
 func clear_all_notes() -> void:
 	print("clearing all notes")
-	for i : Object in note_nodes:
+	for i : Note in note_nodes:
 		i.free()
 	note_nodes.clear()
 #endregion
 	
 func play_notes(new_time : float) -> void:
 	GameManager.redraw_scene()
-	for i : Node2D in note_nodes:
+	for i : Note in note_nodes:
 		#(NoteTimestamp - TimePassed ) * scroll_speed + offset
 		var new_pos : float = (GameManager.music_time_to_screen_time(i.time) - GameManager.music_time_to_screen_time(new_time)) + offset
 		#Check if the note is outside the frame, hide and skip the iteration if we do
-		if(new_pos > DisplayServer.window_get_size().x + 100 || new_pos < -20):
+		if(new_pos > DisplayServer.window_get_size().x + 20 || new_pos < -20):
 			i.visible = false
+			i.disable_collision()
 			continue
 		if(GameManager.audio_player.playing):
 			if (i.time >= new_time):
-				i.visible = true
+				if(!i.visible):
+					i.visible = true
+					i.enable_collision()
 				i.position.x = new_pos
 			else:
 				if(i.visible):
 					#Make sure the note is actually close enough to the bar before playing the sound
 					if(i.time >= GameManager.current_pos - 0.02):
+						i.disable_collision()
 						get_tree().get_nodes_in_group("Instruments")[i.color - 1].play()
-						print("play audio")
 						i.visible = false
 		else:
 			i.position.x = new_pos
-			i.visible = true
+			if(!i.visible):
+				i.enable_collision()
+				i.visible = true

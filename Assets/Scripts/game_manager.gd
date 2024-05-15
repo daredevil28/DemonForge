@@ -13,6 +13,9 @@ var bpm : float = 60.0
 var snapping_frequency : int = 4
 var is_another_window_focused : bool = false #ui_controller.gd -> check_for_window_focused()
 
+var current_hovered_note : Note
+var current_selected_note : Note
+
 var cursor_note : Node2D #cursor_note.gd -> _ready()
 var current_lane : int
 
@@ -148,7 +151,7 @@ func save_project(path : String) -> void:
 		]
 	}
 	var note_array : Array = []
-	for i : Node2D in NoteManager.note_nodes:
+	for i : Note in NoteManager.note_nodes:
 		var individual_note : Dictionary = {
 		"time" : i.time,	
 		"color" : i.color,
@@ -178,13 +181,14 @@ func _input(event):
 		var seconds_per_beat : float = 60 / bpm
 		if(current_lane != 0):
 			var new_pos : Dictionary = mouse_snapped_screen_pos(get_viewport().get_mouse_position())
-			var note_exists: bool = NoteManager.check_if_note_exists(new_pos["time_pos"], current_lane)
+			var note_exists: bool = NoteManager.check_if_note_exists_at_mouse_location(new_pos["time_pos"], current_lane)
 			if(event.is_action_pressed("LeftClick")):
 				if(!note_exists):
 					NoteManager.add_new_note(new_pos["time_pos"], current_lane)
 			if(event.is_action_pressed("RightClick")):
-				if(note_exists):
-					NoteManager.remove_note_at_time(new_pos["time_pos"], current_lane)
+				if(current_hovered_note != null):
+					NoteManager.remove_note_at_time(current_hovered_note.time, current_hovered_note.color)
+					current_hovered_note = null
 
 		if(event.is_action_pressed("ScrollUp") && !audio_player.playing && !is_another_window_focused):
 			current_pos += seconds_per_beat / snapping_frequency
@@ -204,8 +208,9 @@ func _input(event):
 			current_pos = get_closest_snap_value(current_pos)
 		else:
 			if(audio_player.stream != null):
-				for i in NoteManager.note_nodes:
+				for i : Note in NoteManager.note_nodes:
 					if(i.time < current_pos):
+						i.disable_collision()
 						i.visible = false
 					else:
 						continue
