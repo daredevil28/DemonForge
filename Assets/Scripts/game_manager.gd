@@ -291,7 +291,6 @@ func _input(event : InputEvent) -> void:
 			var note_exists: bool = NoteManager.check_if_note_exists_at_mouse_location(new_pos["time_pos"], current_lane)
 			if(event.is_action_pressed("LeftClick")):
 				if(!note_exists && !NoteManager.check_if_double_note_exists_at_time(new_pos["time_pos"])):
-					print(new_pos["time_pos"])
 					NoteManager.add_new_note(new_pos["time_pos"], current_lane)
 			if(event.is_action_pressed("RightClick")):
 				if(current_hovered_note != null):

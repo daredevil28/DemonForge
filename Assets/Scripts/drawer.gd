@@ -10,7 +10,7 @@ func _draw() -> void:
 	for i in range(1,7):
 		draw_line(Vector2(0,NoteManager.get_note_lane_y(i)),Vector2(DisplayServer.window_get_size().x,NoteManager.get_note_lane_y(i)),line_color,1)
 	var seconds_per_beat : float = 60 / GameManager.bpm / GameManager.snapping_frequency
-	var new_time : float = seconds_per_beat
+	var new_time : float
 	for i : int in range(0,snapped(GameManager.audio_length / seconds_per_beat, 0)):
 		var marker_distance : float = (-GameManager.music_time_to_screen_time(GameManager.current_pos) + GameManager.music_time_to_screen_time(new_time)) + NoteManager.offset
 		if (marker_distance > DisplayServer.window_get_size().x):
