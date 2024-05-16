@@ -12,6 +12,8 @@ extends Control
 @onready var client_settings : Array = get_tree().get_nodes_in_group("ClientSettings")
 @onready var export_settings : Array = get_tree().get_nodes_in_group("ExportSettings")
 
+@onready var song_time_label : Label = $SongTimeLabel
+
 #region MenuBar
 func _on_file_index_pressed(index : int) -> void:
 	match index:
@@ -188,3 +190,4 @@ func check_for_window_focus() -> void:
 		
 func _process(_delta : float) -> void:
 	check_for_window_focus()
+	song_time_label.text = str(round(GameManager.current_pos))

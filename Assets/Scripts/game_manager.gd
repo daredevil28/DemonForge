@@ -179,7 +179,7 @@ func _process(_delta : float) -> void:
 	if(audio_player.playing):
 		current_pos = audio_player.get_playback_position() + AudioServer.get_time_since_last_mix()
 		
-	if current_lane == 0 || is_another_window_focused:
+	if current_lane == 0 || is_another_window_focused || current_hovered_note != null:
 		cursor_note.visible = false
 	else:
 		cursor_note.visible = true

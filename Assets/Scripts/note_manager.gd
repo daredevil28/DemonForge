@@ -36,6 +36,7 @@ func initialise_notes(json_notes : Array) -> void:
 		
 		instance.time = note["time"]
 		instance.color = note["color"]
+		instance.interval = note["interval"]
 		instance.position.y = reset_note_y(instance, note["color"])
 		instance.visible = false
 		note_nodes.append(instance)
