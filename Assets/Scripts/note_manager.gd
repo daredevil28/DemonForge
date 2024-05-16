@@ -55,25 +55,20 @@ func reset_note_location() -> void:
 
 func reset_note_y(instance : Node2D, color : int) -> float:
 	var position : float
+	position = get_note_lane_y(color)
 	match color:
 			1:
 				instance.canvas_color = yellow
-				position = 0.55 * DisplayServer.window_get_size().y
 			2:
 				instance.canvas_color = red
-				position = 0.45 * DisplayServer.window_get_size().y
 			3:
 				instance.canvas_color = orange
-				position = 0.75 * DisplayServer.window_get_size().y
 			4:
 				instance.canvas_color = purple
-				position = 0.25 * DisplayServer.window_get_size().y
 			5:
 				instance.canvas_color = blue
-				position = 0.65 * DisplayServer.window_get_size().y
 			6:
 				instance.canvas_color = green
-				position = 0.35 * DisplayServer.window_get_size().y
 			_:
 				push_warning("No color found")
 	return position
@@ -83,21 +78,24 @@ func reset_collision_location(instance : Node2D, color : int) -> void:
 	@warning_ignore("integer_division")
 	instance.scale.x = DisplayServer.window_get_size().x / 2 / 10
 	instance.scale.y = 0.0048 * DisplayServer.window_get_size().y
-	match color:
+	instance.position.y = get_note_lane_y(color)
+
+func get_note_lane_y(lane : int) -> float:
+	match lane:
 		1:
-			instance.position.y = 0.55 * DisplayServer.window_get_size().y
+			return 0.55 * DisplayServer.window_get_size().y
 		2:
-			instance.position.y = 0.45 * DisplayServer.window_get_size().y
+			return 0.45 * DisplayServer.window_get_size().y
 		3:
-			instance.position.y = 0.75 * DisplayServer.window_get_size().y
+			return 0.75 * DisplayServer.window_get_size().y
 		4:
-			instance.position.y = 0.25 * DisplayServer.window_get_size().y
+			return 0.25 * DisplayServer.window_get_size().y
 		5:
-			instance.position.y = 0.65 * DisplayServer.window_get_size().y
+			return 0.65 * DisplayServer.window_get_size().y
 		6:
-			instance.position.y = 0.35 * DisplayServer.window_get_size().y
+			return 0.35 * DisplayServer.window_get_size().y
 		_:
-			push_warning("No color found")
+			return 0
 
 func add_new_note(time : float, color : int) -> void:
 	var instance : Note = note_scene.instantiate()
