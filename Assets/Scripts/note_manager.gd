@@ -123,6 +123,15 @@ func check_if_note_exists_at_mouse_location(time : float, color : int) -> bool:
 		if(note_nodes[i].time == time && note_nodes[i].color == color):
 			return true
 	return false
+	
+func check_if_double_note_exists_at_time(time : float) -> bool:
+	var note_count : int = 0
+	for note : Note in note_nodes:
+		if(note.time == time):
+				note_count += 1
+		if(note_count >= 2):
+			return true
+	return false
 
 func sort_all_notes() -> void:
 	note_nodes.sort_custom(sort_ascending_time)

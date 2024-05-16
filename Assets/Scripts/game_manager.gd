@@ -191,81 +191,81 @@ func check_for_errors(check_notes : bool) -> String:
 func export_project() -> void:
 	print("Exporting project")
 	var errors : String = check_for_errors(true)
-	#if(errors != ""):
-	#	errors_found.emit(errors)
-	#else:
-	errors_found.emit(errors)
-	var path : String = custom_songs_folder + folder_name
-	print(path)
-	if(DirAccess.dir_exists_absolute(path)):
-		print("Path exists")
+	if(errors != ""):
+		errors_found.emit(errors)
 	else:
-		print("Path don't exist")
-		DirAccess.make_dir_absolute(path)
-	var dir : DirAccess = DirAccess.open(path)
-	print(dir.copy(song_file,path + "/song.ogg"))
-	print(dir.copy(preview_file, path + "./preview.ogg"))
-	
-	#Making info.csv file
-	var info : FileAccess = FileAccess.open(path + "/info.csv",FileAccess.WRITE)
-	info.store_csv_line(PackedStringArray(["Song Name","Author Name","Difficulty","Song Duration in seconds","Song Map"]))
-	info.store_csv_line(PackedStringArray([song_name,artist_name,str(difficulty),roundi(audio_length),str(map)]))
-	
-	NoteManager.sort_all_notes()
-	
-	var notes : FileAccess = FileAccess.open(path + "/notes.csv",FileAccess.WRITE)
-	notes.store_line("Time [s],Enemy Type,Aux Color 1,Aux Color 2,Nº Enemies,interval,Aux")
-	var double_note : bool
-	#Everything below here is adapted from https://github.com/daredevil28/drumsrockmidiparser/blob/main/drumsrockparser.py#L76
-	for i : int in NoteManager.note_nodes.size():
-		var note : Note = NoteManager.note_nodes[i]
-		if(double_note):
-			double_note = false
-			continue
+		errors_found.emit(errors)
+		var path : String = custom_songs_folder + folder_name
+		print(path)
+		if(DirAccess.dir_exists_absolute(path)):
+			print("Path exists")
+		else:
+			print("Path don't exist")
+			DirAccess.make_dir_absolute(path)
+		var dir : DirAccess = DirAccess.open(path)
+		print(dir.copy(song_file,path + "/song.ogg"))
+		print(dir.copy(preview_file, path + "./preview.ogg"))
+		
+		#Making info.csv file
+		var info : FileAccess = FileAccess.open(path + "/info.csv",FileAccess.WRITE)
+		info.store_csv_line(PackedStringArray(["Song Name","Author Name","Difficulty","Song Duration in seconds","Song Map"]))
+		info.store_csv_line(PackedStringArray([song_name,artist_name,str(difficulty),roundi(audio_length),str(map)]))
+		
+		NoteManager.sort_all_notes()
+		
+		var notes : FileAccess = FileAccess.open(path + "/notes.csv",FileAccess.WRITE)
+		notes.store_line("Time [s],Enemy Type,Aux Color 1,Aux Color 2,Nº Enemies,interval,Aux")
+		var double_note : bool
+		#Everything below here is adapted from https://github.com/daredevil28/drumsrockmidiparser/blob/main/drumsrockparser.py#L76
+		for i : int in NoteManager.note_nodes.size():
+			var note : Note = NoteManager.note_nodes[i]
+			if(double_note):
+				double_note = false
+				continue
+				
+			var note_time : String
+			var enemy_type : String = "1"
+			var color_1 : String
+			var color_2 : String
+			var interval : String = ""
+			var aux : String
 			
-		var note_time : String
-		var enemy_type : String = "1"
-		var color_1 : String
-		var color_2 : String
-		var interval : String = ""
-		var aux : String
-		
-		if(note.interval != 0):
-			enemy_type = "3"
-			interval = str(note.interval)
+			if(note.interval != 0):
+				enemy_type = "3"
+				interval = str(note.interval)
+				
+			if(i+1 < NoteManager.note_nodes.size()):
+				if(note.time == NoteManager.note_nodes[i+1].time):
+					double_note = true
+					enemy_type = "2"
+					color_2 = str(NoteManager.note_nodes[i+1].color)
 			
-		if(i+1 < NoteManager.note_nodes.size()):
-			if(note.time == NoteManager.note_nodes[i+1].time):
-				double_note = true
-				enemy_type = "2"
-				color_2 = str(NoteManager.note_nodes[i+1].color)
-		
-		note_time = str(note.time)
-		color_1 = str(note.color)
-		
-		if(!double_note):
-			color_2 = color_1
-		
-		if(int(color_2) < int(color_1)):
-			var temp : String = color_1
-			color_1 = color_2
-			color_2 = temp
+			note_time = str(note.time)
+			color_1 = str(note.color)
+			
+			if(!double_note):
+				color_2 = color_1
+			
+			if(int(color_2) < int(color_1)):
+				var temp : String = color_1
+				color_1 = color_2
+				color_2 = temp
 
-		match color_1:
-			"2":
-				aux = "7"
-			"1":
-				aux = "6"
-			"5":
-				aux = "5"
-			"3":
-				aux = "5"
-			"6":
-				aux = "8"
-			"4":
-				aux = "8"
+			match color_1:
+				"2":
+					aux = "7"
+				"1":
+					aux = "6"
+				"5":
+					aux = "5"
+				"3":
+					aux = "5"
+				"6":
+					aux = "8"
+				"4":
+					aux = "8"
 
-		notes.store_csv_line(PackedStringArray([note_time,enemy_type,color_1,color_2,"1",interval,aux]))
+			notes.store_csv_line(PackedStringArray([note_time,enemy_type,color_1,color_2,"1",interval,aux]))
 
 
 func _process(_delta : float) -> void:
@@ -275,10 +275,13 @@ func _process(_delta : float) -> void:
 	if current_lane == 0 || is_another_window_focused || current_hovered_note != null:
 		cursor_note.visible = false
 	else:
-		cursor_note.visible = true
 		cursor_note.position.y = NoteManager.reset_note_y(cursor_note, current_lane)
 		var note_pos : Dictionary = mouse_snapped_screen_pos(get_viewport().get_mouse_position())
-		cursor_note.position.x = note_pos["screen_pos"]
+		if(!NoteManager.check_if_double_note_exists_at_time(note_pos["time_pos"])):
+			cursor_note.visible = true
+			cursor_note.position.x = note_pos["screen_pos"]
+		else:
+			cursor_note.visible = false
 
 func _input(event : InputEvent) -> void:
 	if(event is InputEventMouseButton):
@@ -287,7 +290,8 @@ func _input(event : InputEvent) -> void:
 			var new_pos : Dictionary = mouse_snapped_screen_pos(get_viewport().get_mouse_position())
 			var note_exists: bool = NoteManager.check_if_note_exists_at_mouse_location(new_pos["time_pos"], current_lane)
 			if(event.is_action_pressed("LeftClick")):
-				if(!note_exists):
+				if(!note_exists && !NoteManager.check_if_double_note_exists_at_time(new_pos["time_pos"])):
+					print(new_pos["time_pos"])
 					NoteManager.add_new_note(new_pos["time_pos"], current_lane)
 			if(event.is_action_pressed("RightClick")):
 				if(current_hovered_note != null):
