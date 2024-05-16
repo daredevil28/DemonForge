@@ -11,15 +11,17 @@ var map : int = 0
 var custom_songs_folder : String = ""
 var folder_name : String = ""
 var bpm : float = 60.0
+var preview_file : String = ""
 var snapping_frequency : int = 4
 var is_another_window_focused : bool = false #ui_controller.gd -> check_for_window_focused()
-
 
 var current_hovered_note : Note
 var current_selected_note : Note
 
 var cursor_note : Node2D #cursor_note.gd -> _ready()
 var current_lane : int
+
+signal errors_found(errors : String)
 
 #region Getter/Setters
 var scroll_speed : int = 50 :
@@ -67,7 +69,9 @@ func setup_project(jsonString : Dictionary) -> void:
 	difficulty = metadata["difficulty"]
 	map = metadata["map"]
 	song_file = metadata["songFile"]
+	preview_file = metadata["previewFile"]
 	bpm = metadata["bpm"]
+	folder_name = metadata["folderName"]
 
 	NoteManager.initialise_notes(jsonString["notes"])
 	current_pos = 0
@@ -87,7 +91,7 @@ func clean_project() -> void:
 	difficulty = 0
 	map = 0
 	song_file = ""
-	custom_songs_folder = ""
+	preview_file = ""
 	bpm = 60.0
 
 	current_pos = 0
@@ -134,9 +138,6 @@ func mouse_snapped_screen_pos(pos : Vector2) -> Dictionary:
 	return {"screen_pos": snapped_pos,"time_pos":music_time}
 #endregion
 
-func check_for_errors() -> String:
-	return "Errors go here"
-	
 func save_project(path : String) -> void:
 	var json_data : Dictionary = {
 		"metaData":
@@ -147,6 +148,7 @@ func save_project(path : String) -> void:
 				"difficulty" : difficulty,
 				"map" : map,
 				"songFile" : song_file,
+				"previewFile" : preview_file,
 				"bpm" : bpm,
 				"folderName" : folder_name
 			}
@@ -170,10 +172,101 @@ func save_project(path : String) -> void:
 	file.store_string(json_string)
 	file.close()
 
+func check_for_errors(check_notes : bool) -> String:
+	var errors : String = ""
+	if(song_name == ""):
+		errors += "No song name set\n"
+	if(artist_name == ""):
+		errors += "Artist name not set\n"
+	if(song_file == ""):
+		errors += "No song file specified\n"
+	if(preview_file == ""):
+		errors += "No preview file specified\n"
+	if(folder_name == ""):
+		errors += "Folder name not specified\n"
+	if(custom_songs_folder == ""):
+		errors += "Custom songs folder not set\n"
+	return errors
+
 func export_project() -> void:
 	print("Exporting project")
-	#var file : FileAccess = FileAccess.open(path, FileAccess.WRITE)
-	pass
+	var errors : String = check_for_errors(true)
+	#if(errors != ""):
+	#	errors_found.emit(errors)
+	#else:
+	errors_found.emit(errors)
+	var path : String = custom_songs_folder + folder_name
+	print(path)
+	if(DirAccess.dir_exists_absolute(path)):
+		print("Path exists")
+	else:
+		print("Path don't exist")
+		DirAccess.make_dir_absolute(path)
+	var dir : DirAccess = DirAccess.open(path)
+	print(dir.copy(song_file,path + "/song.ogg"))
+	print(dir.copy(preview_file, path + "./preview.ogg"))
+	
+	#Making info.csv file
+	var info : FileAccess = FileAccess.open(path + "/info.csv",FileAccess.WRITE)
+	info.store_csv_line(PackedStringArray(["Song Name","Author Name","Difficulty","Song Duration in seconds","Song Map"]))
+	info.store_csv_line(PackedStringArray([song_name,artist_name,str(difficulty),roundi(audio_length),str(map)]))
+	
+	NoteManager.sort_all_notes()
+	
+	var notes : FileAccess = FileAccess.open(path + "/notes.csv",FileAccess.WRITE)
+	notes.store_line("Time [s],Enemy Type,Aux Color 1,Aux Color 2,Nº Enemies,interval,Aux")
+	var double_note : bool
+	#Everything below here is adapted from https://github.com/daredevil28/drumsrockmidiparser/blob/main/drumsrockparser.py#L76
+	for i : int in NoteManager.note_nodes.size():
+		var note : Note = NoteManager.note_nodes[i]
+		if(double_note):
+			double_note = false
+			continue
+			
+		var note_time : String
+		var enemy_type : String = "1"
+		var color_1 : String
+		var color_2 : String
+		var interval : String = ""
+		var aux : String
+		
+		if(note.interval != 0):
+			enemy_type = "3"
+			interval = str(note.interval)
+			
+		if(i+1 < NoteManager.note_nodes.size()):
+			if(note.time == NoteManager.note_nodes[i+1].time):
+				double_note = true
+				enemy_type = "2"
+				color_2 = str(NoteManager.note_nodes[i+1].color)
+		
+		note_time = str(note.time)
+		color_1 = str(note.color)
+		
+		if(!double_note):
+			color_2 = color_1
+		
+		if(int(color_2) < int(color_1)):
+			var temp : String = color_1
+			color_1 = color_2
+			color_2 = temp
+
+		match color_1:
+			"2":
+				aux = "7"
+			"1":
+				aux = "6"
+			"5":
+				aux = "5"
+			"3":
+				aux = "5"
+			"6":
+				aux = "8"
+			"4":
+				aux = "8"
+
+		notes.store_csv_line(PackedStringArray([note_time,enemy_type,color_1,color_2,"1",interval,aux]))
+
 
 func _process(_delta : float) -> void:
 	if(audio_player.playing):
@@ -186,7 +279,7 @@ func _process(_delta : float) -> void:
 		cursor_note.position.y = NoteManager.reset_note_y(cursor_note, current_lane)
 		var note_pos : Dictionary = mouse_snapped_screen_pos(get_viewport().get_mouse_position())
 		cursor_note.position.x = note_pos["screen_pos"]
-			
+
 func _input(event : InputEvent) -> void:
 	if(event is InputEventMouseButton):
 		var seconds_per_beat : float = 60 / bpm

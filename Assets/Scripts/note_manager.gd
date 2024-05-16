@@ -41,7 +41,8 @@ func initialise_notes(json_notes : Array) -> void:
 		instance.visible = false
 		note_nodes.append(instance)
 	GameManager.current_pos = 0
-	GameManager.audio_length = note_nodes.back().time
+	if(!note_nodes.is_empty()):
+		GameManager.audio_length = note_nodes.back().time
 
 func reset_note_location() -> void:
 	for i : Note in note_nodes:
@@ -123,6 +124,15 @@ func check_if_note_exists_at_mouse_location(time : float, color : int) -> bool:
 			return true
 	return false
 
+func sort_all_notes() -> void:
+	note_nodes.sort_custom(sort_ascending_time)
+	pass
+
+func sort_ascending_time(a : Note, b : Note) -> bool:
+	if(a["time"] < b["time"]):
+		return true
+	return false
+	
 func clear_all_notes() -> void:
 	print("clearing all notes")
 	for i : Note in note_nodes:

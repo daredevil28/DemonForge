@@ -3,6 +3,7 @@ extends Control
 @onready var open_dialog : FileDialog = $OpenDialog
 @onready var save_dialog : FileDialog = $SaveDialog
 @onready var song_file_dialog : FileDialog = $SongFileDialog
+@onready var preview_file_dialog : FileDialog = $PreviewFileDialog
 @onready var folder_dialog : FileDialog = $FolderDialog
 @onready var song_properties_panel : Window = $SongProperties
 @onready var client_settings_panel : Window = $ClientSettings
@@ -107,7 +108,8 @@ func _on_song_properties_about_to_popup() -> void:
 	song_properties[3].selected = GameManager.map
 	#Path for the song file
 	song_properties[4].text = GameManager.song_file
-	song_properties[5].text = str(GameManager.bpm)
+	song_properties[5].text = GameManager.preview_file
+	song_properties[6].text = str(GameManager.bpm)
 	
 func _on_song_properties_close_requested() -> void:
 	song_properties_panel.visible = false
@@ -123,16 +125,24 @@ func _on_song_properties_close_requested() -> void:
 	GameManager.map = song_properties[3].selected
 	#Path for the song file
 	GameManager.song_file = song_properties[4].text
-	GameManager.bpm = float(song_properties[5].text)
+	GameManager.preview_file = song_properties[5].text
+	GameManager.bpm = float(song_properties[6].text)
 	GameManager.redraw_scene()
+
+func _on_song_select_file_button_up() -> void:
+	song_file_dialog.popup()# > _on_song_file_dialog_file_selected
 
 func _on_song_file_dialog_file_selected(path : String) -> void:
 	GameManager.song_file = path
 	#Song file
 	song_properties[4].text = path
 	
-func _on_song_select_file_button_up() -> void:
-	song_file_dialog.popup()# > _on_song_file_dialog_file_selected
+func _on_preview_select_file_button_up() -> void:
+	preview_file_dialog.popup()
+	
+func _on_preview_file_dialog_file_selected(path: String) -> void:
+	GameManager.preview_file = path
+	song_properties[5].text = path
 #endregion
 	
 #region Client settings panel
@@ -166,7 +176,7 @@ func _on_offset_value_changed(value : float) -> void:
 func _on_export_panel_about_to_popup() -> void:
 	export_settings[0].text = GameManager.custom_songs_folder
 	export_settings[1].text = GameManager.folder_name
-	export_settings[2].text = GameManager.check_for_errors()
+	export_settings[2].text = GameManager.check_for_errors(true)
 	
 func _on_export_panel_close_requested() -> void:
 	export_panel.visible = false
@@ -177,9 +187,12 @@ func _on_custom_folder_button_up() -> void:
 func _on_export_project_button_up() -> void:
 	GameManager.export_project()
 
-func _on_folder_dialog_dir_selected(dir : String) -> void:
+func _on_folder_dialog_dir_selected(dir : String) -> void:# Connects to both the texturebutton and the lineEdit button
 	GameManager.custom_songs_folder = dir
 	export_settings[0].text = dir
+	
+func _on_folder_name_text_changed(new_text : String) -> void:
+	GameManager.folder_name = 	"/"+new_text
 #endregion
 
 func check_for_window_focus() -> void:

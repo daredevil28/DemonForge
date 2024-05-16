@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdd5so8gpgl0q"]
+[gd_scene load_steps=7 format=3 uid="uid://cdd5so8gpgl0q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ui_controller.gd" id="1_hk45x"]
 [ext_resource type="PackedScene" uid="uid://bxv46rdbd272o" path="res://Assets/Scenes/progress_bar.tscn" id="2_t6ae7"]
 [ext_resource type="Texture2D" uid="uid://cskljke58e2fj" path="res://Assets/Sprites/FolderIcon.png" id="3_m2luq"]
 [ext_resource type="Texture2D" uid="uid://cxqqsd1lraejc" path="res://Assets/Sprites/FolderIconPressed.png" id="4_6ftkc"]
 [ext_resource type="Texture2D" uid="uid://cse04ob740oo4" path="res://Assets/Sprites/FolderIconHover.png" id="5_16p63"]
+[ext_resource type="Script" path="res://Assets/Scripts/errors_label.gd" id="6_hsjtr"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -39,6 +40,16 @@ filters = PackedStringArray("*.json")
 use_native_dialog = true
 
 [node name="SongFileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+position = Vector2i(0, 36)
+size = Vector2i(335, 159)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.ogg")
+use_native_dialog = true
+
+[node name="PreviewFileDialog" type="FileDialog" parent="."]
 title = "Open a File"
 position = Vector2i(0, 36)
 size = Vector2i(335, 159)
@@ -162,6 +173,27 @@ tooltip_text = "Path to the song file (only .ogg is supported)"
 placeholder_text = "Song Location"
 
 [node name="SongSelectFile" type="TextureButton" parent="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "File Select"
+texture_normal = ExtResource("3_m2luq")
+texture_pressed = ExtResource("4_6ftkc")
+texture_hover = ExtResource("5_16p63")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="SongProperties/ColorRect/SongPropertiesValues"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="PreviewLocation" type="LineEdit" parent="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer2" groups=["SongProperties"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tooltip_text = "Path to the song file (only .ogg is supported)"
+placeholder_text = "Preview file location"
+
+[node name="PreviewSelectFile" type="TextureButton" parent="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "File Select"
@@ -419,8 +451,10 @@ layout_mode = 2
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_font_sizes/font_size = 32
 text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\" \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
 autowrap_mode = 2
+script = ExtResource("6_hsjtr")
 
 [node name="SongTimeLabel" type="Label" parent="."]
 layout_mode = 1
@@ -438,12 +472,14 @@ text = "1000"
 [connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
 [connection signal="file_selected" from="SongFileDialog" to="." method="_on_song_file_dialog_file_selected"]
+[connection signal="file_selected" from="PreviewFileDialog" to="." method="_on_preview_file_dialog_file_selected"]
 [connection signal="dir_selected" from="FolderDialog" to="." method="_on_folder_dialog_dir_selected"]
 [connection signal="index_pressed" from="MenuBar/File" to="." method="_on_file_index_pressed"]
 [connection signal="index_pressed" from="MenuBar/Properties" to="." method="_on_properties_index_pressed"]
 [connection signal="about_to_popup" from="SongProperties" to="." method="_on_song_properties_about_to_popup"]
 [connection signal="close_requested" from="SongProperties" to="." method="_on_song_properties_close_requested"]
 [connection signal="button_up" from="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer/SongSelectFile" to="." method="_on_song_select_file_button_up"]
+[connection signal="button_up" from="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer2/PreviewSelectFile" to="." method="_on_preview_select_file_button_up"]
 [connection signal="about_to_popup" from="ClientSettings" to="." method="_on_client_settings_about_to_popup"]
 [connection signal="close_requested" from="ClientSettings" to="." method="_on_client_settings_close_requested"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/MasterSlider" to="." method="_on_slider_changed" binds= [0]]
@@ -454,4 +490,6 @@ text = "1000"
 [connection signal="about_to_popup" from="ExportPanel" to="." method="_on_export_panel_about_to_popup"]
 [connection signal="close_requested" from="ExportPanel" to="." method="_on_export_panel_close_requested"]
 [connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer/CustomFolderSelect" to="." method="_on_custom_folder_button_up"]
+[connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/CustomFolderLocation" to="." method="_on_folder_dialog_dir_selected"]
+[connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/FolderName" to="." method="_on_folder_name_text_changed"]
 [connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/ExportProjectButton" to="." method="_on_export_project_button_up"]
