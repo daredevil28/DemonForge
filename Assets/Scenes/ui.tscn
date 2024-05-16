@@ -329,6 +329,22 @@ tooltip_text = "Max FPS (0 = infinite)"
 max_value = 10000.0
 value = 15.0
 
+[node name="SnappingFrequencyContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/SnappingFrequencyContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Snapping frequency"
+
+[node name="SnappingFrequency" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/SnappingFrequencyContainer" groups=["ClientSettings"]]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+tooltip_text = "Amount of lines between each bar, increases snapping"
+max_value = 64.0
+
 [node name="TimeBetweenFramesContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
@@ -487,6 +503,7 @@ text = "1000"
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/SFXSlider" to="." method="_on_slider_changed" binds= [2]]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/ScrollSpeedContainer/ScrollSpeed" to="." method="_on_scroll_speed_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/OffsetContainer/Offset" to="." method="_on_offset_value_changed"]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/SnappingFrequencyContainer/SnappingFrequency" to="." method="_on_snapping_frequency_value_changed"]
 [connection signal="about_to_popup" from="ExportPanel" to="." method="_on_export_panel_about_to_popup"]
 [connection signal="close_requested" from="ExportPanel" to="." method="_on_export_panel_close_requested"]
 [connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer/CustomFolderSelect" to="." method="_on_custom_folder_button_up"]

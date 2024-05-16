@@ -121,7 +121,7 @@ func screen_time_to_music_time(location : float) -> float:
 	return location / DisplayServer.window_get_size().x * audio_length / GameManager.scroll_speed
 
 func get_closest_snap_value(original_pos : float) -> float:
-	var seconds_per_beat : float = 60 / bpm / snapping_frequency
+	var seconds_per_beat : float = 60 / bpm / snapping_frequency * 2
 	var before_snap : float = floorf((original_pos-seconds_per_beat / snapping_frequency) / seconds_per_beat) * seconds_per_beat
 	var ahead_snap : float = before_snap + seconds_per_beat
 	
@@ -285,7 +285,7 @@ func _process(_delta : float) -> void:
 
 func _input(event : InputEvent) -> void:
 	if(event is InputEventMouseButton):
-		var seconds_per_beat : float = 60 / bpm
+		var seconds_per_beat : float = 60 / bpm * 2
 		if(current_lane != 0):
 			var new_pos : Dictionary = mouse_snapped_screen_pos(get_viewport().get_mouse_position())
 			var note_exists: bool = NoteManager.check_if_note_exists_at_mouse_location(new_pos["time_pos"], current_lane)

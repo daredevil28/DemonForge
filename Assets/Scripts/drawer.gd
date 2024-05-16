@@ -26,4 +26,4 @@ func _draw() -> void:
 			line_color = Color.ANTIQUE_WHITE
 			line_thickness = 2
 		draw_line(Vector2(marker_distance,top_point),Vector2(marker_distance,bottom_point),line_color,line_thickness)
-		new_time = new_time + seconds_per_beat
+		new_time = new_time + seconds_per_beat * 2

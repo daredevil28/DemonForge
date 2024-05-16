@@ -150,7 +150,8 @@ func _on_client_settings_about_to_popup() -> void:
 	client_settings[0].value = GameManager.scroll_speed
 	client_settings[1].value = NoteManager.offset
 	client_settings[2].value = Engine.max_fps
-	client_settings[3].value = OS.low_processor_usage_mode_sleep_usec
+	client_settings[3].value = GameManager.snapping_frequency
+	client_settings[4].value = OS.low_processor_usage_mode_sleep_usec
 	
 func _on_client_settings_close_requested() -> void:
 	client_settings_panel.visible = false
@@ -170,6 +171,11 @@ func _on_scroll_speed_value_changed(value : float) -> void:
 
 func _on_offset_value_changed(value : float) -> void:
 	NoteManager.offset = roundi(value)
+	
+func _on_snapping_frequency_value_changed(value: float) -> void:
+	print(value)
+	GameManager.snapping_frequency = roundi(value)
+	GameManager.redraw_scene()
 #endregion
 
 #region Export panel
