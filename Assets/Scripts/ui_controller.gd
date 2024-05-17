@@ -162,8 +162,6 @@ func _on_client_settings_about_to_popup() -> void:
 	
 func _on_client_settings_close_requested() -> void:
 	client_settings_panel.visible = false
-	Engine.max_fps = client_settings[2].value
-	OS.low_processor_usage_mode_sleep_usec = client_settings[3].value
 
 func _on_slider_changed(value : float, slider : int) -> void:
 	var new_db_value : float = value / 100 * 24
@@ -175,6 +173,9 @@ func _on_slider_changed(value : float, slider : int) -> void:
 
 func _on_scroll_speed_value_changed(value : float) -> void:
 	GameManager.scroll_speed = roundi(value)
+	
+func _on_max_fps_value_changed(value: float) -> void:
+	Engine.max_fps = client_settings[2].value
 
 func _on_offset_value_changed(value : float) -> void:
 	NoteManager.offset = roundi(value)
@@ -183,6 +184,9 @@ func _on_snapping_frequency_value_changed(value: float) -> void:
 	print(value)
 	GameManager.snapping_frequency = roundi(value)
 	GameManager.redraw_scene()
+	
+func _on_time_between_frames_value_changed(value: float) -> void:
+	OS.low_processor_usage_mode_sleep_usec = value
 #endregion
 
 #region Export panel
