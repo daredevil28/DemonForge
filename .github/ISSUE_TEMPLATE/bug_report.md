@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Found a bug? Report it here
 title: ''
 labels: bug
 assignees: daredevil28
