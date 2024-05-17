@@ -27,7 +27,7 @@ Download the .exe from releases and run it, no further configuration required
 - [x] Support other timing signatures
 - [ ] Support dynamic time signatures and bpm
 - [ ] Set preview time stamp and length
-- [ ] Export project to the custom songs folder
+- [x] Export project to the custom songs folder
 
 # Possible future features
 

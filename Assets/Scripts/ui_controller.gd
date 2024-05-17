@@ -12,8 +12,15 @@ extends Control
 @onready var volume_sliders : Array = get_tree().get_nodes_in_group("VolumeSliders")
 @onready var client_settings : Array = get_tree().get_nodes_in_group("ClientSettings")
 @onready var export_settings : Array = get_tree().get_nodes_in_group("ExportSettings")
-
+@onready var note_settings : Array = get_tree().get_nodes_in_group("NoteSettings")
+@onready var note_settings_panel : Control = $NoteSettings
 @onready var song_time_label : Label = $SongTimeLabel
+
+var selected_note : Note
+
+func _ready():
+	GameManager.note_selected.connect(_on_note_selected)
+	GameManager.note_deselected.connect(_on_note_deselected)
 
 #region MenuBar
 func _on_file_index_pressed(index : int) -> void:
@@ -201,8 +208,30 @@ func _on_folder_name_text_changed(new_text : String) -> void:
 	GameManager.folder_name = 	"/"+new_text
 #endregion
 
+#region Note settings panel
+var note_settings_focused : bool = false
+func _on_note_interval_mouse_entered() -> void:
+	note_settings_focused = true
+	
+func _on_note_interval_mouse_exited() -> void:
+	note_settings_focused = false
+	
+func _on_spin_box_value_changed(value: float) -> void:
+	if(selected_note != null):
+		selected_note.interval = value
+
+func _on_note_selected(note : Note) -> void:
+	selected_note = note
+	note_settings[0].value = selected_note.interval
+	note_settings_panel.visible = true
+
+func _on_note_deselected(note : Note) -> void:
+	note_settings_panel.visible = false
+	selected_note = null
+#endregion
+
 func check_for_window_focus() -> void:
-	if song_properties_panel.has_focus() || client_settings_panel.has_focus() || export_panel.has_focus():
+	if song_properties_panel.has_focus() || client_settings_panel.has_focus() || export_panel.has_focus() || note_settings_focused:
 		GameManager.is_another_window_focused = true
 	else:
 		GameManager.is_another_window_focused = false

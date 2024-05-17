@@ -485,6 +485,58 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "1000"
 
+[node name="NoteSettings" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -220.0
+offset_right = 147.0
+offset_bottom = -120.0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NoteSettings"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="NoteSettings/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+color = Color(0.0885599, 0.0885599, 0.0885599, 1)
+
+[node name="Label" type="Label" parent="NoteSettings/VBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.0
+offset_top = -11.5
+offset_right = 52.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Note Settings"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="NoteSettings/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="NoteSettings/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Interval"
+
+[node name="NoteInterval" type="SpinBox" parent="NoteSettings/VBoxContainer/HBoxContainer" groups=["NoteSettings"]]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
 [connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
 [connection signal="file_selected" from="SongFileDialog" to="." method="_on_song_file_dialog_file_selected"]
@@ -510,3 +562,8 @@ text = "1000"
 [connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/CustomFolderLocation" to="." method="_on_folder_dialog_dir_selected"]
 [connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/FolderName" to="." method="_on_folder_name_text_changed"]
 [connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/ExportProjectButton" to="." method="_on_export_project_button_up"]
+[connection signal="focus_entered" from="NoteSettings/VBoxContainer/HBoxContainer/NoteInterval" to="." method="_on_spin_box_focus_entered"]
+[connection signal="focus_exited" from="NoteSettings/VBoxContainer/HBoxContainer/NoteInterval" to="." method="_on_spin_box_focus_exited"]
+[connection signal="mouse_entered" from="NoteSettings/VBoxContainer/HBoxContainer/NoteInterval" to="." method="_on_note_interval_mouse_entered"]
+[connection signal="mouse_exited" from="NoteSettings/VBoxContainer/HBoxContainer/NoteInterval" to="." method="_on_note_interval_mouse_exited"]
+[connection signal="value_changed" from="NoteSettings/VBoxContainer/HBoxContainer/NoteInterval" to="." method="_on_spin_box_value_changed"]
