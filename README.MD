@@ -1,6 +1,6 @@
 # Demon Forge; A Drums Rock Editor
 
-A custom song editor for Drums Rock that currently is more of a visualizer than an editor
+A custom song editor for Drums Rock that supports editing and previewing charts.
 
 # Installation
 
