@@ -1,3 +1,4 @@
+#Singleton for managing anything related to notes
 extends Node
 
 var note_nodes : Array[Note] = []

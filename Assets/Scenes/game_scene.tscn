@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://dl3tnd05upukf" path="res://Assets/DrumKit/TomLow.wav" id="8_f62j3"]
 [ext_resource type="AudioStream" uid="uid://c4p1y72ti8ebf" path="res://Assets/DrumKit/CrashL.wav" id="9_3opps"]
 [ext_resource type="PackedScene" uid="uid://dnoutqfa7vh6h" path="res://Assets/Scenes/note_lane.tscn" id="9_52jsw"]
-[ext_resource type="Script" path="res://Assets/Scenes/metronome.gd" id="9_kp416"]
+[ext_resource type="Script" path="res://Assets/Scripts/metronome.gd" id="9_kp416"]
 [ext_resource type="Script" path="res://Assets/Scripts/cursor_note.gd" id="10_2cfoa"]
 [ext_resource type="AudioStream" uid="uid://btxvms6cg5ity" path="res://Assets/DrumKit/MetronomeLow.wav" id="10_3137b"]
 [ext_resource type="Texture2D" uid="uid://pokip0nsccq2" path="res://Assets/Sprites/Notes.png" id="10_b56au"]

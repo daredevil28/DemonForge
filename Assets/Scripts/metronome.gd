@@ -17,4 +17,8 @@ func _process(_delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if(event.is_action_pressed("ToggleMetronome")):
+		if(metronome_enabled == true):
+			Global.notification_popup.play_notification("Metronome is now disabled.")
+		if(metronome_enabled == false):
+			Global.notification_popup.play_notification("Metronome is now enabled.")
 		metronome_enabled = !metronome_enabled

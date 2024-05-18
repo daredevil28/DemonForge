@@ -1,5 +1,6 @@
 extends Control
 
+
 @onready var open_dialog : FileDialog = $OpenDialog
 @onready var save_dialog : FileDialog = $SaveDialog
 @onready var song_file_dialog : FileDialog = $SongFileDialog
@@ -15,6 +16,7 @@ extends Control
 @onready var note_settings : Array = get_tree().get_nodes_in_group("NoteSettings")
 @onready var note_settings_panel : Control = $NoteSettings
 @onready var song_time_label : Label = $SongTimeLabel
+@onready var notification_popup : Control = $NotificationContainer
 
 var selected_note : Note
 
@@ -239,7 +241,10 @@ func check_for_window_focus() -> void:
 		GameManager.is_another_window_focused = true
 	else:
 		GameManager.is_another_window_focused = false
-		
+
+func _on_notification_popup(text : String) -> void:
+	notification_popup.reset_notification(text)
+
 func _process(_delta : float) -> void:
 	check_for_window_focus()
 	song_time_label.text = str(round(GameManager.current_pos))

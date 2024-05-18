@@ -24,6 +24,7 @@ buses/default_bus_layout="res://Assets/default_bus_layout.tres"
 
 GameManager="*res://Assets/Scripts/game_manager.gd"
 NoteManager="*res://Assets/Scripts/note_manager.gd"
+Global="*res://Assets/Scripts/global.gd"
 
 [debug]
 

@@ -1,3 +1,4 @@
+#Singleton for managing everything related to the game
 extends Node
 
 var audio_player : AudioStreamPlayer
@@ -284,7 +285,6 @@ func export_project() -> void:
 					aux = "8"
 
 			notes.store_csv_line(PackedStringArray([note_time,enemy_type,color_1,color_2,"1",interval,aux]))
-
 
 func _process(_delta : float) -> void:
 	if(audio_player.playing):

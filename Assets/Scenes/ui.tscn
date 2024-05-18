@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cdd5so8gpgl0q"]
+[gd_scene load_steps=9 format=3 uid="uid://cdd5so8gpgl0q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ui_controller.gd" id="1_hk45x"]
 [ext_resource type="PackedScene" uid="uid://bxv46rdbd272o" path="res://Assets/Scenes/progress_bar.tscn" id="2_t6ae7"]
@@ -6,6 +6,25 @@
 [ext_resource type="Texture2D" uid="uid://cxqqsd1lraejc" path="res://Assets/Sprites/FolderIconPressed.png" id="4_6ftkc"]
 [ext_resource type="Texture2D" uid="uid://cse04ob740oo4" path="res://Assets/Sprites/FolderIconHover.png" id="5_16p63"]
 [ext_resource type="Script" path="res://Assets/Scripts/errors_label.gd" id="6_hsjtr"]
+[ext_resource type="Script" path="res://Assets/Scripts/popup_notification.gd" id="7_bt6ck"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hp2c"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.137255, 0.137255, 0.137255, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 16
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -491,9 +510,8 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -220.0
+offset_top = -100.0
 offset_right = 147.0
-offset_bottom = -120.0
 grow_vertical = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="NoteSettings"]
@@ -536,6 +554,22 @@ text = "Interval"
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
+
+[node name="NotificationContainer" type="PanelContainer" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -49.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0hp2c")
+script = ExtResource("7_bt6ck")
+
+[node name="NotificationLabel" type="Label" parent="NotificationContainer"]
+layout_mode = 2
+text = "Lorem ipsum doloses de bora"
 
 [connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
