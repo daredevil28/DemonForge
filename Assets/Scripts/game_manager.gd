@@ -26,6 +26,22 @@ signal note_selected(note : Note)
 signal note_deselected(note : Note)
 
 #region Getter/Setters
+var seconds_per_measure : float :
+	get:
+		return 60 / (bpm / snapping_frequency)
+
+var seconds_per_beat : float :
+	get:
+		return seconds_per_measure / snapping_frequency
+		
+var current_beat : int :
+	get:
+		return current_pos / seconds_per_beat
+
+var current_measure : int :
+	get:
+		return current_beat / 4
+
 var scroll_speed : int = 50 :
 	set(value):
 		scroll_speed = value
@@ -163,7 +179,7 @@ func save_project(path : String) -> void:
 	var note_array : Array = []
 	for i : Note in NoteManager.note_nodes:
 		var individual_note : Dictionary = {
-		"time" : i.time,	
+		"time" : i.time,
 		"color" : i.color,
 		"interval" : i.interval
 		}
@@ -291,12 +307,14 @@ func _input(event : InputEvent) -> void:
 		if(current_lane != 0):
 			var new_pos : Dictionary = mouse_snapped_screen_pos(get_viewport().get_mouse_position())
 			var note_exists: bool = NoteManager.check_if_note_exists_at_mouse_location(new_pos["time_pos"], current_lane)
+			
 			if(event.is_action_pressed("LeftClick") && !is_another_window_focused):
 				if(!note_exists && !NoteManager.check_if_double_note_exists_at_time(new_pos["time_pos"])):
 					NoteManager.add_new_note(new_pos["time_pos"], current_lane)
 				if(current_hovered_note != null):
 					current_selected_note = current_hovered_note
 					note_selected.emit(current_selected_note)
+					
 			if(event.is_action_pressed("RightClick") && !is_another_window_focused):
 				if(current_selected_note != null):
 					note_deselected.emit(current_selected_note)

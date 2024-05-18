@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bcoi5hfer5b8e"]
+[gd_scene load_steps=16 format=3 uid="uid://bcoi5hfer5b8e"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/drawer.gd" id="1_avsu0"]
 [ext_resource type="PackedScene" uid="uid://cdd5so8gpgl0q" path="res://Assets/Scenes/ui.tscn" id="1_obr5d"]
@@ -9,9 +9,12 @@
 [ext_resource type="AudioStream" uid="uid://dl3tnd05upukf" path="res://Assets/DrumKit/TomLow.wav" id="8_f62j3"]
 [ext_resource type="AudioStream" uid="uid://c4p1y72ti8ebf" path="res://Assets/DrumKit/CrashL.wav" id="9_3opps"]
 [ext_resource type="PackedScene" uid="uid://dnoutqfa7vh6h" path="res://Assets/Scenes/note_lane.tscn" id="9_52jsw"]
+[ext_resource type="Script" path="res://Assets/Scenes/metronome.gd" id="9_kp416"]
 [ext_resource type="Script" path="res://Assets/Scripts/cursor_note.gd" id="10_2cfoa"]
+[ext_resource type="AudioStream" uid="uid://btxvms6cg5ity" path="res://Assets/DrumKit/MetronomeLow.wav" id="10_3137b"]
 [ext_resource type="Texture2D" uid="uid://pokip0nsccq2" path="res://Assets/Sprites/Notes.png" id="10_b56au"]
 [ext_resource type="AudioStream" uid="uid://bae2fu377vmfw" path="res://Assets/DrumKit/Ride.wav" id="10_ob81e"]
+[ext_resource type="AudioStream" uid="uid://jfr6lnwq11fh" path="res://Assets/DrumKit/MetronomeHigh.wav" id="11_aohh4"]
 
 [node name="MainNode" type="Node"]
 
@@ -50,6 +53,16 @@ bus = &"SFX"
 [node name="Ride" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("10_ob81e")
 bus = &"SFX"
+
+[node name="Metronome" type="Node" parent="GameScene"]
+script = ExtResource("9_kp416")
+
+[node name="MetronomeLow" type="AudioStreamPlayer" parent="GameScene/Metronome"]
+stream = ExtResource("10_3137b")
+
+[node name="MetronomeHigh" type="AudioStreamPlayer" parent="GameScene/Metronome"]
+stream = ExtResource("11_aohh4")
+volume_db = 10.0
 
 [node name="NodeLanes" type="Node" parent="GameScene"]
 

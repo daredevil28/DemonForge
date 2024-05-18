@@ -18,7 +18,7 @@ func _draw() -> void:
 		var line_thickness : int = 1
 		var top_point : float = 0.25 * DisplayServer.window_get_size().y
 		var bottom_point : float = 0.75 * DisplayServer.window_get_size().y
-		if(i % GameManager.snapping_frequency):
+		if(i % (GameManager.snapping_frequency * 2)):
 			line_color = Color.GRAY
 			top_point = 0.30 * DisplayServer.window_get_size().y
 			bottom_point = 0.70 * DisplayServer.window_get_size().y
