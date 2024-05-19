@@ -19,7 +19,7 @@ extends Control
 
 var selected_note : Note
 
-func _ready():
+func _ready() -> void:
 	GameManager.note_selected.connect(_on_note_selected)
 	GameManager.note_deselected.connect(_on_note_deselected)
 
@@ -28,13 +28,22 @@ func _on_file_index_pressed(index : int) -> void:
 	match index:
 		0:
 			print("New File")
-			GameManager.clean_project()
+			if(GameManager.project_changed):
+				Global.popup_dialog.play_dialog("Project not saved!","The current project has not been saved, are you sure you want to continue?", GameManager.clean_project)
+			else:
+				GameManager.clean_project()
 		1:
 			print("Load File")
-			open_dialog.popup()# > _on_open_dialog_file_selected()
+			if(GameManager.project_changed):
+				Global.popup_dialog.play_dialog("Project not saved!","The current project has not been saved, are you sure you want to continue?", open_dialog.popup)
+			else:
+				open_dialog.popup()# > _on_open_dialog_file_selected()
 		2:
 			print("Save File")
-			save_dialog.popup()# > _on_save_dialog_file_selected()
+			if(GameManager.project_file == ""):
+				save_dialog.popup()# > _on_save_dialog_file_selected()
+			else:
+				GameManager.save_project(GameManager.project_file)
 		3:
 			print("Export project")
 			export_panel.popup()# > _on_open_dialog_file_selected
@@ -63,6 +72,7 @@ func _on_open_dialog_file_selected(path : String) -> void:
 	Global.notification_popup.play_notification("Loading file: " + path, 2)
 	match result.get_string():
 		".json":
+			GameManager.project_file = path
 			print(".json")
 			var json_file : Dictionary = JSON.parse_string(FileAccess.get_file_as_string(path))
 			GameManager.setup_project(json_file)
@@ -224,6 +234,7 @@ func _on_note_interval_mouse_exited() -> void:
 	
 func _on_spin_box_value_changed(value: float) -> void:
 	if(selected_note != null):
+		GameManager.project_changed = true
 		selected_note.interval = value
 
 func _on_note_selected(note : Note) -> void:

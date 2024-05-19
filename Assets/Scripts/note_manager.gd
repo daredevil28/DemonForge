@@ -99,6 +99,7 @@ func get_note_lane_y(lane : int) -> float:
 			return 0
 
 func add_new_note(time : float, color : int) -> void:
+	GameManager.project_changed = true
 	var instance : Note = note_scene.instantiate()
 	
 	add_child(instance)
@@ -110,6 +111,7 @@ func add_new_note(time : float, color : int) -> void:
 	GameManager.current_pos = GameManager.current_pos
 
 func remove_note_at_time(time : float, color : int) -> void:
+	GameManager.project_changed = true
 	for i : int in note_nodes.size():
 		if(note_nodes[i].time == time && note_nodes[i].color == color):
 			print("Deleting note at: " + str(time) + " color: " + str(color))

@@ -1,7 +1,7 @@
 extends Node2D
 
 func _ready() -> void:
-	GameManager.game_scene_node = self
+	Global.game_scene_node = self
 	
 func _draw() -> void:
 	#The judgement line

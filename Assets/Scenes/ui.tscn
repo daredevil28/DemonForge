@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cdd5so8gpgl0q"]
+[gd_scene load_steps=10 format=3 uid="uid://cdd5so8gpgl0q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ui_controller.gd" id="1_hk45x"]
 [ext_resource type="PackedScene" uid="uid://bxv46rdbd272o" path="res://Assets/Scenes/progress_bar.tscn" id="2_t6ae7"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cse04ob740oo4" path="res://Assets/Sprites/FolderIconHover.png" id="5_16p63"]
 [ext_resource type="Script" path="res://Assets/Scripts/errors_label.gd" id="6_hsjtr"]
 [ext_resource type="Script" path="res://Assets/Scripts/popup_notification.gd" id="7_bt6ck"]
+[ext_resource type="Script" path="res://Assets/Scenes/dialog_popup.gd" id="8_h4mn3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hp2c"]
 content_margin_left = 5.0
@@ -571,6 +572,14 @@ script = ExtResource("7_bt6ck")
 layout_mode = 2
 text = "Lorem ipsum doloses de bora"
 
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+title = "Project has not been saved!"
+initial_position = 1
+size = Vector2i(533, 100)
+unresizable = true
+dialog_text = "Project has not been saved yet, are you sure you want to continue?"
+script = ExtResource("8_h4mn3")
+
 [connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
 [connection signal="file_selected" from="SongFileDialog" to="." method="_on_song_file_dialog_file_selected"]
@@ -591,7 +600,6 @@ text = "Lorem ipsum doloses de bora"
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/OffsetContainer/Offset" to="." method="_on_offset_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/MaxFPSContainer/MaxFPS" to="." method="_on_max_fps_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/SnappingFrequencyContainer/SnappingFrequency" to="." method="_on_snapping_frequency_value_changed"]
-[connection signal="focus_exited" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/TimeBetweenFramesContainer/TimeBetweenFrames" to="." method="_on_time_between_frames_focus_exited"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/TimeBetweenFramesContainer/TimeBetweenFrames" to="." method="_on_time_between_frames_value_changed"]
 [connection signal="about_to_popup" from="ExportPanel" to="." method="_on_export_panel_about_to_popup"]
 [connection signal="close_requested" from="ExportPanel" to="." method="_on_export_panel_close_requested"]
@@ -599,8 +607,8 @@ text = "Lorem ipsum doloses de bora"
 [connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/CustomFolderLocation" to="." method="_on_folder_dialog_dir_selected"]
 [connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/FolderName" to="." method="_on_folder_name_text_changed"]
 [connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/ExportProjectButton" to="." method="_on_export_project_button_up"]
-[connection signal="focus_entered" from="NoteSettings/VBoxContainer/HBoxContainer/NoteInterval" to="." method="_on_spin_box_focus_entered"]
-[connection signal="focus_exited" from="NoteSettings/VBoxContainer/HBoxContainer/NoteInterval" to="." method="_on_spin_box_focus_exited"]
 [connection signal="mouse_entered" from="NoteSettings/VBoxContainer/HBoxContainer/NoteInterval" to="." method="_on_note_interval_mouse_entered"]
 [connection signal="mouse_exited" from="NoteSettings/VBoxContainer/HBoxContainer/NoteInterval" to="." method="_on_note_interval_mouse_exited"]
 [connection signal="value_changed" from="NoteSettings/VBoxContainer/HBoxContainer/NoteInterval" to="." method="_on_spin_box_value_changed"]
+[connection signal="canceled" from="ConfirmationDialog" to="ConfirmationDialog" method="_on_canceled"]
+[connection signal="confirmed" from="ConfirmationDialog" to="ConfirmationDialog" method="_on_confirmed"]

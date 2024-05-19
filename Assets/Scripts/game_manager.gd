@@ -3,18 +3,20 @@ extends Node
 
 var audio_player : AudioStreamPlayer
 
-var game_scene_node : Node2D
-
 var song_name : String = ""
 var artist_name : String = ""
 var difficulty : int = 0
 var map : int = 0
 var custom_songs_folder : String = ""
+var project_file : String = ""
 var folder_name : String = ""
 var bpm : float = 60.0
 var preview_file : String = ""
 var snapping_frequency : int = 4
 var is_another_window_focused : bool = false #ui_controller.gd -> check_for_window_focused()
+
+#If any change has been made to the project then give warnings if it hasn't been saved yet
+var project_changed : bool
 
 var current_hovered_note : Note
 var current_selected_note : Note
@@ -37,11 +39,11 @@ var seconds_per_beat : float :
 		
 var current_beat : int :
 	get:
-		return roundi(current_pos / seconds_per_beat)
+		return current_pos / seconds_per_beat
 
 var current_measure : int :
 	get:
-		return roundi(current_beat / 4)
+		return current_beat / 4
 
 var scroll_speed : int = 50 :
 	set(value):
@@ -119,15 +121,15 @@ func clean_project() -> void:
 
 func play_music() -> void:
 	audio_player.play(current_pos)
-	Global.notification_popup.play_notification("Music playing.", 0.5)
+	Global.notification_popup.play_notification("Music playing", 0.5)
 
 func stop_music() -> void:
 	current_pos = audio_player.get_playback_position()
 	audio_player.stop()
-	Global.notification_popup.play_notification("Music stopped.", 0.5)
+	Global.notification_popup.play_notification("Music stopped", 0.5)
 
 func redraw_scene() -> void:
-	game_scene_node.queue_redraw()
+	Global.game_scene_node.queue_redraw()
 	
 #region Music time related functions
 #Get the location of the note based on how long the song is and the width of the window
@@ -190,9 +192,17 @@ func save_project(path : String) -> void:
 		note_array.append(individual_note)
 	json_data["notes"] = note_array
 	var json_string : String = JSON.stringify(json_data, "\t")
-	var file : FileAccess = FileAccess.open(path, FileAccess.WRITE)
+	var regex : RegEx = RegEx.new()
+	regex.compile("\\.(json)")
+	var result : RegExMatch = regex.search(path)
+	var file : FileAccess
+	if(result.get_string() == ".json"):
+		file = FileAccess.open(path, FileAccess.WRITE)
+	else:
+		file = FileAccess.open(path + ".json", FileAccess.WRITE)
 	file.store_string(json_string)
 	file.close()
+	project_changed = false
 	Global.notification_popup.play_notification("Project has been saved to: " + path, 2)
 
 func check_for_errors() -> String:
@@ -354,3 +364,10 @@ func _input(event : InputEvent) -> void:
 					else:
 						continue
 				play_music()
+
+func _notification(what: int) -> void:
+	if(what == NOTIFICATION_WM_CLOSE_REQUEST):
+		if(project_changed):
+			Global.popup_dialog.play_dialog("Project not saved!","The current project has not been saved, are you sure you want to exit?",get_tree().quit)
+		else:
+			get_tree().quit()
