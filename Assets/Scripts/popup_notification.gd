@@ -8,9 +8,9 @@ var notification_timer : float
 func _ready() -> void:
 	Global.notification_popup = self
 
-func play_notification(text : String) -> void:
+func play_notification(text : String, timer : float) -> void:
 	notification_opacity = 1
-	notification_timer = 0.5
+	notification_timer = timer
 	label.text = text
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.

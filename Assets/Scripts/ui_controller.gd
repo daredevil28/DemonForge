@@ -1,6 +1,5 @@
 extends Control
 
-
 @onready var open_dialog : FileDialog = $OpenDialog
 @onready var save_dialog : FileDialog = $SaveDialog
 @onready var song_file_dialog : FileDialog = $SongFileDialog
@@ -61,6 +60,7 @@ func _on_open_dialog_file_selected(path : String) -> void:
 	var regex : RegEx = RegEx.new()
 	regex.compile("\\.(json|csv)")
 	var result : RegExMatch = regex.search(path)
+	Global.notification_popup.play_notification("Loading file: " + path, 2)
 	match result.get_string():
 		".json":
 			print(".json")
@@ -195,7 +195,7 @@ func _on_time_between_frames_value_changed(value: float) -> void:
 func _on_export_panel_about_to_popup() -> void:
 	export_settings[0].text = GameManager.custom_songs_folder
 	export_settings[1].text = GameManager.folder_name
-	export_settings[2].text = GameManager.check_for_errors(true)
+	export_settings[2].text = GameManager.check_for_errors()
 	
 func _on_export_panel_close_requested() -> void:
 	export_panel.visible = false
@@ -248,3 +248,11 @@ func _on_notification_popup(text : String) -> void:
 func _process(_delta : float) -> void:
 	check_for_window_focus()
 	song_time_label.text = str(round(GameManager.current_pos))
+
+func _shortcut_input(event: InputEvent) -> void:
+	if(event.is_action_pressed("NewProject")):
+		_on_file_index_pressed(0)
+	if(event.is_action_pressed("LoadFile")):
+		_on_file_index_pressed(1)
+	if(event.is_action_pressed("SaveProject")):
+		_on_file_index_pressed(2)

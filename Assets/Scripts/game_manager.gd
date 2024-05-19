@@ -37,11 +37,11 @@ var seconds_per_beat : float :
 		
 var current_beat : int :
 	get:
-		return current_pos / seconds_per_beat
+		return roundi(current_pos / seconds_per_beat)
 
 var current_measure : int :
 	get:
-		return current_beat / 4
+		return roundi(current_beat / 4)
 
 var scroll_speed : int = 50 :
 	set(value):
@@ -114,14 +114,17 @@ func clean_project() -> void:
 	bpm = 60.0
 
 	current_pos = 0
+	Global.notification_popup.play_notification("Project has been reset!", 0.5)
 #endregion
 
 func play_music() -> void:
 	audio_player.play(current_pos)
+	Global.notification_popup.play_notification("Music playing.", 0.5)
 
 func stop_music() -> void:
 	current_pos = audio_player.get_playback_position()
 	audio_player.stop()
+	Global.notification_popup.play_notification("Music stopped.", 0.5)
 
 func redraw_scene() -> void:
 	game_scene_node.queue_redraw()
@@ -190,8 +193,9 @@ func save_project(path : String) -> void:
 	var file : FileAccess = FileAccess.open(path, FileAccess.WRITE)
 	file.store_string(json_string)
 	file.close()
+	Global.notification_popup.play_notification("Project has been saved to: " + path, 2)
 
-func check_for_errors(check_notes : bool) -> String:
+func check_for_errors() -> String:
 	var errors : String = ""
 	if(song_name == ""):
 		errors += "No song name set\n"
@@ -209,7 +213,7 @@ func check_for_errors(check_notes : bool) -> String:
 
 func export_project() -> void:
 	print("Exporting project")
-	var errors : String = check_for_errors(true)
+	var errors : String = check_for_errors()
 	if(errors != ""):
 		errors_found.emit(errors)
 	else:
@@ -229,6 +233,7 @@ func export_project() -> void:
 		var info : FileAccess = FileAccess.open(path + "/info.csv",FileAccess.WRITE)
 		info.store_csv_line(PackedStringArray(["Song Name","Author Name","Difficulty","Song Duration in seconds","Song Map"]))
 		info.store_csv_line(PackedStringArray([song_name,artist_name,str(difficulty),roundi(audio_length),str(map)]))
+		info.close()
 		
 		NoteManager.sort_all_notes()
 		
@@ -285,6 +290,7 @@ func export_project() -> void:
 					aux = "8"
 
 			notes.store_csv_line(PackedStringArray([note_time,enemy_type,color_1,color_2,"1",interval,aux]))
+			Global.notification_popup.play_notification("Project succesfully exported to: " + path, 1)
 
 func _process(_delta : float) -> void:
 	if(audio_player.playing):
