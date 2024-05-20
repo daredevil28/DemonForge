@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cse04ob740oo4" path="res://Assets/Sprites/FolderIconHover.png" id="5_16p63"]
 [ext_resource type="Script" path="res://Assets/Scripts/errors_label.gd" id="6_hsjtr"]
 [ext_resource type="Script" path="res://Assets/Scripts/popup_notification.gd" id="7_bt6ck"]
-[ext_resource type="Script" path="res://Assets/Scenes/dialog_popup.gd" id="8_h4mn3"]
+[ext_resource type="Script" path="res://Assets/Scripts/dialog_popup.gd" id="8_hkohk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hp2c"]
 content_margin_left = 5.0
@@ -586,7 +586,7 @@ initial_position = 1
 size = Vector2i(533, 100)
 unresizable = true
 dialog_text = "Project has not been saved yet, are you sure you want to continue?"
-script = ExtResource("8_h4mn3")
+script = ExtResource("8_hkohk")
 
 [connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]

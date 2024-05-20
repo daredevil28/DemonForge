@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxv46rdbd272o"]
+[gd_scene load_steps=4 format=3 uid="uid://bxv46rdbd272o"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/progress_bar.gd" id="1_ynsex"]
+[ext_resource type="Texture2D" uid="uid://pokip0nsccq2" path="res://Assets/Sprites/Notes.png" id="2_5ckfs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ndrta"]
+size = Vector2(32, 32)
 
 [node name="MarginContainer" type="MarginContainer"]
 anchors_preset = 12
@@ -20,3 +24,14 @@ size_flags_vertical = 1
 value = 50.0
 show_percentage = false
 script = ExtResource("1_ynsex")
+
+[node name="ProgressBall" type="Sprite2D" parent="VBoxContainer/ProgressBar"]
+texture = ExtResource("2_5ckfs")
+
+[node name="Area2D" type="Area2D" parent="VBoxContainer/ProgressBar/ProgressBall"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/ProgressBar/ProgressBall/Area2D"]
+shape = SubResource("RectangleShape2D_ndrta")
+
+[connection signal="mouse_entered" from="VBoxContainer/ProgressBar/ProgressBall/Area2D" to="VBoxContainer/ProgressBar" method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/ProgressBar/ProgressBall/Area2D" to="VBoxContainer/ProgressBar" method="_on_area_2d_mouse_exited"]
