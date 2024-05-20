@@ -280,6 +280,14 @@ text = "Music Volume:"
 layout_mode = 2
 value = 100.0
 
+[node name="LabelInstruments" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer"]
+layout_mode = 2
+text = "Instruments"
+
+[node name="SFXInstruments" type="HSlider" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer" groups=["VolumeSliders"]]
+layout_mode = 2
+value = 100.0
+
 [node name="LabelSFX" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer"]
 layout_mode = 2
 text = "SFX Volume:"
@@ -595,7 +603,8 @@ script = ExtResource("8_h4mn3")
 [connection signal="close_requested" from="ClientSettings" to="." method="_on_client_settings_close_requested"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/MasterSlider" to="." method="_on_slider_changed" binds= [0]]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/MusicSlider" to="." method="_on_slider_changed" binds= [1]]
-[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/SFXSlider" to="." method="_on_slider_changed" binds= [2]]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/SFXInstruments" to="." method="_on_slider_changed" binds= [2]]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/SFXSlider" to="." method="_on_slider_changed" binds= [3]]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/ScrollSpeedContainer/ScrollSpeed" to="." method="_on_scroll_speed_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/OffsetContainer/Offset" to="." method="_on_offset_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/MaxFPSContainer/MaxFPS" to="." method="_on_max_fps_value_changed"]

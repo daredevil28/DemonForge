@@ -31,38 +31,40 @@ script = ExtResource("2_w8v26")
 
 [node name="Snare" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("5_klm7p")
-bus = &"SFX"
+bus = &"Instruments"
 
 [node name="Kick" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("5_cgcp7")
-bus = &"SFX"
+bus = &"Instruments"
 
 [node name="TomHigh" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("7_h73ft")
-bus = &"SFX"
+bus = &"Instruments"
 
 [node name="TomLow" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("8_f62j3")
-bus = &"SFX"
+bus = &"Instruments"
 
 [node name="CrashL" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("9_3opps")
 volume_db = -4.0
-bus = &"SFX"
+bus = &"Instruments"
 
 [node name="Ride" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("10_ob81e")
-bus = &"SFX"
+bus = &"Instruments"
 
 [node name="Metronome" type="Node" parent="GameScene"]
 script = ExtResource("9_kp416")
 
 [node name="MetronomeLow" type="AudioStreamPlayer" parent="GameScene/Metronome"]
 stream = ExtResource("10_3137b")
+bus = &"SFX"
 
 [node name="MetronomeHigh" type="AudioStreamPlayer" parent="GameScene/Metronome"]
 stream = ExtResource("11_aohh4")
 volume_db = 10.0
+bus = &"SFX"
 
 [node name="NodeLanes" type="Node" parent="GameScene"]
 
