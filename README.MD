@@ -36,6 +36,7 @@ Download the .exe from releases and run it, no further configuration required
 - [ ] Support dynamic time signatures and bpm
 - [ ] Set preview time stamp and length
 - [x] Export project to the custom songs folder
+- [ ] Audio offset for syncing up audio
 
 # Possible future features
 

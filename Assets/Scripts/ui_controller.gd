@@ -226,20 +226,38 @@ func _on_folder_name_text_changed(new_text : String) -> void:
 
 #region Note settings panel
 var note_settings_focused : bool = false
-func _on_note_interval_mouse_entered() -> void:
+	
+func _on_note_settings_mouse_entered() -> void:
 	note_settings_focused = true
 	
-func _on_note_interval_mouse_exited() -> void:
+func _on_note_settings_mouse_exited() -> void:
 	note_settings_focused = false
 	
-func _on_spin_box_value_changed(value: float) -> void:
+func _on_spin_box_value_changed(value: float, box : String) -> void:
+	GameManager.project_changed = true
 	if(selected_note != null):
-		GameManager.project_changed = true
-		selected_note.interval = value
+		match box:
+			"interval":
+				selected_note.interval = value
+			"bpm":
+				selected_note.bpm = value
+				GameManager.redraw_scene()
+			"snapping":
+				selected_note.snapping = value
+				GameManager.redraw_scene()
 
-func _on_note_selected(note : Note) -> void:
+func _on_note_selected(note : Note) -> void:# < GameManager.note_selected
 	selected_note = note
 	note_settings[0].value = selected_note.interval
+	if(note is Marker):
+		note_settings[1].value = selected_note.bpm
+		note_settings[2].value = selected_note.snapping
+		note_settings_panel.get_child(0).visible = false
+		note_settings_panel.get_child(1).visible = true
+	else:
+		note_settings[0].value = selected_note.interval
+		note_settings_panel.get_child(0).visible = true
+		note_settings_panel.get_child(1).visible = false
 	note_settings_panel.visible = true
 
 func _on_note_deselected(note : Note) -> void:

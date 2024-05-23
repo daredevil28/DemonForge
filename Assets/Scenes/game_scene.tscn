@@ -68,6 +68,10 @@ bus = &"SFX"
 
 [node name="NodeLanes" type="Node" parent="GameScene"]
 
+[node name="Markers" parent="GameScene/NodeLanes" groups=["NodeLanes"] instance=ExtResource("9_52jsw")]
+position = Vector2(600, 120)
+note_color = 7
+
 [node name="PurpleNote" parent="GameScene/NodeLanes" groups=["NodeLanes"] instance=ExtResource("9_52jsw")]
 position = Vector2(600, 180)
 note_color = 4

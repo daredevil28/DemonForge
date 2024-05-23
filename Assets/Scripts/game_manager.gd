@@ -18,10 +18,14 @@ var is_another_window_focused : bool = false #ui_controller.gd -> check_for_wind
 #If any change has been made to the project then give warnings if it hasn't been saved yet
 var project_changed : bool
 
-var current_hovered_note : Note
-var current_selected_note : Note
+var current_hovered_note
+		
+var current_selected_note
 
-var cursor_note : Node2D #cursor_note.gd -> _ready()
+var cursor_note : Sprite2D #cursor_note.gd -> _ready()
+var note_sprite : Resource = load("res://Assets/Sprites/Notes.png")
+var marker_sprite : Resource = load("res://Assets/Sprites/BPMMarker.png")
+
 var current_lane : int
 
 signal errors_found(errors : String)
@@ -73,7 +77,13 @@ var audio_length : float = 60 :
 var current_pos : float = 0 :
 	set(value):
 		current_pos = value
-		NoteManager.play_notes(current_pos)
+		for marker : Marker in NoteManager.marker_nodes:
+			if(marker.time <= value):
+				bpm = marker.bpm
+				snapping_frequency = marker.snapping
+			NoteManager.play_notes(marker, current_pos)
+		for note : Note in NoteManager.note_nodes:
+			NoteManager.play_notes(note, current_pos)
 #endregion
 
 func _ready() -> void:
@@ -84,6 +94,7 @@ func _ready() -> void:
 #region Project setup
 #Setup metadata, audio and all the notes
 func setup_project(jsonString : Dictionary) -> void:
+
 	var metadata : Dictionary = jsonString["metaData"][0]
 	song_name = metadata["songName"]
 	artist_name = metadata["artistName"]
@@ -91,11 +102,14 @@ func setup_project(jsonString : Dictionary) -> void:
 	map = metadata["map"]
 	song_file = metadata["songFile"]
 	preview_file = metadata["previewFile"]
-	bpm = metadata["bpm"]
 	folder_name = metadata["folderName"]
-
+	
+	NoteManager.clear_all_notes()
+	
+	NoteManager.initialise_bpm_marker(jsonString["marker"])
 	NoteManager.initialise_notes(jsonString["notes"])
 	current_pos = 0
+	
 
 func setup_audio(audio_file : String) -> void:
 	if audio_file == "":
@@ -145,7 +159,7 @@ func screen_time_to_music_time(location : float) -> float:
 	return location / DisplayServer.window_get_size().x * audio_length / GameManager.scroll_speed
 
 func get_closest_snap_value(original_pos : float) -> float:
-	var seconds_per_beat : float = 60 / bpm / snapping_frequency * 2
+	var seconds_per_beat : float = 60 / bpm / snapping_frequency
 	var before_snap : float = floorf((original_pos-seconds_per_beat / snapping_frequency) / seconds_per_beat) * seconds_per_beat
 	var ahead_snap : float = before_snap + seconds_per_beat
 	
@@ -162,6 +176,7 @@ func mouse_snapped_screen_pos(pos : Vector2) -> Dictionary:
 	return {"screen_pos": snapped_pos,"time_pos":music_time}
 #endregion
 
+#region Files and saving related
 func save_project(path : String) -> void:
 	var json_data : Dictionary = {
 		"metaData":
@@ -173,9 +188,11 @@ func save_project(path : String) -> void:
 				"map" : map,
 				"songFile" : song_file,
 				"previewFile" : preview_file,
-				"bpm" : bpm,
 				"folderName" : folder_name
 			}
+		],
+		"marker" : [
+			
 		],
 		"notes" : 
 		[
@@ -190,8 +207,18 @@ func save_project(path : String) -> void:
 		"interval" : i.interval
 		}
 		note_array.append(individual_note)
+	var marker_array : Array = []
+	for i : Marker in NoteManager.marker_nodes:
+		var individual_marker : Dictionary = {
+			"time" : i.time,
+			"bpm" : i.bpm,
+			"snapping" : i.snapping
+		}
+		marker_array.append(individual_marker)
 	json_data["notes"] = note_array
-	var json_string : String = JSON.stringify(json_data, "\t")
+	json_data["marker"] = marker_array
+	var json_string : String = JSON.stringify(json_data, "\t",false)
+	
 	var regex : RegEx = RegEx.new()
 	regex.compile("\\.(json)")
 	var result : RegExMatch = regex.search(path)
@@ -200,6 +227,7 @@ func save_project(path : String) -> void:
 		file = FileAccess.open(path, FileAccess.WRITE)
 	else:
 		file = FileAccess.open(path + ".json", FileAccess.WRITE)
+	
 	file.store_string(json_string)
 	file.close()
 	project_changed = false
@@ -300,7 +328,8 @@ func export_project() -> void:
 					aux = "8"
 
 			notes.store_csv_line(PackedStringArray([note_time,enemy_type,color_1,color_2,"1",interval,aux]))
-			Global.notification_popup.play_notification("Project succesfully exported to: " + path, 1)
+		Global.notification_popup.play_notification("Project succesfully exported to: " + path, 1)
+#endregion
 
 func _process(_delta : float) -> void:
 	if(audio_player.playing):
@@ -310,8 +339,13 @@ func _process(_delta : float) -> void:
 		cursor_note.visible = false
 	else:
 		cursor_note.position.y = NoteManager.reset_note_y(cursor_note, current_lane)
+		if(current_lane == 7):
+			cursor_note.texture = marker_sprite
+		else:
+			cursor_note.texture = note_sprite
 		var note_pos : Dictionary = mouse_snapped_screen_pos(get_viewport().get_mouse_position())
-		if(!NoteManager.check_if_double_note_exists_at_time(note_pos["time_pos"])):
+		
+		if(!NoteManager.check_if_double_note_exists_at_time(note_pos["time_pos"]) || current_lane == 7):
 			cursor_note.visible = true
 			cursor_note.position.x = note_pos["screen_pos"]
 		else:
@@ -319,14 +353,25 @@ func _process(_delta : float) -> void:
 
 func _input(event : InputEvent) -> void:
 	if(event is InputEventMouseButton):
-		var seconds_per_beat : float = 60 / bpm * 2
+		#TODO replace with the proper seconds_per_beat
+		var seconds_per_beat : float = 60 / bpm
+		#If we are in any of the note lanes
 		if(current_lane != 0):
+			#Get snapped pos and time
 			var new_pos : Dictionary = mouse_snapped_screen_pos(get_viewport().get_mouse_position())
+			#Check if note or marker already exists
 			var note_exists: bool = NoteManager.check_if_note_exists_at_mouse_location(new_pos["time_pos"], current_lane)
 			
 			if(event.is_action_pressed("LeftClick") && !is_another_window_focused):
-				if(!note_exists && !NoteManager.check_if_double_note_exists_at_time(new_pos["time_pos"])):
-					NoteManager.add_new_note(new_pos["time_pos"], current_lane)
+				#Check if note exists and if there are no double notes
+				if(!note_exists):
+					var if_double_note : bool
+					if(current_lane != 7):
+						if_double_note = NoteManager.check_if_double_note_exists_at_time(new_pos["time_pos"])
+					else:
+						if_double_note = false
+						if(!if_double_note):
+							NoteManager.add_new_note(new_pos["time_pos"], current_lane)
 				if(current_hovered_note != null):
 					current_selected_note = current_hovered_note
 					note_selected.emit(current_selected_note)
@@ -346,6 +391,10 @@ func _input(event : InputEvent) -> void:
 				current_pos = audio_length
 
 		if(event.is_action_pressed("ScrollDown") && !audio_player.playing && !is_another_window_focused):
+			for i : int in range(0,NoteManager.marker_nodes.size()):
+				if(NoteManager.marker_nodes[i].time == current_pos):
+					seconds_per_beat = 60 / NoteManager.marker_nodes[i-1].bpm
+					break
 			current_pos -= seconds_per_beat / snapping_frequency
 			current_pos = get_closest_snap_value(current_pos)
 			if current_pos < 0:

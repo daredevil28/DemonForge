@@ -32,6 +32,3 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_0r3w7")
-
-[connection signal="mouse_shape_entered" from="Area2D" to="." method="_on_mouse_shape_entered"]
-[connection signal="mouse_shape_exited" from="Area2D" to="." method="_on_mouse_shape_exited"]
