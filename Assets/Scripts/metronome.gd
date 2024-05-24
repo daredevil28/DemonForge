@@ -5,11 +5,12 @@ var metronome_enabled : bool = true
 @onready var metronome_high : AudioStreamPlayer = $MetronomeLow
 @onready var metronome_low : AudioStreamPlayer = $MetronomeHigh
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if(GameManager.audio_player.playing && metronome_enabled):
+		#Make sure we play the metronome only once
 		if(GameManager.current_beat != last_beat):
 			last_beat = GameManager.current_beat
+			#Use the snapping frequency to determine when to play a high metronome note
 			if(GameManager.current_beat % 4):
 				metronome_high.play(0)
 			else:

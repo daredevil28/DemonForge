@@ -29,14 +29,24 @@ Download the .exe from releases and run it, no further configuration required
 - [ ] Figure out how to properly play sound for drum rolls
 - [x] Snap editing
 - [x] Adjustable client settings (scroll speed, note size,volume etc)
-- [ ] Make scroll speed not dependant on screen size
 - [ ] Custom asset support for audio/sprites
 - [ ] Undo/Redo button
 - [x] Support other timing signatures
 - [ ] Support dynamic time signatures and bpm
-- [ ] Set preview time stamp and length
+- [ ] Set preview time stamp and length to automatically export preview
 - [x] Export project to the custom songs folder
 - [ ] Audio offset for syncing up audio
+
+# Compiling
+
+I use Godot v4.2.2 stable to compile, but versions around it should still be compatible
+
+- Import project into godot
+- Project > Export
+- Select Windows Desktop
+- Press export project
+
+The .exe should be exported into ProjectFolder/Build/DemonForge.exe
 
 # Possible future features
 

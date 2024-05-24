@@ -3,6 +3,7 @@ extends Node
 
 var note_nodes : Array[Note] = []
 var marker_nodes : Array[Marker] = []
+
 var yellow : Color = Color.YELLOW
 var red : Color = Color.RED
 var orange : Color = Color.ORANGE
@@ -16,6 +17,7 @@ var note_scene : Resource = load("res://Assets/Scenes/note.tscn")
 var marker_scene : Resource = load("res://Assets/Scenes/bpm_marker.tscn")
 
 var offset : int = 200 :
+	#Whenever offset changes, redraw the scene
 	set(value):
 		offset = value
 		GameManager.redraw_scene()
@@ -26,28 +28,32 @@ func _ready() -> void:
 	#Reset width of colliders
 	for i : Node in note_lanes:
 		reset_collision_location(i, i.note_color)
-	
+		
 #region Note manipulation
-#Instantiate all the notes
 func initialise_notes(json_notes : Array) -> void:
-	
+	#Instantiate all the notes
 	for i : int in json_notes.size():
+		#Make a new note dictionary, instantiate it and add it to NoteManager as a child
 		var note : Dictionary = json_notes[i]
 		var instance : Note = note_scene.instantiate()
 		add_child(instance)
 		
+		#Set up the properties
 		instance.time = note["time"]
 		instance.color = note["color"]
 		instance.interval = note["interval"]
 		instance.position.y = reset_note_y(instance, note["color"])
-		instance.visible = false
 		note_nodes.append(instance)
+		
 	GameManager.current_pos = 0
+	
+	#If the array is not empty then use the last note as the audio length temporarily
 	if(!note_nodes.is_empty()):
 		GameManager.audio_length = note_nodes.back().time
 
-func initialise_bpm_marker(json_markers : Array) -> void:
-	for i in json_markers.size():
+func initialise_marker(json_markers : Array) -> void:
+	#Instantiate all the markers (Similar to initialise_notes but for markers)
+	for i : int in json_markers.size():
 		var marker : Dictionary = json_markers[i]
 		var instance : Marker = marker_scene.instantiate()
 		add_child(instance)
@@ -59,17 +65,24 @@ func initialise_bpm_marker(json_markers : Array) -> void:
 		marker_nodes.append(instance)
 
 func reset_note_location() -> void:
+	#Reset all the positions for the notes for whenever the screen resizes
 	for note : Note in note_nodes:
 		note.position.y = reset_note_y(note, note.color)
+		
 	for marker : Marker in marker_nodes:
 		marker.position.y = reset_note_y(marker, 7)
+		
 	for i : Node in note_lanes:
 		reset_collision_location(i, i.note_color)
+	
+	#Reset the X pos of the note
 	GameManager.current_pos = GameManager.current_pos
+	
 	#Redraw the lines in drawer.gd
 	GameManager.redraw_scene()
 
 func reset_note_y(instance : Node2D, color : int) -> float:
+	#Reset the y pos of the note and adjust the color of the note
 	var position : float
 	position = get_note_lane_y(color)
 	match color:
@@ -92,6 +105,7 @@ func reset_note_y(instance : Node2D, color : int) -> float:
 	return position
 
 func reset_collision_location(instance : Node2D, color : int) -> void:
+	#Reset the position and size of the note lanes to span across the screen size
 	instance.position = DisplayServer.window_get_size() / 2
 	@warning_ignore("integer_division")
 	instance.scale.x = DisplayServer.window_get_size().x / 2 / 10
@@ -118,13 +132,17 @@ func get_note_lane_y(lane : int) -> float:
 			return 0
 
 func add_new_note(time : float, color : int) -> void:
+	#Add a new note to the chart
 	GameManager.project_changed = true
 	var instance : Note
+	#If it is a marker
 	if(color == 7):
 		instance = marker_scene.instantiate()
+		#Default values for markers
 		instance.bpm = 100
 		instance.snapping = 4
 		marker_nodes.append(instance)
+		#Some logic (snapping) depend on the order of the markers in the array
 		marker_nodes.sort_custom(sort_ascending_time)
 	else:
 		instance = note_scene.instantiate()
@@ -135,47 +153,56 @@ func add_new_note(time : float, color : int) -> void:
 	
 	instance.time = time
 	instance.position.y = reset_note_y(instance, color)
+	#Reset the X pos of the note
 	GameManager.current_pos = GameManager.current_pos
 
 func remove_note_at_time(time : float, color : int) -> void:
+	#Remove a note from the chart at the specified time
 	GameManager.project_changed = true
 	var array : Array
+	#If it's a marker then use the marker_nodes array, else the note_nodes array will be used
 	if(color == 7):
 		array = marker_nodes
 	else:
 		array = note_nodes
 	
 	for i : int in array.size():
+		#If we find an exact time and color match then remove the note
 		if(array[i].time == time && array[i].color == color):
 			print("Deleting note at: " + str(time) + " color: " + str(color))
 			array[i].queue_free()
 			array.remove_at(i)
+			#Redraw the scene for if we deleted a marker note
 			GameManager.redraw_scene()
 			break;
 
 func check_if_note_exists_at_mouse_location(time : float, color : int) -> bool:
+	#If the note is a marker
 	if(color == 7):
 		for i : int in marker_nodes.size():
 			if(marker_nodes[i].time == time && marker_nodes[i].color == color):
 				return true
 		return false
+	#The note is a note
 	for i : int in note_nodes.size():
 		if(note_nodes[i].time == time && note_nodes[i].color == color):
 			return true
 	return false
 	
 func check_if_double_note_exists_at_time(time : float) -> bool:
+	#Drums Rock only supports 2 notes at the same time
 	var note_count : int = 0
+	#Go through the note array and add to note_count if we encounter the same note
 	for note : Note in note_nodes:
 		if(note.time == time):
 				note_count += 1
+		#If we counted 2 or more then there is a double note at the location
 		if(note_count >= 2):
 			return true
 	return false
 
 func sort_all_notes() -> void:
 	note_nodes.sort_custom(sort_ascending_time)
-	pass
 
 func sort_ascending_time(a : Note, b : Note) -> bool:
 	if(a["time"] < b["time"]):
@@ -194,27 +221,42 @@ func clear_all_notes() -> void:
 	
 func play_notes(object : Node2D, new_time : float) -> void:
 	GameManager.redraw_scene()
-	#(NoteTimestamp - TimePassed ) * scroll_speed + offset
+	
+	#(NoteTimestamp - TimePassed ) + offset
 	var new_pos : float = (GameManager.music_time_to_screen_time(object.time) - GameManager.music_time_to_screen_time(new_time)) + offset
-	#Check if the note is outside the frame, hide and skip the iteration if we do
+	
+	#Check if the note is outside the frame, hide and skip if we do
 	if(new_pos > DisplayServer.window_get_size().x + 20 || new_pos < -20):
 		object.visible = false
 		object.disable_collision()
 		return
+		
 	if(GameManager.audio_player.playing):
+		
+		#If the note is ahead of the judgement line
 		if (object.time >= new_time):
+			
+			#If it's not visible then make it visible and enable collision for the mouse cursor
 			if(!object.visible):
 				object.visible = true
 				object.enable_collision()
+				
+			#Update position of the note
 			object.position.x = new_pos
+			
 		else:
-			if(object.visible && object.color != 7):
+			
+			#Note is on or has passed the judgement line
+			if(object.visible):
+				
 				#Make sure the note is actually close enough to the bar before playing the sound
 				if(object.time >= GameManager.current_pos - 0.02 || new_pos < offset):
 					object.disable_collision()
-					get_tree().get_nodes_in_group("Instruments")[object.color - 1].play()
+					if(object.color != 7):
+						get_tree().get_nodes_in_group("Instruments")[object.color - 1].play()
 					object.visible = false
 	else:
+		#No audio is playing so make every note behind the judgement line visible
 		object.position.x = new_pos
 		if(!object.visible):
 			object.enable_collision()

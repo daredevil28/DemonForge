@@ -1,3 +1,4 @@
+#Mostly anything related to the UI goes here
 extends Control
 
 @onready var open_dialog : FileDialog = $OpenDialog
@@ -25,6 +26,7 @@ func _ready() -> void:
 
 #region MenuBar
 func _on_file_index_pressed(index : int) -> void:
+	#File menu bar
 	match index:
 		0:
 			print("New File")
@@ -49,6 +51,7 @@ func _on_file_index_pressed(index : int) -> void:
 			export_panel.popup()# > _on_open_dialog_file_selected
 
 func _on_properties_index_pressed(index : int) -> void:
+	#Properties menu bar
 	match index:
 		0:
 			print("Song Properties")
@@ -66,9 +69,12 @@ func _on_properties_index_pressed(index : int) -> void:
 
 #region Everything related to files
 func _on_open_dialog_file_selected(path : String) -> void:
+	#File > Open File
+	#Check if path contains either .json or .csv
 	var regex : RegEx = RegEx.new()
 	regex.compile("\\.(json|csv)")
 	var result : RegExMatch = regex.search(path)
+	
 	Global.notification_popup.play_notification("Loading file: " + path, 2)
 	match result.get_string():
 		".json":
@@ -81,18 +87,26 @@ func _on_open_dialog_file_selected(path : String) -> void:
 			NoteManager.initialise_notes(csv_to_json(path))
 
 func _on_save_dialog_file_selected(path : String) -> void:
+	#File > Save File
 	GameManager.save_project(path)
 
 func csv_to_json(csv_file : String) -> Array:
+	#Convert an existing .csv file to json. Generally not recommended for actually editing the chart (because of floating point inaccuracies) but still a possiblity
 	#Time,Enemy Type(1normal,2dual,3fat),Color1,Color2,1,Drumroll amount,Aux
 	var file : FileAccess = FileAccess.open(csv_file, FileAccess.READ)
+	
 	print(file.get_line()) #Skip the first line
 	
 	var note_array : Array = []
 	
+	#While we haven't reached end of file yet
 	while file.get_position() < file.get_length():
+		
+		#Read the csv line and advanced the line
 		var csv_line : PackedStringArray = file.get_csv_line()
 		var temp_array : Dictionary = {}
+		
+		#Read the second item which is the enemy type
 		match int(csv_line[1]):
 			1: #normal demon
 				temp_array["time"] = float(csv_line[0])
@@ -104,6 +118,7 @@ func csv_to_json(csv_file : String) -> Array:
 				temp_array["color"] = int(csv_line[2])
 				temp_array["interval"] = int(0)
 				note_array.append(temp_array)
+				#Since it's a double note duplicate the array and just change the color
 				var new_array : Dictionary = temp_array.duplicate()
 				new_array["color"] = int(csv_line[3])
 				note_array.append(new_array)
@@ -127,8 +142,8 @@ func _on_song_properties_about_to_popup() -> void:
 	song_properties[3].selected = GameManager.map
 	#Path for the song file
 	song_properties[4].text = GameManager.song_file
+	#Path to the preview file
 	song_properties[5].text = GameManager.preview_file
-	song_properties[6].text = str(GameManager.bpm)
 	
 func _on_song_properties_close_requested() -> void:
 	song_properties_panel.visible = false
@@ -144,39 +159,45 @@ func _on_song_properties_close_requested() -> void:
 	GameManager.map = song_properties[3].selected
 	#Path for the song file
 	GameManager.song_file = song_properties[4].text
+	#Path to the preview file
 	GameManager.preview_file = song_properties[5].text
-	GameManager.bpm = float(song_properties[6].text)
-	GameManager.redraw_scene()
 
 func _on_song_select_file_button_up() -> void:
+	#Properties > Song Properties > song file select
 	song_file_dialog.popup()# > _on_song_file_dialog_file_selected
 
 func _on_song_file_dialog_file_selected(path : String) -> void:
+	#SongFileDialog
 	GameManager.song_file = path
 	#Song file
 	song_properties[4].text = path
 	
 func _on_preview_select_file_button_up() -> void:
-	preview_file_dialog.popup()
+	#Properties > Song Properties > Preview file select
+	preview_file_dialog.popup() # _on_preview_file_dialog_file_selected
 	
 func _on_preview_file_dialog_file_selected(path: String) -> void:
+	#PreviewFileDialog
 	GameManager.preview_file = path
 	song_properties[5].text = path
 #endregion
 	
 #region Client settings panel
 func _on_client_settings_about_to_popup() -> void:
+	#ClientSettings
 	client_settings[0].value = GameManager.scroll_speed
 	client_settings[1].value = NoteManager.offset
 	client_settings[2].value = Engine.max_fps
-	client_settings[3].value = GameManager.snapping_frequency
-	client_settings[4].value = OS.low_processor_usage_mode_sleep_usec
+	client_settings[3].value = OS.low_processor_usage_mode_sleep_usec
 	
 func _on_client_settings_close_requested() -> void:
 	client_settings_panel.visible = false
 
 func _on_slider_changed(value : float, slider : int) -> void:
+	#When any volume slider has been changed
+	#Go down a max of -24dB
 	var new_db_value : float = value / 100 * 24
+	#If it's 0 then mute the audio bus
 	if new_db_value == 0:
 		AudioServer.set_bus_mute(slider, true)
 	else:
@@ -187,22 +208,18 @@ func _on_scroll_speed_value_changed(value : float) -> void:
 	GameManager.scroll_speed = roundi(value)
 	
 func _on_max_fps_value_changed(value: float) -> void:
-	Engine.max_fps = client_settings[2].value
+	Engine.max_fps = roundi(value)
 
 func _on_offset_value_changed(value : float) -> void:
 	NoteManager.offset = roundi(value)
 	
-func _on_snapping_frequency_value_changed(value: float) -> void:
-	print(value)
-	GameManager.snapping_frequency = roundi(value)
-	GameManager.redraw_scene()
-	
 func _on_time_between_frames_value_changed(value: float) -> void:
-	OS.low_processor_usage_mode_sleep_usec = value
+	OS.low_processor_usage_mode_sleep_usec = roundi(value)
 #endregion
 
 #region Export panel
 func _on_export_panel_about_to_popup() -> void:
+	#ExportPanel
 	export_settings[0].text = GameManager.custom_songs_folder
 	export_settings[1].text = GameManager.folder_name
 	export_settings[2].text = GameManager.check_for_errors()
@@ -216,7 +233,7 @@ func _on_custom_folder_button_up() -> void:
 func _on_export_project_button_up() -> void:
 	GameManager.export_project()
 
-func _on_folder_dialog_dir_selected(dir : String) -> void:# Connects to both the texturebutton and the lineEdit button
+func _on_folder_selected(dir : String) -> void:# Connects to both the texturebutton and the lineEdit button
 	GameManager.custom_songs_folder = dir
 	export_settings[0].text = dir
 	
@@ -227,6 +244,7 @@ func _on_folder_name_text_changed(new_text : String) -> void:
 #region Note settings panel
 var note_settings_focused : bool = false
 	
+#Check if mouse is inside the note settings box
 func _on_note_settings_mouse_entered() -> void:
 	note_settings_focused = true
 	
@@ -234,6 +252,7 @@ func _on_note_settings_mouse_exited() -> void:
 	note_settings_focused = false
 	
 func _on_spin_box_value_changed(value: float, box : String) -> void:
+	#Change the specific box
 	GameManager.project_changed = true
 	if(selected_note != null):
 		match box:
@@ -247,6 +266,8 @@ func _on_spin_box_value_changed(value: float, box : String) -> void:
 				GameManager.redraw_scene()
 
 func _on_note_selected(note : Note) -> void:# < GameManager.note_selected
+	#Called when GameManager sends note_selected
+	#Makes the note settings panel visible
 	selected_note = note
 	note_settings[0].value = selected_note.interval
 	if(note is Marker):
@@ -266,22 +287,24 @@ func _on_note_deselected(note : Note) -> void:
 #endregion
 
 func check_for_window_focus() -> void:
+	#Check the focus of windows so that we don't show the cursor note when we are focusing on a window
 	if song_properties_panel.has_focus() || client_settings_panel.has_focus() || export_panel.has_focus() || note_settings_focused:
 		GameManager.is_another_window_focused = true
 	else:
 		GameManager.is_another_window_focused = false
 
-func _on_notification_popup(text : String) -> void:
-	notification_popup.reset_notification(text)
-
 func _process(_delta : float) -> void:
 	check_for_window_focus()
+	#Time passed in song
 	song_time_label.text = str(round(GameManager.current_pos))
 
 func _shortcut_input(event: InputEvent) -> void:
+	#Ctrl + N
 	if(event.is_action_pressed("NewProject")):
 		_on_file_index_pressed(0)
+	#Ctrl + L
 	if(event.is_action_pressed("LoadFile")):
 		_on_file_index_pressed(1)
+	#Ctrl + S
 	if(event.is_action_pressed("SaveProject")):
-		_on_file_index_pressed(2)
+		_on_file_index_pressed(2)	

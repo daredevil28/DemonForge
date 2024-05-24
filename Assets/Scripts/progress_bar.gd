@@ -11,10 +11,12 @@ func _on_area_2d_mouse_exited() -> void:
 	mouse_in_ball = false
 
 func _process(_delta : float) -> void:
+	#Get percentage of time passed and use that to get a percentage of screen width
 	var percentage_passed : float = GameManager.current_pos / GameManager.audio_length
 	value = percentage_passed * 100
 	progress_ball.position.x = percentage_passed * DisplayServer.window_get_size().x
 	
+	#If we are holding the progess bar ball then move current pos
 	if(holding_ball):
 		GameManager.current_pos = clamp(get_viewport().get_mouse_position().x / DisplayServer.window_get_size().x * GameManager.audio_length,0,GameManager.audio_length)
 	

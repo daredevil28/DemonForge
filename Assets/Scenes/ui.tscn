@@ -221,12 +221,6 @@ texture_normal = ExtResource("3_m2luq")
 texture_pressed = ExtResource("4_6ftkc")
 texture_hover = ExtResource("5_16p63")
 
-[node name="BPM" type="LineEdit" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
-layout_mode = 2
-size_flags_vertical = 3
-tooltip_text = "The Beats Per Minute of the song"
-placeholder_text = "BPM"
-
 [node name="ClientSettings" type="Window" parent="."]
 title = "Client Settings"
 initial_position = 1
@@ -356,22 +350,6 @@ size_flags_vertical = 4
 tooltip_text = "Max FPS (0 = infinite)"
 max_value = 10000.0
 value = 15.0
-
-[node name="SnappingFrequencyContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/SnappingFrequencyContainer"]
-layout_mode = 2
-size_flags_horizontal = 2
-text = "Snapping frequency"
-
-[node name="SnappingFrequency" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/SnappingFrequencyContainer" groups=["ClientSettings"]]
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-tooltip_text = "Amount of lines between each bar, increases snapping"
-max_value = 64.0
 
 [node name="TimeBetweenFramesContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
 layout_mode = 2
@@ -657,7 +635,7 @@ script = ExtResource("8_om2vj")
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
 [connection signal="file_selected" from="SongFileDialog" to="." method="_on_song_file_dialog_file_selected"]
 [connection signal="file_selected" from="PreviewFileDialog" to="." method="_on_preview_file_dialog_file_selected"]
-[connection signal="dir_selected" from="FolderDialog" to="." method="_on_folder_dialog_dir_selected"]
+[connection signal="dir_selected" from="FolderDialog" to="." method="_on_folder_selected"]
 [connection signal="index_pressed" from="MenuBar/File" to="." method="_on_file_index_pressed"]
 [connection signal="index_pressed" from="MenuBar/Properties" to="." method="_on_properties_index_pressed"]
 [connection signal="about_to_popup" from="SongProperties" to="." method="_on_song_properties_about_to_popup"]
@@ -673,12 +651,11 @@ script = ExtResource("8_om2vj")
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/ScrollSpeedContainer/ScrollSpeed" to="." method="_on_scroll_speed_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/OffsetContainer/Offset" to="." method="_on_offset_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/MaxFPSContainer/MaxFPS" to="." method="_on_max_fps_value_changed"]
-[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/SnappingFrequencyContainer/SnappingFrequency" to="." method="_on_snapping_frequency_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/TimeBetweenFramesContainer/TimeBetweenFrames" to="." method="_on_time_between_frames_value_changed"]
 [connection signal="about_to_popup" from="ExportPanel" to="." method="_on_export_panel_about_to_popup"]
 [connection signal="close_requested" from="ExportPanel" to="." method="_on_export_panel_close_requested"]
 [connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer/CustomFolderSelect" to="." method="_on_custom_folder_button_up"]
-[connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/CustomFolderLocation" to="." method="_on_folder_dialog_dir_selected"]
+[connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/CustomFolderLocation" to="." method="_on_folder_selected"]
 [connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/FolderName" to="." method="_on_folder_name_text_changed"]
 [connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/ExportProjectButton" to="." method="_on_export_project_button_up"]
 [connection signal="mouse_entered" from="NoteSettings" to="." method="_on_note_settings_mouse_entered"]
