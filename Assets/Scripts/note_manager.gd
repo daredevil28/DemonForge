@@ -205,7 +205,7 @@ func sort_all_notes() -> void:
 	note_nodes.sort_custom(sort_ascending_time)
 
 func sort_ascending_time(a : Note, b : Note) -> bool:
-	if(a["time"] < b["time"]):
+	if(a["time"] > b["time"]):
 		return true
 	return false
 	

@@ -127,6 +127,7 @@ func clean_project() -> void:
 	bpm = 60.0
 
 	current_pos = 0
+	NoteManager.add_new_note(0,7)
 	Global.notification_popup.play_notification("Project has been reset!", 0.5)
 #endregion
 
@@ -155,13 +156,24 @@ func screen_time_to_music_time(location : float) -> float:
 	#Like previous function but in reverse
 	return location / DisplayServer.window_get_size().x * audio_length / GameManager.scroll_speed
 
-func get_closest_snap_value(original_pos : float) -> float:
+func get_closest_snap_value(music_pos : float) -> float:
+	var start_time : float = 0
+	if(NoteManager.marker_nodes.size() != 0):
+		var bpm : int
+		var snapping_frequency : int
+		for marker : Marker in NoteManager.marker_nodes:
+				if(marker.time <= music_pos):
+					start_time = marker.time
+					bpm = marker.bpm
+					snapping_frequency = marker.snapping
 	#Gets the closest bar by comparing the snap backwards with the snap forwards and see which is closer
-	var seconds_per_beat : float = 60 / bpm / snapping_frequency
-	var before_snap : float = floorf((original_pos-seconds_per_beat / snapping_frequency) / seconds_per_beat) * seconds_per_beat
+	var beat_duration : float = 60 / bpm / snapping_frequency
+	var relative_pos : float = music_pos - start_time
+	var closest_beat : int = round(relative_pos / beat_duration)
+	var before_snap : float = start_time + closest_beat * beat_duration
 	var ahead_snap : float = before_snap + seconds_per_beat
 	
-	if(abs(original_pos - ahead_snap) < abs(original_pos - before_snap)):
+	if(abs(music_pos - ahead_snap) < abs(music_pos - before_snap)):
 		return ahead_snap
 	else:
 		return before_snap
@@ -390,6 +402,8 @@ func _input(event : InputEvent) -> void:
 						if(current_lane != 7):
 							if(!NoteManager.check_if_double_note_exists_at_time(new_pos["time_pos"])):
 								NoteManager.add_new_note(new_pos["time_pos"], current_lane)
+						else:
+							NoteManager.add_new_note(new_pos["time_pos"], current_lane)
 								
 					#If we are hovering over a note then set the note as the selected note
 					if(current_hovered_note != null):
