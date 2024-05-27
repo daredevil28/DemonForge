@@ -42,10 +42,10 @@ func _on_file_index_pressed(index : int) -> void:
 				open_dialog.popup()# > _on_open_dialog_file_selected()
 		2:
 			print("Save File")
-			if(GameManager.project_file == ""):
+			if(Global.file_manager.project_file == ""):
 				save_dialog.popup()# > _on_save_dialog_file_selected()
 			else:
-				GameManager.save_project(GameManager.project_file)
+				Global.file_manager.save_project(Global.file_manager.project_file)
 		3:
 			print("Export project")
 			export_panel.popup()# > _on_open_dialog_file_selected
@@ -78,7 +78,7 @@ func _on_open_dialog_file_selected(path : String) -> void:
 	Global.notification_popup.play_notification("Loading file: " + path, 2)
 	match result.get_string():
 		".json":
-			GameManager.project_file = path
+			Global.file_manager.project_file = path
 			print(".json")
 			var json_file : Dictionary = JSON.parse_string(FileAccess.get_file_as_string(path))
 			GameManager.setup_project(json_file)
@@ -88,7 +88,7 @@ func _on_open_dialog_file_selected(path : String) -> void:
 
 func _on_save_dialog_file_selected(path : String) -> void:
 	#File > Save File
-	GameManager.save_project(path)
+	Global.file_manager.save_project(path)
 
 func csv_to_json(csv_file : String) -> Array:
 	#Convert an existing .csv file to json. Generally not recommended for actually editing the chart (because of floating point inaccuracies) but still a possiblity
@@ -141,9 +141,9 @@ func _on_song_properties_about_to_popup() -> void:
 	#Which map it plays on
 	song_properties[3].selected = GameManager.map
 	#Path for the song file
-	song_properties[4].text = GameManager.song_file
+	song_properties[4].text = Global.file_manager.song_file
 	#Path to the preview file
-	song_properties[5].text = GameManager.preview_file
+	song_properties[5].text = Global.file_manager.preview_file
 	
 func _on_song_properties_close_requested() -> void:
 	song_properties_panel.visible = false
@@ -158,9 +158,9 @@ func _on_song_properties_close_requested() -> void:
 	#Which map it plays on
 	GameManager.map = song_properties[3].selected
 	#Path for the song file
-	GameManager.song_file = song_properties[4].text
+	Global.file_manager.song_file = song_properties[4].text
 	#Path to the preview file
-	GameManager.preview_file = song_properties[5].text
+	Global.file_manager.preview_file = song_properties[5].text
 
 func _on_song_select_file_button_up() -> void:
 	#Properties > Song Properties > song file select
@@ -168,7 +168,7 @@ func _on_song_select_file_button_up() -> void:
 
 func _on_song_file_dialog_file_selected(path : String) -> void:
 	#SongFileDialog
-	GameManager.song_file = path
+	Global.file_manager.song_file = path
 	#Song file
 	song_properties[4].text = path
 	
@@ -178,7 +178,7 @@ func _on_preview_select_file_button_up() -> void:
 	
 func _on_preview_file_dialog_file_selected(path: String) -> void:
 	#PreviewFileDialog
-	GameManager.preview_file = path
+	Global.file_manager.preview_file = path
 	song_properties[5].text = path
 #endregion
 	
@@ -224,8 +224,8 @@ func _on_audio_offset_value_changed(value: float) -> void:
 #region Export panel
 func _on_export_panel_about_to_popup() -> void:
 	#ExportPanel
-	export_settings[0].text = GameManager.custom_songs_folder
-	export_settings[1].text = GameManager.folder_name
+	export_settings[0].text = Global.file_manager.custom_songs_folder
+	export_settings[1].text = Global.file_manager.folder_name
 	export_settings[2].text = GameManager.check_for_errors()
 	
 func _on_export_panel_close_requested() -> void:
@@ -235,14 +235,14 @@ func _on_custom_folder_button_up() -> void:
 	folder_dialog.popup()
 	
 func _on_export_project_button_up() -> void:
-	GameManager.export_project()
+	Global.file_manager.export_project()
 
 func _on_folder_selected(dir : String) -> void:# Connects to both the texturebutton and the lineEdit button
-	GameManager.custom_songs_folder = dir
+	Global.file_manager.custom_songs_folder = dir
 	export_settings[0].text = dir
 	
 func _on_folder_name_text_changed(new_text : String) -> void:
-	GameManager.folder_name = 	"/"+new_text
+	Global.file_manager.folder_name = 	"/"+new_text
 #endregion
 
 #region Note settings panel

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bcoi5hfer5b8e"]
+[gd_scene load_steps=17 format=3 uid="uid://bcoi5hfer5b8e"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/drawer.gd" id="1_avsu0"]
 [ext_resource type="PackedScene" uid="uid://cdd5so8gpgl0q" path="res://Assets/Scenes/ui.tscn" id="1_obr5d"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://pokip0nsccq2" path="res://Assets/Sprites/Notes.png" id="10_b56au"]
 [ext_resource type="AudioStream" uid="uid://bae2fu377vmfw" path="res://Assets/DrumKit/Ride.wav" id="10_ob81e"]
 [ext_resource type="AudioStream" uid="uid://jfr6lnwq11fh" path="res://Assets/DrumKit/MetronomeHigh.wav" id="11_aohh4"]
+[ext_resource type="Script" path="res://Assets/Scripts/file_manager.gd" id="12_ejln6"]
 
 [node name="MainNode" type="Node"]
 
@@ -65,6 +66,9 @@ bus = &"SFX"
 stream = ExtResource("11_aohh4")
 volume_db = 10.0
 bus = &"SFX"
+
+[node name="FileManager" type="Node" parent="GameScene"]
+script = ExtResource("12_ejln6")
 
 [node name="NodeLanes" type="Node" parent="GameScene"]
 

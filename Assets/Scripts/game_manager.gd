@@ -9,11 +9,7 @@ var song_name : String = ""
 var artist_name : String = ""
 var difficulty : int = 0
 var map : int = 0
-var custom_songs_folder : String = ""
-var project_file : String = ""
-var folder_name : String = ""
 var bpm : float = 60.0
-var preview_file : String = ""
 var snapping_frequency : int = 4
 var audio_offset : float = 0
 
@@ -56,13 +52,6 @@ var scroll_speed : int = 50 :
 		scroll_speed = value
 		redraw_scene()
 		current_pos = current_pos
-		
-var song_file : String = "" :
-	#Set up audiostreamplayer as soon as it's set
-	set(value):
-		if value != song_file:
-			song_file = value
-			setup_audio(value)
 
 var audio_length : float = 60 :
 	#Return length of audio, if audio empty return default value
@@ -85,11 +74,6 @@ var current_pos : float = 0 :
 			NoteManager.play_notes(note, current_pos)
 #endregion
 
-func _ready() -> void:
-	#Default custom song location
-	if(OS.get_name() == "Windows"):
-		custom_songs_folder = OS.get_data_dir().rstrip("Roaming") + "LocalLow/Garage 51/Drums Rock/CustomSongs"
-	
 #region Project setup
 func setup_project(jsonString : Dictionary) -> void:
 	#Setup metadata, audio and all the notes
@@ -98,9 +82,9 @@ func setup_project(jsonString : Dictionary) -> void:
 	artist_name = metadata["artistName"]
 	difficulty = metadata["difficulty"]
 	map = metadata["map"]
-	song_file = metadata["songFile"]
-	preview_file = metadata["previewFile"]
-	folder_name = metadata["folderName"]
+	Global.file_manager.song_file = metadata["songFile"]
+	Global.file_manager.preview_file = metadata["previewFile"]
+	Global.file_manager.folder_name = metadata["folderName"]
 	
 	NoteManager.clear_all_notes()
 	
@@ -113,7 +97,7 @@ func setup_audio(audio_file : String) -> void:
 	if audio_file == "":
 		audio_player.stream = null
 	else:
-		audio_player.stream = AudioStreamOggVorbis.load_from_file(song_file)
+		audio_player.stream = AudioStreamOggVorbis.load_from_file(Global.file_manager.song_file)
 		current_pos = 0
 
 func clean_project() -> void:
@@ -123,8 +107,8 @@ func clean_project() -> void:
 	artist_name = ""
 	difficulty = 0
 	map = 0
-	song_file = ""
-	preview_file = ""
+	Global.file_manager.song_file = ""
+	Global.file_manager.preview_file = ""
 	bpm = 60.0
 
 	current_pos = 0
@@ -182,178 +166,23 @@ func mouse_snapped_screen_pos(pos : Vector2) -> Dictionary:
 	return {"screen_pos": snapped_pos,"time_pos":music_time}
 #endregion
 
-#region Files and saving related
-func save_project(path : String) -> void:
-	#Save project into a .json file
-	#Set up general json file as a dictionary
-	var json_data : Dictionary = {
-		"metaData":
-		[
-			{
-				"songName" : song_name,
-				"artistName" : artist_name,
-				"difficulty" : difficulty,
-				"map" : map,
-				"songFile" : song_file,
-				"previewFile" : preview_file,
-				"folderName" : folder_name
-			}
-		],
-		"marker" : [
-			
-		],
-		"notes" : 
-		[
-			
-		]
-	}
-	#Make a new array with the notes
-	var note_array : Array = []
-	for i : Note in NoteManager.note_nodes:
-		var individual_note : Dictionary = {
-		"time" : i.time,
-		"color" : i.color,
-		"interval" : i.interval
-		}
-		note_array.append(individual_note)
-	#Make a new array with the markers
-	var marker_array : Array = []
-	for i : Marker in NoteManager.marker_nodes:
-		var individual_marker : Dictionary = {
-			"time" : i.time,
-			"bpm" : i.bpm,
-			"snapping" : i.snapping
-		}
-		marker_array.append(individual_marker)
-	#Add both to the dictionary
-	json_data["notes"] = note_array
-	json_data["marker"] = marker_array
-	
-	var json_string : String = JSON.stringify(json_data, "\t",false)
-	#Check if path has .json at the end, else add it
-	var regex : RegEx = RegEx.new()
-	regex.compile("\\.(json)")
-	var result : RegExMatch = regex.search(path)
-	
-	var file : FileAccess
-	if(result.get_string() == ".json"):
-		file = FileAccess.open(path, FileAccess.WRITE)
-	else:
-		file = FileAccess.open(path + ".json", FileAccess.WRITE)
-	
-	file.store_string(json_string)
-	file.close()
-	project_changed = false
-	Global.notification_popup.play_notification("Project has been saved to: " + path, 2)
-
 func check_for_errors() -> String:
 	#Check for errors before exporting the project
 	var errors : String = ""
-	if(song_name == ""):
+	if(GameManager.song_name == ""):
 		errors += "No song name set\n"
-	if(artist_name == ""):
+	if(GameManager.artist_name == ""):
 		errors += "Artist name not set\n"
-	if(song_file == ""):
+	if(Global.file_manager.song_file == ""):
 		errors += "No song file specified\n"
-	if(preview_file == ""):
+	if(Global.file_manager.preview_file == ""):
 		errors += "No preview file specified\n"
-	if(folder_name == ""):
+	if(Global.file_manager.folder_name == ""):
 		errors += "Folder name not specified\n"
-	if(custom_songs_folder == ""):
+	if(Global.file_manager.custom_songs_folder == ""):
 		errors += "Custom songs folder not set\n"
 	return errors
-
-func export_project() -> void:
-	#Export the project to the custom songs folder
-	print("Exporting project")
-	#Check for errors and don't continue if any is found
-	var errors : String = check_for_errors()
-	if(errors != ""):
-		errors_found.emit(errors)
-	else:
-		errors_found.emit(errors)
-		#Set the path to the custom songs folder + the exported folder name
-		var path : String = custom_songs_folder + folder_name
-		print(path)
-		if(DirAccess.dir_exists_absolute(path)):
-			print("Path exists")
-		else:
-			print("Path don't exist")
-			DirAccess.make_dir_absolute(path)
-		var dir : DirAccess = DirAccess.open(path)
-		#Copy audio files to the folder
-		print(dir.copy(song_file,path + "/song.ogg"))
-		print(dir.copy(preview_file, path + "./preview.ogg"))
-		
-		#Making info.csv file
-		var info : FileAccess = FileAccess.open(path + "/info.csv",FileAccess.WRITE)
-		info.store_csv_line(PackedStringArray(["Song Name","Author Name","Difficulty","Song Duration in seconds","Song Map"]))
-		info.store_csv_line(PackedStringArray([song_name,artist_name,str(difficulty),roundi(audio_length),str(map)]))
-		info.close()
-		
-		NoteManager.sort_all_notes()
-		
-		#Write the first line
-		var notes : FileAccess = FileAccess.open(path + "/notes.csv",FileAccess.WRITE)
-		notes.store_line("Time [s],Enemy Type,Aux Color 1,Aux Color 2,Nº Enemies,interval,Aux")
-		var double_note : bool
-		#Everything below here is adapted from https://github.com/daredevil28/drumsrockmidiparser/blob/main/drumsrockparser.py#L76
-		for i : int in NoteManager.note_nodes.size():
-			var note : Note = NoteManager.note_nodes[i]
-			#If the previous was a double note then skip this iteration
-			if(double_note):
-				double_note = false
-				continue
-			
-			var note_time : String
-			var enemy_type : String = "1"
-			var color_1 : String
-			var color_2 : String
-			var interval : String = ""
-			var aux : String
-			
-			#if interval is not 0 then it's a drumroll
-			if(note.interval != 0):
-				enemy_type = "3"
-				interval = str(note.interval)
-			
-			#If this note and the next one have the exact same time then it's a double note
-			if(i+1 < NoteManager.note_nodes.size()):
-				if(note.time == NoteManager.note_nodes[i+1].time):
-					double_note = true
-					enemy_type = "2"
-					color_2 = str(NoteManager.note_nodes[i+1].color)
-			
-			note_time = str(note.time)
-			color_1 = str(note.color)
-			
-			if(!double_note):
-				color_2 = color_1
-			
-			if(int(color_2) < int(color_1)):
-				var temp : String = color_1
-				color_1 = color_2
-				color_2 = temp
-
-			match color_1:
-				"2":
-					aux = "7"
-				"1":
-					aux = "6"
-				"5":
-					aux = "5"
-				"3":
-					aux = "5"
-				"6":
-					aux = "8"
-				"4":
-					aux = "8"
-
-			notes.store_csv_line(PackedStringArray([note_time,enemy_type,color_1,color_2,"1",interval,aux]))
-		notes.close()
-		Global.notification_popup.play_notification("Project succesfully exported to: " + path, 1)
-#endregion
-
+	
 func _process(_delta : float) -> void:
 	if(audio_player.playing):
 		current_pos = (audio_player.get_playback_position() + AudioServer.get_time_since_last_mix()) + audio_offset / 100
