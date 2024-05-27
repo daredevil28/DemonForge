@@ -10,8 +10,6 @@ extends Control
 @onready var client_settings_panel : Window = $ClientSettings
 @onready var export_panel : Window = $ExportPanel
 @onready var song_properties : Array = get_tree().get_nodes_in_group("SongProperties")
-@onready var volume_sliders : Array = get_tree().get_nodes_in_group("VolumeSliders")
-@onready var client_settings : Array = get_tree().get_nodes_in_group("ClientSettings")
 @onready var export_settings : Array = get_tree().get_nodes_in_group("ExportSettings")
 @onready var note_settings : Array = get_tree().get_nodes_in_group("NoteSettings")
 @onready var note_settings_panel : Control = $NoteSettings
@@ -185,11 +183,11 @@ func _on_preview_file_dialog_file_selected(path: String) -> void:
 #region Client settings panel
 func _on_client_settings_about_to_popup() -> void:
 	#ClientSettings
-	client_settings[0].value = GameManager.scroll_speed
-	client_settings[1].value = NoteManager.offset
-	client_settings[2].value = Engine.max_fps
-	client_settings[3].value = OS.low_processor_usage_mode_sleep_usec
-	client_settings[4].value = GameManager.audio_offset
+	Global.client_settings[0].value = GameManager.scroll_speed
+	Global.client_settings[1].value = NoteManager.offset
+	Global.client_settings[2].value = Engine.max_fps
+	Global.client_settings[3].value = OS.low_processor_usage_mode_sleep_usec
+	Global.client_settings[4].value = GameManager.audio_offset
 	
 func _on_client_settings_close_requested() -> void:
 	client_settings_panel.visible = false

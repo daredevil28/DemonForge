@@ -2,7 +2,7 @@ class_name DialogManager extends ConfirmationDialog
 
 var current_callable : Callable
 
-func _ready() -> void:
+func _init() -> void:
 	Global.popup_dialog = self
 
 func play_dialog(new_title : String, new_text : String, function : Callable) -> void:

@@ -1,6 +1,6 @@
 extends Node2D
 
-func _ready() -> void:
+func _init() -> void:
 	Global.game_scene_node = self
 	
 func _draw() -> void:

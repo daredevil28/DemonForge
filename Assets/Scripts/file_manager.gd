@@ -1,4 +1,4 @@
-extends Node
+class_name FileManager extends Node
 
 var custom_songs_folder : String = ""
 var project_file : String = ""
@@ -15,9 +15,11 @@ var song_file : String = "" :
 func _init() -> void:
 	Global.file_manager = self
 	
+	
 func _ready() -> void:
 	if(OS.get_name() == "Windows"):
 		custom_songs_folder = OS.get_data_dir().rstrip("Roaming") + "LocalLow/Garage 51/Drums Rock/CustomSongs"
+	load_settings()
 #region Files and saving related
 func save_project(path : String) -> void:
 	#Save project into a .json file
@@ -172,3 +174,49 @@ func export_project() -> void:
 		notes.close()
 		Global.notification_popup.play_notification("Project succesfully exported to: " + path, 1)
 #endregion
+
+func save_settings() -> void:
+	var settings_json : Dictionary = {
+		"volume": [
+			{
+				"master": Global.volume_sliders[0].value,
+				"music": Global.volume_sliders[1].value,
+				"instruments": Global.volume_sliders[2].value,
+				"sfx": Global.volume_sliders[3].value
+			}
+		],
+		"settings": [
+			{
+				"scrollSpeed": GameManager.scroll_speed,
+				"lineOffset": NoteManager.offset,
+				"fps": Engine.max_fps,
+				"sleep": OS.low_processor_usage_mode_sleep_usec,
+				"audioOffset": GameManager.audio_offset
+			}
+		]
+	}
+	var settings_file : FileAccess = FileAccess.open("settings.cfg",FileAccess.WRITE)
+	var json_string : String = JSON.stringify(settings_json, "\t",false)
+	settings_file.store_string(json_string)
+	settings_file.close()
+
+func load_settings() -> void:
+	var settings_file : FileAccess = FileAccess.open("settings.cfg",FileAccess.READ)
+	
+	if(settings_file == null):
+		return
+	else:
+		var json_file = JSON.parse_string(settings_file.get_as_text())
+		var volume_settings : Dictionary = json_file["volume"][0]
+		Global.volume_sliders[0].value = volume_settings["master"]
+		Global.volume_sliders[1].value = volume_settings["music"]
+		Global.volume_sliders[2].value = volume_settings["instruments"]
+		Global.volume_sliders[3].value = volume_settings["sfx"]
+		
+		var settings : Dictionary = json_file["settings"][0]
+		
+		GameManager.scroll_speed = settings["scrollSpeed"]
+		NoteManager.offset = settings["lineOffset"]
+		Engine.max_fps = settings["fps"]
+		OS.low_processor_usage_mode_sleep_usec = settings["sleep"]
+		GameManager.audio_offset = settings["audioOffset"]

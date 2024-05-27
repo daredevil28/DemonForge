@@ -289,6 +289,7 @@ func _input(event : InputEvent) -> void:
 func _notification(what: int) -> void:
 	#Warn before exiting the program if we have not saved
 	if(what == NOTIFICATION_WM_CLOSE_REQUEST):
+		Global.file_manager.save_settings()
 		if(project_changed):
 			Global.popup_dialog.play_dialog("Project not saved!","The current project has not been saved, are you sure you want to exit?",get_tree().quit)
 		else:

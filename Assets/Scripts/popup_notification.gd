@@ -5,7 +5,7 @@ var notification_timer : float
 
 @onready var label : Label = $NotificationLabel
 
-func _ready() -> void:
+func _init() -> void:
 	Global.notification_popup = self
 
 func play_notification(text : String, timer : float) -> void:
