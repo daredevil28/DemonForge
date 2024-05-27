@@ -189,6 +189,7 @@ func _on_client_settings_about_to_popup() -> void:
 	client_settings[1].value = NoteManager.offset
 	client_settings[2].value = Engine.max_fps
 	client_settings[3].value = OS.low_processor_usage_mode_sleep_usec
+	client_settings[4].value = GameManager.audio_offset
 	
 func _on_client_settings_close_requested() -> void:
 	client_settings_panel.visible = false
@@ -215,6 +216,9 @@ func _on_offset_value_changed(value : float) -> void:
 	
 func _on_time_between_frames_value_changed(value: float) -> void:
 	OS.low_processor_usage_mode_sleep_usec = roundi(value)
+
+func _on_audio_offset_value_changed(value: float) -> void:
+	GameManager.audio_offset = value
 #endregion
 
 #region Export panel

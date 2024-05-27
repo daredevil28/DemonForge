@@ -15,6 +15,7 @@ var folder_name : String = ""
 var bpm : float = 60.0
 var preview_file : String = ""
 var snapping_frequency : int = 4
+var audio_offset : float = 0
 
 var is_another_window_focused : bool = false #ui_controller.gd -> check_for_window_focused()
 
@@ -150,11 +151,11 @@ func music_time_to_screen_time(time : float) -> float:
 	if time > 0:
 		percentage_elapsed = time / audio_length
 
-	return percentage_elapsed * DisplayServer.window_get_size().x * GameManager.scroll_speed
+	return percentage_elapsed * DisplayServer.window_get_size().x * scroll_speed
 
 func screen_time_to_music_time(location : float) -> float:
 	#Like previous function but in reverse
-	return location / DisplayServer.window_get_size().x * audio_length / GameManager.scroll_speed
+	return location / DisplayServer.window_get_size().x * audio_length / scroll_speed
 
 func get_closest_snap_value(music_pos : float) -> float:
 	var start_time : float = 0
@@ -166,23 +167,18 @@ func get_closest_snap_value(music_pos : float) -> float:
 					start_time = marker.time
 					bpm = marker.bpm
 					snapping_frequency = marker.snapping
-	#Gets the closest bar by comparing the snap backwards with the snap forwards and see which is closer
+					
 	var beat_duration : float = 60 / bpm / snapping_frequency
 	var relative_pos : float = music_pos - start_time
 	var closest_beat : int = round(relative_pos / beat_duration)
 	var before_snap : float = start_time + closest_beat * beat_duration
-	var ahead_snap : float = before_snap + seconds_per_beat
-	
-	if(abs(music_pos - ahead_snap) < abs(music_pos - before_snap)):
-		return ahead_snap
-	else:
-		return before_snap
+	return before_snap
 
 func mouse_snapped_screen_pos(pos : Vector2) -> Dictionary:
 	#Get the right music time and position based on screen position
 	var offset_pos : float = pos.x - NoteManager.offset
 	var music_time : float = get_closest_snap_value(screen_time_to_music_time(offset_pos) + current_pos)
-	var snapped_pos : float = GameManager.music_time_to_screen_time(music_time - current_pos) + NoteManager.offset
+	var snapped_pos : float = music_time_to_screen_time(music_time - current_pos) + NoteManager.offset
 	return {"screen_pos": snapped_pos,"time_pos":music_time}
 #endregion
 
@@ -360,7 +356,7 @@ func export_project() -> void:
 
 func _process(_delta : float) -> void:
 	if(audio_player.playing):
-		current_pos = audio_player.get_playback_position() + AudioServer.get_time_since_last_mix()
+		current_pos = (audio_player.get_playback_position() + AudioServer.get_time_since_last_mix()) + audio_offset / 100
 	
 	if current_lane == 0 || is_another_window_focused || current_hovered_note != null:
 		cursor_note.visible = false

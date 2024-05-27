@@ -367,6 +367,23 @@ size_flags_vertical = 4
 tooltip_text = "The time between frames in microseconds (Lower values mean more FPS but higher power usage)"
 max_value = 100000.0
 
+[node name="AudioOffsetContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/AudioOffsetContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Audio offset"
+
+[node name="AudioOffset" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/AudioOffsetContainer" groups=["ClientSettings"]]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+tooltip_text = "Audio offset in ms"
+min_value = -100000.0
+max_value = 100000.0
+
 [node name="ExportPanel" type="Window" parent="."]
 initial_position = 1
 size = Vector2i(900, 500)
@@ -652,6 +669,7 @@ script = ExtResource("8_om2vj")
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/OffsetContainer/Offset" to="." method="_on_offset_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/MaxFPSContainer/MaxFPS" to="." method="_on_max_fps_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/TimeBetweenFramesContainer/TimeBetweenFrames" to="." method="_on_time_between_frames_value_changed"]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/AudioOffsetContainer/AudioOffset" to="." method="_on_audio_offset_value_changed"]
 [connection signal="about_to_popup" from="ExportPanel" to="." method="_on_export_panel_about_to_popup"]
 [connection signal="close_requested" from="ExportPanel" to="." method="_on_export_panel_close_requested"]
 [connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer/CustomFolderSelect" to="." method="_on_custom_folder_button_up"]
