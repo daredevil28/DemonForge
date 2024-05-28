@@ -224,12 +224,10 @@ func _input(event : InputEvent) -> void:
 					if(!note_exists):
 						
 						#Check if double note exists
-						if(current_lane != 7):
-							if(!NoteManager.check_if_double_note_exists_at_time(new_pos["time_pos"])):
-								NoteManager.add_new_note(new_pos["time_pos"], current_lane)
-						else:
+						if(!NoteManager.check_if_double_note_exists_at_time(new_pos["time_pos"]) || current_lane == 7):
 							NoteManager.add_new_note(new_pos["time_pos"], current_lane)
-								
+							for i in NoteManager.marker_nodes:
+								print(i["time"])
 					#If we are hovering over a note then set the note as the selected note
 					if(current_hovered_note != null):
 						current_selected_note = current_hovered_note

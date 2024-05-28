@@ -17,13 +17,12 @@ func _draw() -> void:
 		
 		#Draw the markers up until the next marker or until song end
 		if(x+1 < NoteManager.marker_nodes.size()):
-			length = NoteManager.marker_nodes[x+1].time
+			length = NoteManager.marker_nodes[x+1].time - NoteManager.marker_nodes[x].time
 		else:
-			length = GameManager.audio_length
+			length = GameManager.audio_length - NoteManager.marker_nodes[x].time
 		var seconds_per_beat : float = 60 / NoteManager.marker_nodes[x].bpm / NoteManager.marker_nodes[x].snapping
 		#Use the position of the marker as the first line
 		var new_time : float = NoteManager.marker_nodes[x].time
-		
 		#Draw the beat lines
 		for i : int in range(0,snapped(length / seconds_per_beat, 0)):
 			var marker_distance : float = (-GameManager.music_time_to_screen_time(GameManager.current_pos) + GameManager.music_time_to_screen_time(new_time)) + NoteManager.offset
