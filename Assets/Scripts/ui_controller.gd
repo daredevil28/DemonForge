@@ -82,50 +82,11 @@ func _on_open_dialog_file_selected(path : String) -> void:
 			GameManager.setup_project(json_file)
 		".csv":
 			print(".csv")
-			NoteManager.initialise_notes(csv_to_json(path))
+			NoteManager.initialise_notes(Global.file_manager.csv_to_json(path))
 
 func _on_save_dialog_file_selected(path : String) -> void:
 	#File > Save File
 	Global.file_manager.save_project(path)
-
-func csv_to_json(csv_file : String) -> Array:
-	#Convert an existing .csv file to json. Generally not recommended for actually editing the chart (because of floating point inaccuracies) but still a possiblity
-	#Time,Enemy Type(1normal,2dual,3fat),Color1,Color2,1,Drumroll amount,Aux
-	var file : FileAccess = FileAccess.open(csv_file, FileAccess.READ)
-	
-	print(file.get_line()) #Skip the first line
-	
-	var note_array : Array = []
-	
-	#While we haven't reached end of file yet
-	while file.get_position() < file.get_length():
-		
-		#Read the csv line and advanced the line
-		var csv_line : PackedStringArray = file.get_csv_line()
-		var temp_array : Dictionary = {}
-		
-		#Read the second item which is the enemy type
-		match int(csv_line[1]):
-			1: #normal demon
-				temp_array["time"] = float(csv_line[0])
-				temp_array["color"] = int(csv_line[2])
-				temp_array["interval"] = int(0)
-				note_array.append(temp_array)
-			2: #dual demon
-				temp_array["time"] = float(csv_line[0])
-				temp_array["color"] = int(csv_line[2])
-				temp_array["interval"] = int(0)
-				note_array.append(temp_array)
-				#Since it's a double note duplicate the array and just change the color
-				var new_array : Dictionary = temp_array.duplicate()
-				new_array["color"] = int(csv_line[3])
-				note_array.append(new_array)
-			3: #fat demon
-				temp_array["time"] = float(csv_line[0])
-				temp_array["color"] = int(csv_line[2])
-				temp_array["interval"] = int(csv_line[5])
-				note_array.append(temp_array)
-	return note_array
 #endregion
 	
 #region Song properties panel

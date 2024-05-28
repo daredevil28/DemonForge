@@ -20,7 +20,7 @@ func _ready() -> void:
 	if(OS.get_name() == "Windows"):
 		custom_songs_folder = OS.get_data_dir().rstrip("Roaming") + "LocalLow/Garage 51/Drums Rock/CustomSongs"
 	load_settings()
-#region Files and saving related
+
 func save_project(path : String) -> void:
 	#Save project into a .json file
 	#Set up general json file as a dictionary
@@ -83,6 +83,45 @@ func save_project(path : String) -> void:
 	file.close()
 	GameManager.project_changed = false
 	Global.notification_popup.play_notification("Project has been saved to: " + path, 2)
+
+func csv_to_json(csv_file : String) -> Array:
+	#Convert an existing .csv file to json. Generally not recommended for actually editing the chart (because of floating point inaccuracies) but still a possiblity
+	#Time,Enemy Type(1normal,2dual,3fat),Color1,Color2,1,Drumroll amount,Aux
+	var file : FileAccess = FileAccess.open(csv_file, FileAccess.READ)
+	
+	print(file.get_line()) #Skip the first line
+	
+	var note_array : Array = []
+	
+	#While we haven't reached end of file yet
+	while file.get_position() < file.get_length():
+		
+		#Read the csv line and advanced the line
+		var csv_line : PackedStringArray = file.get_csv_line()
+		var temp_array : Dictionary = {}
+		
+		#Read the second item which is the enemy type
+		match int(csv_line[1]):
+			1: #normal demon
+				temp_array["time"] = float(csv_line[0])
+				temp_array["color"] = int(csv_line[2])
+				temp_array["interval"] = int(0)
+				note_array.append(temp_array)
+			2: #dual demon
+				temp_array["time"] = float(csv_line[0])
+				temp_array["color"] = int(csv_line[2])
+				temp_array["interval"] = int(0)
+				note_array.append(temp_array)
+				#Since it's a double note duplicate the array and just change the color
+				var new_array : Dictionary = temp_array.duplicate()
+				new_array["color"] = int(csv_line[3])
+				note_array.append(new_array)
+			3: #fat demon
+				temp_array["time"] = float(csv_line[0])
+				temp_array["color"] = int(csv_line[2])
+				temp_array["interval"] = int(csv_line[5])
+				note_array.append(temp_array)
+	return note_array
 
 func export_project() -> void:
 	#Export the project to the custom songs folder
@@ -173,7 +212,6 @@ func export_project() -> void:
 			notes.store_csv_line(PackedStringArray([note_time,enemy_type,color_1,color_2,"1",interval,aux]))
 		notes.close()
 		Global.notification_popup.play_notification("Project succesfully exported to: " + path, 1)
-#endregion
 
 func save_settings() -> void:
 	var settings_json : Dictionary = {

@@ -32,10 +32,10 @@ Download the .exe from releases and run it, no further configuration required
 - [ ] Custom asset support for audio/sprites
 - [ ] Undo/Redo button
 - [x] Support other timing signatures
-- [ ] Support dynamic time signatures and bpm
+- [x] Support dynamic time signatures and bpm
 - [ ] Set preview time stamp and length to automatically export preview
 - [x] Export project to the custom songs folder
-- [ ] Audio offset for syncing up audio
+- [x] Audio offset for syncing up audio
 
 # Compiling
 
