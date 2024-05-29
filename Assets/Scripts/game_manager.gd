@@ -221,13 +221,12 @@ func _input(event : InputEvent) -> void:
 				if(event.is_action_pressed("LeftClick")):
 					
 					#Check if note exists
-					if(!note_exists):
+					if(!note_exists && current_hovered_note == null):
 						
 						#Check if double note exists
 						if(!NoteManager.check_if_double_note_exists_at_time(new_pos["time_pos"]) || current_lane == 7):
 							NoteManager.add_new_note(new_pos["time_pos"], current_lane)
-							for i in NoteManager.marker_nodes:
-								print(i["time"])
+								
 					#If we are hovering over a note then set the note as the selected note
 					if(current_hovered_note != null):
 						current_selected_note = current_hovered_note
