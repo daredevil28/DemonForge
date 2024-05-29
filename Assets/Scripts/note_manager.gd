@@ -141,17 +141,18 @@ func add_new_note(time : float, color : int) -> void:
 		#Default values for markers
 		instance.bpm = 100
 		instance.snapping = 4
+		instance.time = time
 		marker_nodes.append(instance)
 		#Some logic (snapping) depend on the order of the markers in the array
 		marker_nodes.sort_custom(sort_ascending_time)
 	else:
 		instance = note_scene.instantiate()
 		instance.color = color
+		instance.time = time
 		note_nodes.append(instance)
 	
 	add_child(instance)
 	
-	instance.time = time
 	instance.position.y = reset_note_y(instance, color)
 	#Reset the X pos of the note
 	GameManager.current_pos = GameManager.current_pos
@@ -205,10 +206,8 @@ func sort_all_notes() -> void:
 	note_nodes.sort_custom(sort_ascending_time)
 
 func sort_ascending_time(a : Note, b : Note) -> bool:
-	if(a["time"] < b["time"]):
-		return true
-	return false
-	
+	return(a.time < b.time)
+
 func clear_all_notes() -> void:
 	print("clearing all notes")
 	for i : Note in note_nodes:
