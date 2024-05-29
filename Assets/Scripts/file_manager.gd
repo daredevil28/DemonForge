@@ -214,47 +214,44 @@ func export_project() -> void:
 		Global.notification_popup.play_notification("Project succesfully exported to: " + path, 1)
 
 func save_settings() -> void:
-	var settings_json : Dictionary = {
-		"volume": [
-			{
-				"master": Global.volume_sliders[0].value,
-				"music": Global.volume_sliders[1].value,
-				"instruments": Global.volume_sliders[2].value,
-				"sfx": Global.volume_sliders[3].value
-			}
-		],
-		"settings": [
-			{
-				"scrollSpeed": GameManager.scroll_speed,
-				"lineOffset": NoteManager.offset,
-				"fps": Engine.max_fps,
-				"sleep": OS.low_processor_usage_mode_sleep_usec,
-				"audioOffset": GameManager.audio_offset
-			}
-		]
-	}
-	var settings_file : FileAccess = FileAccess.open("settings.cfg",FileAccess.WRITE)
-	var json_string : String = JSON.stringify(settings_json, "\t",false)
-	settings_file.store_string(json_string)
-	settings_file.close()
+	#Initialise config file
+	var config = ConfigFile.new()
+	
+	#Set all the variables into the config file
+	config.set_value("volume","master",Global.volume_sliders[0].value)
+	config.set_value("volume","music",Global.volume_sliders[1].value)
+	config.set_value("volume","instruments",Global.volume_sliders[2].value)
+	config.set_value("volume","sfx",Global.volume_sliders[3].value)
+	
+	config.set_value("settings","scrollSpeed",GameManager.scroll_speed)
+	config.set_value("settings","lineOffset",NoteManager.offset)
+	config.set_value("settings","fps",Engine.max_fps)
+	config.set_value("settings","sleep",OS.low_processor_usage_mode_sleep_usec)
+	config.set_value("settings","audioOffset",GameManager.audio_offset)
+	
+	#Save the config file
+	config.save("user://settings.cfg")
 
 func load_settings() -> void:
-	var settings_file : FileAccess = FileAccess.open("settings.cfg",FileAccess.READ)
+	#Initialise config file
+	var config = ConfigFile.new()
 	
-	if(settings_file == null):
+	#Check for errors
+	var err = config.load("user://settings.cfg")
+	if err != OK:
+		printerr(err)
 		return
-	else:
-		var json_file = JSON.parse_string(settings_file.get_as_text())
-		var volume_settings : Dictionary = json_file["volume"][0]
-		Global.volume_sliders[0].value = volume_settings["master"]
-		Global.volume_sliders[1].value = volume_settings["music"]
-		Global.volume_sliders[2].value = volume_settings["instruments"]
-		Global.volume_sliders[3].value = volume_settings["sfx"]
-		
-		var settings : Dictionary = json_file["settings"][0]
-		
-		GameManager.scroll_speed = settings["scrollSpeed"]
-		NoteManager.offset = settings["lineOffset"]
-		Engine.max_fps = settings["fps"]
-		OS.low_processor_usage_mode_sleep_usec = settings["sleep"]
-		GameManager.audio_offset = settings["audioOffset"]
+	
+	#Set each volume setting
+	var current_it : int = 0
+	for volume : String in config.get_section_keys("volume"):
+		Global.volume_sliders[current_it].value = config.get_value("volume", volume)
+		current_it += 1
+	
+	#Set each normal setting
+	var settings : String = "settings"
+	GameManager.scroll_speed = int(config.get_value(settings, "scrollSpeed"))
+	NoteManager.offset = float(config.get_value(settings, "lineOffset"))
+	Engine.max_fps = int(config.get_value(settings, "fps"))
+	OS.low_processor_usage_mode_sleep_usec = int(config.get_value(settings, "sleep"))
+	GameManager.audio_offset = float(config.get_value(settings, "audioOffset"))
