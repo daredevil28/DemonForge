@@ -678,7 +678,7 @@ script = ExtResource("8_om2vj")
 [connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/ExportProjectButton" to="." method="_on_export_project_button_up"]
 [connection signal="mouse_entered" from="NoteSettings" to="." method="_on_note_settings_mouse_entered"]
 [connection signal="mouse_exited" from="NoteSettings" to="." method="_on_note_settings_mouse_exited"]
-[connection signal="value_changed" from="NoteSettings/NoteSettingsBox/HBoxContainer/NoteInterval" to="." method="_on_spin_box_value_changed" binds= ["Interval"]]
+[connection signal="value_changed" from="NoteSettings/NoteSettingsBox/HBoxContainer/NoteInterval" to="." method="_on_spin_box_value_changed" binds= ["interval"]]
 [connection signal="value_changed" from="NoteSettings/BPMMarkerSettingsBox/HBoxContainer/bpm" to="." method="_on_spin_box_value_changed" binds= ["bpm"]]
 [connection signal="value_changed" from="NoteSettings/BPMMarkerSettingsBox/HBoxContainer2/Snapping" to="." method="_on_spin_box_value_changed" binds= ["snapping"]]
 [connection signal="canceled" from="ConfirmationDialog" to="ConfirmationDialog" method="_on_canceled"]

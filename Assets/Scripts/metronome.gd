@@ -1,10 +1,13 @@
-extends Node
+class_name Metronome extends Node
 
 var last_beat : int
 var metronome_enabled : bool = true
 @onready var metronome_high : AudioStreamPlayer = $MetronomeLow
 @onready var metronome_low : AudioStreamPlayer = $MetronomeHigh
 
+func _init() -> void:
+	Global.metronome = self
+	
 func _process(_delta: float) -> void:
 	if(GameManager.audio_player.playing && metronome_enabled):
 		#Make sure we play the metronome only once

@@ -15,7 +15,6 @@ var song_file : String = "" :
 func _init() -> void:
 	Global.file_manager = self
 	
-	
 func _ready() -> void:
 	if(OS.get_name() == "Windows"):
 		custom_songs_folder = OS.get_data_dir().rstrip("Roaming") + "LocalLow/Garage 51/Drums Rock/CustomSongs"
@@ -74,15 +73,15 @@ func save_project(path : String) -> void:
 	var result : RegExMatch = regex.search(path)
 	
 	var file : FileAccess
-	if(result.get_string() == ".json"):
-		file = FileAccess.open(path, FileAccess.WRITE)
-	else:
+	if(result == null || result.get_string() != ".json"):
 		file = FileAccess.open(path + ".json", FileAccess.WRITE)
-	
+	else:
+		file = FileAccess.open(path, FileAccess.WRITE)
+
 	file.store_string(json_string)
 	file.close()
 	GameManager.project_changed = false
-	Global.notification_popup.play_notification("Project has been saved to: " + path, 2)
+	Global.notification_popup.play_notification("Project has been saved to: " + str(file.get_path()), 2)
 
 func csv_to_json(csv_file : String) -> Array:
 	#Convert an existing .csv file to json. Generally not recommended for actually editing the chart (because of floating point inaccuracies) but still a possiblity
@@ -228,6 +227,7 @@ func save_settings() -> void:
 	config.set_value("settings","fps",Engine.max_fps)
 	config.set_value("settings","sleep",OS.low_processor_usage_mode_sleep_usec)
 	config.set_value("settings","audioOffset",GameManager.audio_offset)
+	config.set_value("settings", "metronomeEnabled",Global.metronome.metronome_enabled)
 	
 	#Save the config file
 	config.save("user://settings.cfg")
@@ -255,3 +255,4 @@ func load_settings() -> void:
 	Engine.max_fps = int(config.get_value(settings, "fps"))
 	OS.low_processor_usage_mode_sleep_usec = int(config.get_value(settings, "sleep"))
 	GameManager.audio_offset = float(config.get_value(settings, "audioOffset"))
+	Global.metronome.metronome_enabled = bool(config.get_value(settings, "metronomeEnabled"))

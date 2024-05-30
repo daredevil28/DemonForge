@@ -217,6 +217,7 @@ func _on_note_settings_mouse_exited() -> void:
 func _on_spin_box_value_changed(value: float, box : String) -> void:
 	#Change the specific box
 	GameManager.project_changed = true
+	print(box)
 	if(selected_note != null):
 		match box:
 			"interval":
