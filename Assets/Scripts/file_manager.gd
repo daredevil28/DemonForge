@@ -250,9 +250,15 @@ func load_settings() -> void:
 	
 	#Set each normal setting
 	var settings : String = "settings"
-	GameManager.scroll_speed = int(config.get_value(settings, "scrollSpeed"))
-	NoteManager.offset = float(config.get_value(settings, "lineOffset"))
-	Engine.max_fps = int(config.get_value(settings, "fps"))
-	OS.low_processor_usage_mode_sleep_usec = int(config.get_value(settings, "sleep"))
-	GameManager.audio_offset = float(config.get_value(settings, "audioOffset"))
-	Global.metronome.metronome_enabled = bool(config.get_value(settings, "metronomeEnabled"))
+	if(config.has_section_key(settings,"scrollSpeed")):
+		GameManager.scroll_speed = int(config.get_value(settings, "scrollSpeed"))
+	if(config.has_section_key(settings,"lineOffset")):
+		NoteManager.offset = float(config.get_value(settings, "lineOffset"))
+	if(config.has_section_key(settings,"fps")):
+		Engine.max_fps = int(config.get_value(settings, "fps"))
+	if(config.has_section_key(settings,"sleep")):
+		OS.low_processor_usage_mode_sleep_usec = int(config.get_value(settings, "sleep"))
+	if(config.has_section_key(settings,"audioOffset")):
+		GameManager.audio_offset = float(config.get_value(settings, "audioOffset"))
+	if(config.has_section_key(settings,"metronomeEnabled")):
+		Global.metronome.metronome_enabled = bool(config.get_value(settings, "metronomeEnabled"))
