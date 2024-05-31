@@ -22,6 +22,8 @@ var current_hovered_note
 var current_selected_note
 var current_lane : int
 
+var current_bpm_marker : Marker
+
 var cursor_note : Sprite2D #<- cursor_note.gd _ready()
 var note_sprite : Resource = load("res://Assets/Sprites/Notes.png")
 var marker_sprite : Resource = load("res://Assets/Sprites/BPMMarker.png")
@@ -41,11 +43,11 @@ var seconds_per_beat : float :
 		
 var current_beat : int :
 	get:
-		return current_pos / seconds_per_beat
+		return (current_pos - current_bpm_marker.time) / seconds_per_beat
 
 var current_measure : int :
 	get:
-		return current_beat / 4
+		return current_beat / snapping_frequency
 
 var scroll_speed : int = 50 :
 	set(value):
@@ -67,6 +69,7 @@ var current_pos : float = 0 :
 		current_pos = value
 		for marker : Marker in NoteManager.marker_nodes:
 			if(marker.time <= value):
+				current_bpm_marker = marker
 				bpm = marker.bpm
 				snapping_frequency = marker.snapping
 			NoteManager.play_notes(marker, current_pos)
