@@ -10,6 +10,7 @@ Download the .exe from releases and run it, no further configuration required
 
 - Make sure that your audio is snapped properly first in a program like Audacity [Tutorial](https://steamcommunity.com/sharedfiles/filedetails/?id=2989549859)
 - Put all your files (song.ogg, preview.ogg) in 1 folder for save keeping
+- Press new file (File > New File)
 - Set up all the right data in Properties > Song Properties
 - Go to File > Save File to save a .json of your chart
 - Place notes by left clicking on the chart, remove notes by right clicking on a note. You can change drum roll intervals by left clicking on a note and changing the interval on the bottom left
@@ -51,7 +52,6 @@ The .exe should be exported into ProjectFolder/Build/DemonForge.exe
 # Possible future features
 
 * Use a cache of notes instead of instantiating every note seperately
-* Dynamic BPM changes
 * Drum track seperation with something like [OpenVINO](https://github.com/openvinotoolkit/openvino)
 
 # Contributing

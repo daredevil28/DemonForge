@@ -63,6 +63,11 @@ func _on_properties_index_pressed(index : int) -> void:
 				client_settings_panel.popup()# > _on_client_settings_about_to_popup
 			else:
 				client_settings_panel.visible = false
+				
+func _on_tools_index_pressed(index: int) -> void:
+	match index:
+		0:
+			NoteManager.snap_all_notes_to_nearest()
 #endregion
 
 #region Everything related to files
@@ -217,7 +222,6 @@ func _on_note_settings_mouse_exited() -> void:
 func _on_spin_box_value_changed(value: float, box : String) -> void:
 	#Change the specific box
 	GameManager.project_changed = true
-	print(box)
 	if(selected_note != null):
 		match box:
 			"interval":

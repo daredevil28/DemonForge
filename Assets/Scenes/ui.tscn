@@ -95,12 +95,12 @@ offset_bottom = 40.0
 
 [node name="File" type="PopupMenu" parent="MenuBar"]
 title = "Test"
-size = Vector2i(194, 100)
+size = Vector2i(194, 116)
 hide_on_state_item_selection = true
 item_count = 4
-item_0/text = "New project (Ctrl + N)"
+item_0/text = "New Project (Ctrl + N)"
 item_0/id = 0
-item_1/text = "Load File(Ctrl + L)"
+item_1/text = "Load File (Ctrl + L)"
 item_1/id = 1
 item_2/text = "Save File (Ctrl + S)"
 item_2/id = 2
@@ -114,6 +114,12 @@ item_0/text = "Song Properties"
 item_0/id = 0
 item_1/text = "Client Options"
 item_1/id = 1
+
+[node name="Tools" type="PopupMenu" parent="MenuBar"]
+size = Vector2i(150, 100)
+item_count = 1
+item_0/text = "Snap to nearest"
+item_0/id = 0
 
 [node name="SongProperties" type="Window" parent="."]
 title = "Song Properties"
@@ -655,6 +661,7 @@ script = ExtResource("8_om2vj")
 [connection signal="dir_selected" from="FolderDialog" to="." method="_on_folder_selected"]
 [connection signal="index_pressed" from="MenuBar/File" to="." method="_on_file_index_pressed"]
 [connection signal="index_pressed" from="MenuBar/Properties" to="." method="_on_properties_index_pressed"]
+[connection signal="index_pressed" from="MenuBar/Tools" to="." method="_on_tools_index_pressed"]
 [connection signal="about_to_popup" from="SongProperties" to="." method="_on_song_properties_about_to_popup"]
 [connection signal="close_requested" from="SongProperties" to="." method="_on_song_properties_close_requested"]
 [connection signal="button_up" from="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer/SongSelectFile" to="." method="_on_song_select_file_button_up"]
