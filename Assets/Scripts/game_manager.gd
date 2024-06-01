@@ -18,8 +18,8 @@ var is_another_window_focused : bool = false #ui_controller.gd -> check_for_wind
 #If any change has been made to the project then give warnings if it hasn't been saved yet
 var project_changed : bool
 
-var current_hovered_note
-var current_selected_note
+var current_hovered_note : Note
+var current_selected_note : Note
 var current_lane : int
 
 var current_bpm_marker : Marker
@@ -27,6 +27,9 @@ var current_bpm_marker : Marker
 var cursor_note : Sprite2D #<- cursor_note.gd _ready()
 var note_sprite : Resource = load("res://Assets/Sprites/Notes.png")
 var marker_sprite : Resource = load("res://Assets/Sprites/BPMMarker.png")
+
+var undo_actions : Array[Action] = []
+var redo_actions : Array[Action] = []
 
 signal errors_found(errors : String)
 signal note_selected(note : Note)
@@ -169,6 +172,43 @@ func mouse_snapped_screen_pos(pos : Vector2) -> Dictionary:
 	return {"screen_pos": snapped_pos,"time_pos":music_time}
 #endregion
 
+#region undo/redo functions
+func add_undo_action(action : Action) -> void:
+	undo_actions.append(action)
+
+func add_redo_action(action : Action) -> void:
+	redo_actions.append(action)
+	
+func run_action(action : Action) -> void:
+	var new_action : Action
+	match action.action_name:
+		# The action was an add so remove the note
+		Action.ActionName.NOTEADD:
+			NoteManager.remove_note_at_time(action.time, action.color)
+			
+			new_action = NoteAction.new()
+			new_action.action_name = Action.ActionName.NOTEREMOVE
+			new_action.time = action.time
+			new_action.color = action.color
+			
+		# The action was a remove so add the note
+		Action.ActionName.NOTEREMOVE:
+			NoteManager.add_new_note(action.time, action.color)
+			
+			new_action = NoteAction.new()
+			new_action.action_name = Action.ActionName.NOTEADD
+			new_action.time = action.time
+			new_action.color = action.color
+				
+	if(action.current_action == action.ActionType.UNDO):
+		new_action.current_action = Action.ActionType.REDO
+		add_redo_action(new_action)
+		
+	elif(action.current_action == action.ActionType.REDO):
+		add_undo_action(new_action)
+		
+#endregion
+
 func check_for_errors() -> String:
 	#Check for errors before exporting the project
 	var errors : String = ""
@@ -229,6 +269,13 @@ func _input(event : InputEvent) -> void:
 						#Check if double note exists
 						if(!NoteManager.check_if_double_note_exists_at_time(new_pos["time_pos"]) || current_lane == 7):
 							NoteManager.add_new_note(new_pos["time_pos"], current_lane)
+							
+							#Add action to the undo array
+							var new_action : NoteAction = NoteAction.new()
+							new_action.action_name = Action.ActionName.NOTEADD
+							new_action.time = new_pos["time_pos"]
+							new_action.color = current_lane
+							add_undo_action(new_action)
 								
 					#If we are hovering over a note then set the note as the selected note
 					if(current_hovered_note != null):
@@ -237,13 +284,21 @@ func _input(event : InputEvent) -> void:
 						
 				if(event.is_action_pressed("RightClick")):
 					
-					#Unselect the selected note
+					#Unselect the selected note if we right click anywhere else in the scene
 					if(current_selected_note != null):
 						note_deselected.emit(current_selected_note)
 						current_selected_note = null
 						
 					#Remove the note if we are hovering over a note
 					if(current_hovered_note != null):
+						
+						#Add action to the undo array
+						var new_action : NoteAction = NoteAction.new()
+						new_action.action_name = Action.ActionName.NOTEREMOVE
+						new_action.time = current_hovered_note.time
+						new_action.color = current_hovered_note.color
+						add_undo_action(new_action)
+						
 						NoteManager.remove_note_at_time(current_hovered_note.time, current_hovered_note.color)
 						current_hovered_note = null
 					
@@ -265,7 +320,7 @@ func _input(event : InputEvent) -> void:
 			
 			current_pos -= seconds_per_beat / snapping_frequency
 			current_pos = get_closest_snap_value(current_pos)
-			if current_pos < 0:
+			if(current_pos < 0):
 				current_pos = 0
 
 	if(event.is_action_pressed("TogglePlay") && is_another_window_focused == false):
@@ -285,6 +340,18 @@ func _input(event : InputEvent) -> void:
 					else:
 						continue
 				play_music()
+
+func _shortcut_input(event: InputEvent) -> void:
+	#Ctrl + Y
+	if(event.is_action_pressed("Redo")):
+		if(redo_actions.size() != 0):
+			run_action(redo_actions.pop_back())
+		return
+	#Ctrl + Z
+	if(event.is_action_pressed("Undo")):
+		if(undo_actions.size() != 0):
+			run_action(undo_actions.pop_back())
+		return
 
 func _notification(what: int) -> void:
 	#Warn before exiting the program if we have not saved

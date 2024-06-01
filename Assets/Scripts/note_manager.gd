@@ -181,6 +181,7 @@ func snap_all_notes_to_nearest() -> void:
 	for i : Note in note_nodes:
 		i.time = GameManager.get_closest_snap_value(i.time)
 	GameManager.current_pos = GameManager.current_pos
+
 func check_if_note_exists_at_mouse_location(time : float, color : int) -> bool:
 	#If the note is a marker
 	if(color == 7):
