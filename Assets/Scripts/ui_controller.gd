@@ -262,14 +262,14 @@ func _on_note_selected(note : InternalNote) -> void:# < GameManager.note_selecte
 		note_settings[2].value = selected_note.snapping
 		note_settings_panel.get_child(0).visible = false
 		note_settings_panel.get_child(1).visible = true
-	else:
+	if(note is Note):
 		note_settings[0].value = selected_note.interval
 		note_settings_panel.get_child(0).visible = true
 		note_settings_panel.get_child(1).visible = false
 	note_settings_panel.visible = true
 	opening_note_settings = false
 
-func _on_note_deselected(_note : Note) -> void:
+func _on_note_deselected(_note : InternalNote) -> void:
 	note_settings_panel.visible = false
 	selected_note = null
 #endregion

@@ -119,6 +119,8 @@ func clean_project() -> void:
 
 	current_pos = 0
 	NoteManager.add_new_note(0,7)
+	undo_actions.clear()
+	redo_actions.clear()
 	Global.notification_popup.play_notification("Project has been reset!", 0.5)
 #endregion
 
@@ -185,14 +187,23 @@ func run_action(action : Action) -> void:
 	match action.action_name:
 		# The action was an add so remove the note
 		Action.ActionName.NOTEADD:
-			#Run reverse of action
-			NoteManager.remove_note_at_time(action.time, action.color)
+			#Get the old note
+			var old_note : InternalNote = NoteManager.get_note_at_time(action.time, action.color)
 			
 			#Make new action for undo/redo
 			new_action = NoteAction.new(Action.ActionName.NOTEREMOVE)
-			new_action.time = action.time
-			new_action.color = action.color
-			new_action.interval = action.interval
+			new_action.time = old_note.time
+			new_action.color = old_note.color
+			if(old_note is Note):
+				new_action.interval = action.interval
+			if(old_note is Marker):
+				new_action.bpm = old_note.bpm
+				new_action.snapping = old_note.snapping
+			
+			#Run reverse of action
+			NoteManager.remove_note_at_time(action.time, action.color)
+			
+			Global.notification_popup.play_notification(str(Action.ActionType.keys()[action.action_type]) + " note at " + str(action.time), 1)
 			
 		# The action was a remove so add the note
 		Action.ActionName.NOTEREMOVE:
@@ -210,25 +221,40 @@ func run_action(action : Action) -> void:
 			new_action.time = action.time
 			new_action.color = action.color
 			
+			Global.notification_popup.play_notification(str(Action.ActionType.keys()[action.action_type]) + " note at " + str(action.time), 1)
+			
 		# The action was a value changed
 		Action.ActionName.VALUECHANGED:
+			#Create new action
 			new_action = ValueAction.new(Action.ActionName.VALUECHANGED)
 			new_action.time = action.time
 			new_action.color = action.color
 			var note : InternalNote = NoteManager.get_note_at_time(action.time,action.color)
-			new_action.old_value = note.interval
 			
 			match action.value_type:
 				ValueAction.ValueType.INTERVAL:
-					note.interval = int(action.old_value)
+					new_action.old_value = note.interval
 					new_action.value_type = ValueAction.ValueType.INTERVAL
+					
+					note.interval = int(action.old_value)
+					
 				ValueAction.ValueType.BPM:
-					note.bpm = float(action.old_value)
+					new_action.old_value = note.bpm
 					new_action.value_type = ValueAction.ValueType.BPM
+					
+					note.bpm = float(action.old_value)
+					
 				ValueAction.ValueType.SNAPPING:
+					new_action.old_value = note.snapping
+					
 					note.snapping = int(action.old_value)
 					new_action.value_type = ValueAction.ValueType.SNAPPING
+				
 			GameManager.redraw_scene()
+			Global.notification_popup.play_notification(str(Action.ActionType.keys()[action.action_type]) +
+			" " + str(ValueAction.ValueType.keys()[new_action.value_type]) +
+			" to " + str(action.old_value) +
+			" at " + str(action.time), 1)
 		
 	if(action.action_type == action.ActionType.UNDO):
 		new_action.action_type = Action.ActionType.REDO
@@ -324,7 +350,11 @@ func _input(event : InputEvent) -> void:
 						var new_action : NoteAction = NoteAction.new(Action.ActionName.NOTEREMOVE)
 						new_action.time = current_hovered_note.time
 						new_action.color = current_hovered_note.color
-						new_action.interval = current_hovered_note.interval
+						if(current_hovered_note is Note):
+							new_action.interval = current_hovered_note.interval
+						if(current_hovered_note is Marker):
+							new_action.bpm = current_hovered_note.bpm
+							new_action.snapping = current_hovered_note.snapping
 						add_undo_action(new_action)
 						
 						NoteManager.remove_note_at_time(current_hovered_note.time, current_hovered_note.color)
