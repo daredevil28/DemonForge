@@ -17,6 +17,7 @@ extends Control
 @onready var notification_popup : Control = $NotificationContainer
 
 var selected_note : Note
+var opening_note_settings : bool
 
 func _ready() -> void:
 	GameManager.note_selected.connect(_on_note_selected)
@@ -222,22 +223,40 @@ func _on_note_settings_mouse_exited() -> void:
 func _on_spin_box_value_changed(value: float, box : String) -> void:
 	#Change the specific box
 	GameManager.project_changed = true
+	
 	if(selected_note != null):
-		match box:
-			"interval":
-				selected_note.interval = value
-			"bpm":
-				selected_note.bpm = value
-				GameManager.redraw_scene()
-			"snapping":
-				selected_note.snapping = value
-				GameManager.redraw_scene()
+		if(opening_note_settings == false):
+			var new_action : ValueAction = ValueAction.new(Action.ActionName.VALUECHANGED)
+			new_action.time = selected_note.time
+			new_action.color = selected_note.color
+			
+			match box:
+				
+				"interval":
+					new_action.value_type = ValueAction.ValueType.INTERVAL
+					new_action.old_value = selected_note.interval
+					selected_note.interval = value
+					
+				"bpm":
+					new_action.value_type = ValueAction.ValueType.BPM
+					new_action.old_value = selected_note.bpm
+					selected_note.bpm = value
+					GameManager.redraw_scene()
+					
+				"snapping":
+					new_action.value_type = ValueAction.ValueType.SNAPPING
+					new_action.old_value = selected_note.snapping
+					selected_note.snapping = value
+					GameManager.redraw_scene()
+					
+			GameManager.add_undo_action(new_action)
 
 func _on_note_selected(note : Note) -> void:# < GameManager.note_selected
-	#Called when GameManager sends note_selected
-	#Makes the note settings panel visible
+	# Called when GameManager sends note_selected
+	# Makes the note settings panel visible
 	selected_note = note
-	note_settings[0].value = selected_note.interval
+	opening_note_settings = true
+	# If note is a marker then show the marker panel, else show the note panel
 	if(note is Marker):
 		note_settings[1].value = selected_note.bpm
 		note_settings[2].value = selected_note.snapping
@@ -248,8 +267,9 @@ func _on_note_selected(note : Note) -> void:# < GameManager.note_selected
 		note_settings_panel.get_child(0).visible = true
 		note_settings_panel.get_child(1).visible = false
 	note_settings_panel.visible = true
+	opening_note_settings = false
 
-func _on_note_deselected(note : Note) -> void:
+func _on_note_deselected(_note : Note) -> void:
 	note_settings_panel.visible = false
 	selected_note = null
 #endregion

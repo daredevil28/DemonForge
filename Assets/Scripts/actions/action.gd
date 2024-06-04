@@ -3,6 +3,7 @@ class_name Action extends Object
 enum ActionName {
 	NOTEADD,
 	NOTEREMOVE,
+	VALUECHANGED,
 }
 
 enum ActionType {
@@ -10,5 +11,9 @@ enum ActionType {
 	REDO,
 }
 
-var current_action : ActionType = ActionType.UNDO
 var action_name : ActionName
+var action_type : ActionType = ActionType.UNDO
+
+func _init(name : ActionName) -> void:
+	action_name = name
+	

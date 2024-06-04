@@ -175,7 +175,8 @@ func mouse_snapped_screen_pos(pos : Vector2) -> Dictionary:
 #region undo/redo functions
 func add_undo_action(action : Action) -> void:
 	undo_actions.append(action)
-
+	redo_actions.clear()
+	
 func add_redo_action(action : Action) -> void:
 	redo_actions.append(action)
 	
@@ -184,29 +185,56 @@ func run_action(action : Action) -> void:
 	match action.action_name:
 		# The action was an add so remove the note
 		Action.ActionName.NOTEADD:
+			#Run reverse of action
 			NoteManager.remove_note_at_time(action.time, action.color)
 			
-			new_action = NoteAction.new()
-			new_action.action_name = Action.ActionName.NOTEREMOVE
+			#Make new action for undo/redo
+			new_action = NoteAction.new(Action.ActionName.NOTEREMOVE)
 			new_action.time = action.time
 			new_action.color = action.color
+			new_action.interval = action.interval
 			
 		# The action was a remove so add the note
 		Action.ActionName.NOTEREMOVE:
-			NoteManager.add_new_note(action.time, action.color)
+			#Run reverse of action and return note
+			var new_note : Note = NoteManager.add_new_note(action.time, action.color)
+			#Set the old values back
+			new_note.interval = action.interval
+			if(new_note is Marker):
+				new_note.bpm = action.bpm
+				new_note.snapping = action.snapping
 			
-			new_action = NoteAction.new()
-			new_action.action_name = Action.ActionName.NOTEADD
+			#Make new action for undo/redo
+			new_action = NoteAction.new(Action.ActionName.NOTEADD)
 			new_action.time = action.time
 			new_action.color = action.color
-				
-	if(action.current_action == action.ActionType.UNDO):
-		new_action.current_action = Action.ActionType.REDO
-		add_redo_action(new_action)
+			
+		# The action was a value changed
+		Action.ActionName.VALUECHANGED:
+			new_action = ValueAction.new(Action.ActionName.VALUECHANGED)
+			new_action.time = action.time
+			new_action.color = action.color
+			var note : Note = NoteManager.get_note_at_time(action.time,action.color)
+			new_action.old_value = note.interval
+			
+			match action.value_type:
+				ValueAction.ValueType.INTERVAL:
+					note.interval = int(action.old_value)
+					new_action.value_type = ValueAction.ValueType.INTERVAL
+				ValueAction.ValueType.BPM:
+					note.bpm = float(action.old_value)
+					new_action.value_type = ValueAction.ValueType.BPM
+				ValueAction.ValueType.SNAPPING:
+					note.snapping = int(action.old_value)
+					new_action.value_type = ValueAction.ValueType.SNAPPING
+			GameManager.redraw_scene()
 		
-	elif(action.current_action == action.ActionType.REDO):
-		add_undo_action(new_action)
+	if(action.action_type == action.ActionType.UNDO):
+		new_action.action_type = Action.ActionType.REDO
+		redo_actions.append(new_action)
 		
+	elif(action.action_type == action.ActionType.REDO):
+		undo_actions.append(new_action)
 #endregion
 
 func check_for_errors() -> String:
@@ -271,8 +299,7 @@ func _input(event : InputEvent) -> void:
 							NoteManager.add_new_note(new_pos["time_pos"], current_lane)
 							
 							#Add action to the undo array
-							var new_action : NoteAction = NoteAction.new()
-							new_action.action_name = Action.ActionName.NOTEADD
+							var new_action : NoteAction = NoteAction.new(Action.ActionName.NOTEADD)
 							new_action.time = new_pos["time_pos"]
 							new_action.color = current_lane
 							add_undo_action(new_action)
@@ -293,10 +320,10 @@ func _input(event : InputEvent) -> void:
 					if(current_hovered_note != null):
 						
 						#Add action to the undo array
-						var new_action : NoteAction = NoteAction.new()
-						new_action.action_name = Action.ActionName.NOTEREMOVE
+						var new_action : NoteAction = NoteAction.new(Action.ActionName.NOTEREMOVE)
 						new_action.time = current_hovered_note.time
 						new_action.color = current_hovered_note.color
+						new_action.interval = current_hovered_note.interval
 						add_undo_action(new_action)
 						
 						NoteManager.remove_note_at_time(current_hovered_note.time, current_hovered_note.color)

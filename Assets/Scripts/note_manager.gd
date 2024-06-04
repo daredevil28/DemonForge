@@ -131,7 +131,7 @@ func get_note_lane_y(lane : int) -> float:
 		_:
 			return 0
 
-func add_new_note(time : float, color : int) -> void:
+func add_new_note(time : float, color : int) -> Note:
 	#Add a new note to the chart
 	GameManager.project_changed = true
 	var instance : Note
@@ -156,6 +156,8 @@ func add_new_note(time : float, color : int) -> void:
 	instance.position.y = reset_note_y(instance, color)
 	#Reset the X pos of the note
 	GameManager.current_pos = GameManager.current_pos
+	
+	return instance
 
 func remove_note_at_time(time : float, color : int) -> void:
 	#Remove a note from the chart at the specified time
@@ -176,6 +178,20 @@ func remove_note_at_time(time : float, color : int) -> void:
 			#Redraw the scene for if we deleted a marker note
 			GameManager.redraw_scene()
 			break;
+
+func get_note_at_time(time : float, color : int) -> Note:
+	var array : Array
+	
+	if(color == 7):
+		array = marker_nodes
+	else:
+		array = note_nodes
+	
+	for i : Note in array:
+		#If we find an exact time and color match then return the note
+		if(i.time == time && i.color == color):
+			return i
+	return null
 
 func snap_all_notes_to_nearest() -> void:
 	for i : Note in note_nodes:
