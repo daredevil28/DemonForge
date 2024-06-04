@@ -16,7 +16,7 @@ extends Control
 @onready var song_time_label : Label = $SongTimeLabel
 @onready var notification_popup : Control = $NotificationContainer
 
-var selected_note : Note
+var selected_note : InternalNote
 var opening_note_settings : bool
 
 func _ready() -> void:
@@ -251,7 +251,7 @@ func _on_spin_box_value_changed(value: float, box : String) -> void:
 					
 			GameManager.add_undo_action(new_action)
 
-func _on_note_selected(note : Note) -> void:# < GameManager.note_selected
+func _on_note_selected(note : InternalNote) -> void:# < GameManager.note_selected
 	# Called when GameManager sends note_selected
 	# Makes the note settings panel visible
 	selected_note = note

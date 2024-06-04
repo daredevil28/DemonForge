@@ -18,8 +18,8 @@ var is_another_window_focused : bool = false #ui_controller.gd -> check_for_wind
 #If any change has been made to the project then give warnings if it hasn't been saved yet
 var project_changed : bool
 
-var current_hovered_note : Note
-var current_selected_note : Note
+var current_hovered_note : InternalNote
+var current_selected_note : InternalNote
 var current_lane : int
 
 var current_bpm_marker : Marker
@@ -32,8 +32,8 @@ var undo_actions : Array[Action] = []
 var redo_actions : Array[Action] = []
 
 signal errors_found(errors : String)
-signal note_selected(note : Note)
-signal note_deselected(note : Note)
+signal note_selected(note : InternalNote)
+signal note_deselected(note : InternalNote)
 
 #region Getter/Setters
 var seconds_per_measure : float :
@@ -197,9 +197,10 @@ func run_action(action : Action) -> void:
 		# The action was a remove so add the note
 		Action.ActionName.NOTEREMOVE:
 			#Run reverse of action and return note
-			var new_note : Note = NoteManager.add_new_note(action.time, action.color)
+			var new_note : InternalNote = NoteManager.add_new_note(action.time, action.color)
 			#Set the old values back
-			new_note.interval = action.interval
+			if(new_note is Note):
+				new_note.interval = action.interval
 			if(new_note is Marker):
 				new_note.bpm = action.bpm
 				new_note.snapping = action.snapping
@@ -214,7 +215,7 @@ func run_action(action : Action) -> void:
 			new_action = ValueAction.new(Action.ActionName.VALUECHANGED)
 			new_action.time = action.time
 			new_action.color = action.color
-			var note : Note = NoteManager.get_note_at_time(action.time,action.color)
+			var note : InternalNote = NoteManager.get_note_at_time(action.time,action.color)
 			new_action.old_value = note.interval
 			
 			match action.value_type:

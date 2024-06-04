@@ -131,10 +131,10 @@ func get_note_lane_y(lane : int) -> float:
 		_:
 			return 0
 
-func add_new_note(time : float, color : int) -> Note:
+func add_new_note(time : float, color : int) -> InternalNote:
 	#Add a new note to the chart
 	GameManager.project_changed = true
-	var instance : Note
+	var instance : InternalNote
 	#If it is a marker
 	if(color == 7):
 		instance = marker_scene.instantiate()
@@ -187,7 +187,7 @@ func get_note_at_time(time : float, color : int) -> Note:
 	else:
 		array = note_nodes
 	
-	for i : Note in array:
+	for i : InternalNote in array:
 		#If we find an exact time and color match then return the note
 		if(i.time == time && i.color == color):
 			return i
@@ -233,7 +233,7 @@ func clear_all_notes() -> void:
 	print("clearing all notes")
 	for i : Note in note_nodes:
 		i.free()
-	for i : Note in marker_nodes:
+	for i : Marker in marker_nodes:
 		i.free()
 	note_nodes.clear()
 	marker_nodes.clear()

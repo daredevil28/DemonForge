@@ -1,4 +1,4 @@
-class_name Marker extends Note
+class_name Marker extends InternalNote
 
 var bpm : float
 var snapping : int
