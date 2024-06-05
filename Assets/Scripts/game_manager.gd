@@ -382,7 +382,11 @@ func _input(event : InputEvent) -> void:
 				current_pos = 0
 
 	if(event.is_action_pressed("TogglePlay") && is_another_window_focused == false):
-		
+		#Reset note selected when playing the song
+		if(current_selected_note != null):
+			note_deselected.emit(current_selected_note)
+			current_selected_note = null
+			
 		#If we are playing, then stop the music and snap to the nearest beat
 		if(audio_player.playing):
 			stop_music()
