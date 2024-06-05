@@ -68,7 +68,7 @@ func _on_properties_index_pressed(index : int) -> void:
 func _on_tools_index_pressed(index: int) -> void:
 	match index:
 		0:
-			NoteManager.snap_all_notes_to_nearest()
+			Global.popup_dialog.play_dialog("Destructive action!","This will snap all the notes to the closest snap value. This can not be undone. Are you sure?",NoteManager.snap_all_notes_to_nearest)
 #endregion
 
 #region Everything related to files
