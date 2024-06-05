@@ -31,7 +31,7 @@ Download the .exe from releases and run it, no further configuration required
 - [x] Snap editing
 - [x] Adjustable client settings (scroll speed, note size,volume etc)
 - [ ] Custom asset support for audio/sprites
-- [ ] Undo/Redo button
+- [x] Undo/Redo button
 - [x] Support other timing signatures
 - [x] Support dynamic time signatures and bpm
 - [ ] Set preview time stamp and length to automatically export preview

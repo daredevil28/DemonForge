@@ -203,7 +203,7 @@ func run_action(action : Action) -> void:
 			#Run reverse of action
 			NoteManager.remove_note_at_time(action.time, action.color)
 			
-			Global.notification_popup.play_notification(str(Action.ActionType.keys()[action.action_type]) + " note at " + str(action.time), 1)
+			Global.notification_popup.play_notification(str(Action.ActionType.keys()[action.action_type]) + " note at " + str(snapped(action.time,0.01)), 1)
 			
 		# The action was a remove so add the note
 		Action.ActionName.NOTEREMOVE:
@@ -221,7 +221,7 @@ func run_action(action : Action) -> void:
 			new_action.time = action.time
 			new_action.color = action.color
 			
-			Global.notification_popup.play_notification(str(Action.ActionType.keys()[action.action_type]) + " note at " + str(action.time), 1)
+			Global.notification_popup.play_notification(str(Action.ActionType.keys()[action.action_type]) + " note at " + str(snapped(action.time,0.01)), 1)
 			
 		# The action was a value changed
 		Action.ActionName.VALUECHANGED:
@@ -254,7 +254,7 @@ func run_action(action : Action) -> void:
 			Global.notification_popup.play_notification(str(Action.ActionType.keys()[action.action_type]) +
 			" " + str(ValueAction.ValueType.keys()[new_action.value_type]) +
 			" to " + str(action.old_value) +
-			" at " + str(action.time), 1)
+			" at " + str(snapped(action.time,0.01)), 1)
 		
 	if(action.action_type == action.ActionType.UNDO):
 		new_action.action_type = Action.ActionType.REDO
