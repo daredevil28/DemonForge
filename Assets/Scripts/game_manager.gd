@@ -25,8 +25,8 @@ var current_lane : int
 var current_bpm_marker : Marker
 
 var cursor_note : Sprite2D #<- cursor_note.gd _ready()
-var note_sprite : Resource = load("res://Assets/Sprites/Notes.png")
-var marker_sprite : Resource = load("res://Assets/Sprites/BPMMarker.png")
+var note_sprite : Resource = preload("res://Assets/Sprites/Notes.png")
+var marker_sprite : Resource = preload("res://Assets/Sprites/BPMMarker.png")
 
 var undo_actions : Array[Action] = []
 var redo_actions : Array[Action] = []

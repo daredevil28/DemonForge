@@ -5,3 +5,11 @@ var interval : int :
 	set(value):
 		interval = value
 		$Label.text = str(value)
+		
+func _ready() -> void:
+	# Run the overriden _ready function from internal_note
+	super._ready()
+	
+	# For custom asset support
+	var sprite : Sprite2D = $Sprite2D
+	sprite.texture = GameManager.note_sprite

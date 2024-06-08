@@ -46,7 +46,7 @@ bus = &"Instruments"
 stream = ExtResource("8_f62j3")
 bus = &"Instruments"
 
-[node name="CrashL" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
+[node name="Crash" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("9_3opps")
 volume_db = -4.0
 bus = &"Instruments"

@@ -5,6 +5,7 @@ var project_file : String = ""
 var folder_name : String = ""
 var preview_file : String = ""
 
+var exe_dir : String = OS.get_executable_path().get_base_dir()
 var song_file : String = "" :
 	#Set up audiostreamplayer in GameManager as soon as it's set
 	set(value):
@@ -19,6 +20,27 @@ func _ready() -> void:
 	if(OS.get_name() == "Windows"):
 		custom_songs_folder = OS.get_data_dir().rstrip("Roaming") + "LocalLow/Garage 51/Drums Rock/CustomSongs"
 	load_settings()
+	var custom_dir : String = exe_dir + "/custom"
+	print(custom_dir)
+	if(DirAccess.dir_exists_absolute(custom_dir)):
+		
+		# Loading note file
+		var note_file : Image = Image.load_from_file(custom_dir + "/note.png")
+		if(note_file != null):
+			GameManager.note_sprite = ImageTexture.create_from_image(note_file)
+			
+		# Loading marker file
+		var marker_file : Image = Image.load_from_file(custom_dir + "/marker.png")
+		if(marker_file != null):
+			GameManager.marker_sprite = ImageTexture.create_from_image(marker_file)
+		
+		# Loading custom audio for drumkit
+		for player : AudioStreamPlayer in Global.instruments:
+			var audio_loader : WavAudioLoader = WavAudioLoader.new()
+			var audio_file : AudioStreamWAV = audio_loader.loadfile(custom_dir + "/" + player.name.to_lower() + ".wav")
+			if(audio_file != null):
+				player.set_stream(audio_file)
+			
 
 func save_project(path : String) -> void:
 	#Save project into a .json file
