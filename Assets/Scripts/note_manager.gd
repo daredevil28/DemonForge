@@ -31,6 +31,7 @@ func _ready() -> void:
 		
 #region Note manipulation
 func initialise_notes(json_notes : Array) -> void:
+	NoteManager.clear_all_notes()
 	#Instantiate all the notes
 	for i : int in json_notes.size():
 		#Make a new note dictionary, instantiate it and add it to NoteManager as a child

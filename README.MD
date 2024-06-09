@@ -30,7 +30,7 @@ Download the .exe from releases and run it, no further configuration required
 - [ ] Figure out how to properly play sound for drum rolls
 - [x] Snap editing
 - [x] Adjustable client settings (scroll speed, note size,volume etc)
-- [ ] Custom asset support for audio/sprites
+- [x] Custom asset support for audio/sprites
 - [x] Undo/Redo button
 - [x] Support other timing signatures
 - [x] Support dynamic time signatures and bpm
