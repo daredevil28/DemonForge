@@ -6,7 +6,7 @@ extends Node
 ## The last beat that occured
 var _last_beat : int
 ## If the metronome is enabled or disabled
-var _metronome_enabled : bool = true
+var metronome_enabled : bool = true
 
 @onready var _metronome_high : AudioStreamPlayer = $MetronomeLow
 @onready var _metronome_low : AudioStreamPlayer = $MetronomeHigh
@@ -15,7 +15,7 @@ func _init() -> void:
 	Global.metronome = self
 	
 func _process(_delta: float) -> void:
-	if(GameManager.audio_player.playing && _metronome_enabled):
+	if(GameManager.audio_player.playing && metronome_enabled):
 		# Make sure we play the metronome only once
 		if(GameManager.current_beat != _last_beat):
 			_last_beat = GameManager.current_beat
@@ -27,8 +27,8 @@ func _process(_delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if(event.is_action_pressed("ToggleMetronome")):
-		if(_metronome_enabled == true):
+		if(metronome_enabled == true):
 			Global.notification_popup.play_notification("Metronome is now disabled.", 0.5)
-		if(_metronome_enabled == false):
+		if(metronome_enabled == false):
 			Global.notification_popup.play_notification("Metronome is now enabled.", 0.5)
-		_metronome_enabled = !_metronome_enabled
+		metronome_enabled = !metronome_enabled
