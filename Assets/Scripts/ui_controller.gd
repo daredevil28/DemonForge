@@ -98,6 +98,7 @@ func _on_open_dialog_file_selected(path : String) -> void:
 			GameManager.setup_project(json_file)
 		".csv":
 			print(".csv")
+			NoteManager.clear_all_notes()
 			NoteManager.initialise_notes(Global.file_manager.csv_to_json(path))
 
 
@@ -233,7 +234,7 @@ func _on_export_panel_about_to_popup() -> void:
 	# ExportPanel
 	_export_settings[0].text = Global.file_manager.custom_songs_folder
 	_export_settings[1].text = Global.file_manager.folder_name
-	_export_settings[2].text = GameManager.check_for_errors()
+	_export_settings[2].text = Global.file_manager.check_for_errors()
 
 
 ## Close the export panel
