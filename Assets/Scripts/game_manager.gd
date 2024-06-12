@@ -256,7 +256,7 @@ func setup_project(jsonString : Dictionary) -> void:
 	Global.file_manager.song_file = metadata["songFile"]
 	Global.file_manager.preview_file = metadata["previewFile"]
 	Global.file_manager.folder_name = metadata["folderName"]
-	
+	NoteManager.clear_all_notes()
 	NoteManager.initialise_marker(jsonString["marker"])
 	NoteManager.initialise_notes(jsonString["notes"])
 	current_pos = 0

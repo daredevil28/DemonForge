@@ -79,7 +79,6 @@ func play_notes(object : InternalNote, new_time : float) -> void:
 ## Set up all the notes using array.[br]
 ## Expects an [Array] with [param time], [param color] and [param interval].
 func initialise_notes(json_notes : Array) -> void:
-	NoteManager.clear_all_notes()
 	# Instantiate all the notes
 	for i : int in json_notes.size():
 		# Make a new note dictionary, instantiate it and add it to NoteManager as a child
