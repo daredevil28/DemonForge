@@ -1,10 +1,15 @@
-class_name ValueAction extends NoteAction
+class_name ValueAction
+extends NoteAction
+## Aditional information for the [ValueAction]
 
+## The posible types of the value
 enum ValueType {
 	INTERVAL,
 	BPM,
 	SNAPPING,
 }
 
+## The [enum ValueType] of the [ValueAction]
 var value_type : ValueType
+## The old value
 var old_value

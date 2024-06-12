@@ -1,9 +1,9 @@
-#Singleton for global variables
 extends Node
+## Singleton for global variables
 
 var notification_popup : NotificationManager
 var popup_dialog : DialogManager
-var game_scene_node : Node
+var game_scene_node : Node2D
 var file_manager : FileManager
 var metronome : Node
 @onready var client_settings : Array = get_tree().get_nodes_in_group("ClientSettings")

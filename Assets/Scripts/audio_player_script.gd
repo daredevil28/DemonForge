@@ -1,5 +1,9 @@
 extends AudioStreamPlayer
+## Script on the audio player.
+##
+## Script to manage anything related to the audio player.
+## Currently only set itself in the GameManager.
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+
+func _init() -> void:
 	GameManager.audio_player = self

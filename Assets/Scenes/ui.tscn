@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cse04ob740oo4" path="res://Assets/Sprites/FolderIconHover.png" id="5_16p63"]
 [ext_resource type="Script" path="res://Assets/Scripts/errors_label.gd" id="6_hsjtr"]
 [ext_resource type="Script" path="res://Assets/Scripts/popup_notification.gd" id="7_bt6ck"]
-[ext_resource type="Script" path="res://Assets/Scripts/dialog_popup.gd" id="8_om2vj"]
+[ext_resource type="Script" path="res://Assets/Scripts/dialog_manager.gd" id="8_om2vj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hp2c"]
 content_margin_left = 5.0

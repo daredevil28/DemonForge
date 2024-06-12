@@ -1,10 +1,14 @@
-class_name Marker extends InternalNote
+class_name Marker
+extends InternalNote
+## Markers to change how the song flows
+##
+## Currently only supports changing the BPM and snapping of a song
 
 var bpm : float
 var snapping : int
 
 func _init() -> void:
-	#Automatically set the color to 7
+	# Automatically set the color to 7
 	color = 7
 
 func _ready() -> void:

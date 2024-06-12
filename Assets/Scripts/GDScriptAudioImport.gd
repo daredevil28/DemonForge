@@ -178,7 +178,7 @@ func loadfile(filepath):
 # I don't wanna risk it always being slower on other files
 # And really, the solution would be to handle it in a low-level language
 func convert_to_16bit(data: PackedByteArray, from: int) -> PackedByteArray:
-	print("converting to 16-bit from %d" % from)
+	#print("converting to 16-bit from %d" % from)
 	var time = Time.get_ticks_msec()
 	if from == 24:
 		var j = 0
@@ -199,7 +199,7 @@ func convert_to_16bit(data: PackedByteArray, from: int) -> PackedByteArray:
 			data[i/2] = value
 			data[i/2+1] = value >> 8
 		data.resize(data.size() / 2)
-	print("Took %f seconds for slow conversion" % ((Time.get_ticks_msec() - time) / 1000.0))
+	#print("Took %f seconds for slow conversion" % ((Time.get_ticks_msec() - time) / 1000.0))
 	return data
 
 # ---------- REFERENCE ---------------
