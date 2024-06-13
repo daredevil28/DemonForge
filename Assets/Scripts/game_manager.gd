@@ -311,16 +311,17 @@ func screen_time_to_music_time(location : float) -> float:
 ## Get the closest snapped value using [param time]
 func get_closest_snap_value(time : float) -> float:
 	var start_time : float = 0
+	var snap_bpm : float = 60
+	var snap_snapping_frequency : int = 4
+
 	if(NoteManager.marker_nodes.size() != 0):
-		var bpm : int
-		var snapping_frequency : int
 		for marker : Marker in NoteManager.marker_nodes:
 				if(marker.time <= time):
 					start_time = marker.time
-					bpm = marker.bpm
-					snapping_frequency = marker.snapping
+					snap_bpm = marker.bpm
+					snap_snapping_frequency = marker.snapping
 					
-	var beat_duration : float = 60 / bpm / snapping_frequency
+	var beat_duration : float = 60 / snap_bpm / snap_snapping_frequency
 	var relative_pos : float = time - start_time
 	var closest_beat : int = round(relative_pos / beat_duration)
 	var before_snap : float = start_time + closest_beat * beat_duration

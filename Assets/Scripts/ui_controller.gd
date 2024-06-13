@@ -273,7 +273,7 @@ func _on_note_settings_mouse_exited() -> void:
 	_note_settings_focused = false
 
 
-## Called whenever a spin box value changed in the client settings
+## Called whenever a spin box value changed in the note settings
 func _on_spin_box_value_changed(value: float, box : String) -> void:
 	# Change the specific box
 	GameManager.project_changed = true
@@ -306,7 +306,6 @@ func _on_spin_box_value_changed(value: float, box : String) -> void:
 					GameManager.current_pos = GameManager.current_pos
 					
 			GameManager.add_undo_action(new_action)
-
 
 
 ## Called on GameManager.note_selected
