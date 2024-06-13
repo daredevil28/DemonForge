@@ -296,12 +296,14 @@ func _on_spin_box_value_changed(value: float, box : String) -> void:
 					new_action.old_value = _selected_note.bpm
 					_selected_note.bpm = value
 					Global.game_scene_node.queue_redraw()
+					GameManager.current_pos = GameManager.current_pos
 					
 				"snapping":
 					new_action.value_type = ValueAction.ValueType.SNAPPING
 					new_action.old_value = _selected_note.snapping
 					_selected_note.snapping = value
 					Global.game_scene_node.queue_redraw()
+					GameManager.current_pos = GameManager.current_pos
 					
 			GameManager.add_undo_action(new_action)
 
