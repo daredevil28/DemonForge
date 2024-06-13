@@ -52,7 +52,16 @@ func _ready() -> void:
 		var marker_file : Image = Image.load_from_file(custom_dir + "/marker.png")
 		if(marker_file != null):
 			GameManager.marker_sprite = ImageTexture.create_from_image(marker_file)
-		
+			
+		var background_image : Image
+		background_image = Image.load_from_file(custom_dir + "/background.jpg")
+		if(background_image == null):
+			background_image = Image.load_from_file(custom_dir + "/background.png")
+			
+		if(background_image != null):
+			Global.background_image.texture = ImageTexture.create_from_image(background_image)
+			
+			
 		# Loading custom audio for drumkit
 		for player : AudioStreamPlayer in Global.instruments:
 			var audio_loader : WavAudioLoader = WavAudioLoader.new()

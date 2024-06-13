@@ -21,6 +21,23 @@ Download the .exe from releases and run it, no further configuration required
 - Test your chart in the game
 - If your chart has a mistake, fix the mistake in the program and press export again, it will overwrite the files
 
+# Custom assets
+
+In order to make your custom assets work, you have to do the following:
+1. Make a new folder next to the executable called `custom`
+2. name the files appropiately like this:
+- `note.png`
+- `marker.png`
+- `snare.wav` (yellow note)
+- `kick.wav` (red note)
+- `tomhigh.wav` (Orange note)
+- `tomlow.wav` (Purple note)
+- `crash.wav` (Blue note)
+- `ride.wav` (Green note)
+3. Start the application, the custom assets should now be loaded in
+
+You can also download the files directly in the [custom](custom) folder
+
 # Future features
 
 - [x] Visualise the notes in sync with the music
@@ -44,14 +61,13 @@ I use Godot v4.2.2 stable to compile, but versions around it should still be com
 
 - Import project into godot
 - Project > Export
-- Select Windows Desktop
+- Select Your OS
 - Press export project
 
-The .exe should be exported into ProjectFolder/Build/DemonForge.exe
+The executable should be exported into ProjectFolder/Build/*
 
 # Possible future features
 
-* Use a cache of notes instead of instantiating every note seperately
 * Drum track seperation with something like [OpenVINO](https://github.com/openvinotoolkit/openvino)
 
 # Contributing

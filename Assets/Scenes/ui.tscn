@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://cdd5so8gpgl0q"]
+[gd_scene load_steps=11 format=3 uid="uid://cdd5so8gpgl0q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ui_controller.gd" id="1_hk45x"]
+[ext_resource type="Script" path="res://Assets/Scripts/background_image.gd" id="2_774o7"]
 [ext_resource type="PackedScene" uid="uid://bxv46rdbd272o" path="res://Assets/Scenes/progress_bar.tscn" id="2_t6ae7"]
 [ext_resource type="Texture2D" uid="uid://cskljke58e2fj" path="res://Assets/Sprites/FolderIcon.png" id="3_m2luq"]
 [ext_resource type="Texture2D" uid="uid://cxqqsd1lraejc" path="res://Assets/Sprites/FolderIconPressed.png" id="4_6ftkc"]
@@ -36,6 +37,21 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_hk45x")
+
+[node name="BackgroundImage" type="TextureRect" parent="."]
+z_index = -50
+texture_filter = 2
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 3
+stretch_mode = 6
+script = ExtResource("2_774o7")
 
 [node name="MarginContainer" parent="." instance=ExtResource("2_t6ae7")]
 layout_mode = 1
