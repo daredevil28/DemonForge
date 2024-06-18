@@ -7,9 +7,11 @@ extends InternalNote
 var bpm : float
 var snapping : int
 
+
 func _init() -> void:
 	# Automatically set the color to 7
 	color = 7
+
 
 func _ready() -> void:
 	# Run the overriden _ready function from internal_note

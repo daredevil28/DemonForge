@@ -14,7 +14,7 @@ func _draw() -> void:
 	# The note lines
 	for i in range(1,7):
 		draw_line(Vector2(0,NoteManager.get_note_lane_y(i)),Vector2(DisplayServer.window_get_size().x,NoteManager.get_note_lane_y(i)),line_color,1)
-		
+	
 	# Beat markers
 	# Loop for each marker
 	for x in range(0,NoteManager.marker_nodes.size()):

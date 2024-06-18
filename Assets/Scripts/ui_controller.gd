@@ -88,7 +88,7 @@ func _on_open_dialog_file_selected(path : String) -> void:
 	var regex : RegEx = RegEx.new()
 	regex.compile("\\.(json|csv)")
 	var result : RegExMatch = regex.search(path)
-	
+	print("Opening file: " + path)
 	Global.notification_popup.play_notification("Loading file: " + path, 2)
 	match result.get_string():
 		".json":
@@ -275,6 +275,7 @@ func _on_note_settings_mouse_exited() -> void:
 
 ## Called whenever a spin box value changed in the note settings
 func _on_spin_box_value_changed(value: float, box : String) -> void:
+	print("Changing note value: " + box + " to " + str(value))
 	# Change the specific box
 	GameManager.project_changed = true
 	
@@ -310,7 +311,7 @@ func _on_spin_box_value_changed(value: float, box : String) -> void:
 
 ## Called on GameManager.note_selected
 func _on_note_selected(note : InternalNote) -> void:# < GameManager.note_selected
-	
+	print("Selecting note at " + str(note.time))
 	# Makes the note settings panel visible
 	_selected_note = note
 	_opening_note_settings = true
@@ -330,6 +331,7 @@ func _on_note_selected(note : InternalNote) -> void:# < GameManager.note_selecte
 
 ## Called on GameManager.note_deselected
 func _on_note_deselected(_note : InternalNote) -> void:
+	print("Deselecting note at " + str(_note.time))
 	_note_settings_panel.visible = false
 	_selected_note = null
 #endregion

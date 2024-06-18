@@ -5,7 +5,10 @@ var interval : int :
 	set(value):
 		interval = value
 		$Label.text = str(value)
-		
+
+var time_between_roll : float
+
+
 func _ready() -> void:
 	# Run the overriden _ready function from internal_note
 	super._ready()

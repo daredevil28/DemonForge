@@ -80,8 +80,8 @@ var audio_length : float = 60 :
 			return audio_length
 
 ## The current position in the song.
-## Any time this gets set it'll move any note with it too[br]
-## [param _current_bpm_marker] also gets set depending on which [Marker] it has passed
+## Any time this gets set it'll move any note with it too.[br]
+## [param _current_bpm_marker] also gets set depending on which [Marker] it has passed.
 var current_pos : float = 0 :
 	# Automatically move the notes whenever we play the position
 	set(value):
@@ -101,7 +101,7 @@ func _process(_delta : float) -> void:
 	if(audio_player.playing):
 		current_pos = (audio_player.get_playback_position() + AudioServer.get_time_since_last_mix()) + audio_offset / 100
 	
-	if current_lane == 0 || is_another_window_focused || current_hovered_note != null:
+	if(current_lane == 0 || is_another_window_focused || current_hovered_note != null):
 		cursor_note.visible = false
 	else:
 		cursor_note.position.y = NoteManager.reset_note_y(cursor_note, current_lane)
@@ -181,7 +181,7 @@ func _input(event : InputEvent) -> void:
 		if(event.is_action_pressed("ScrollUp") && !audio_player.playing && !is_another_window_focused):
 			current_pos += seconds_per_beat / snapping_frequency
 			current_pos = get_closest_snap_value(current_pos)
-			if current_pos > audio_length:
+			if(current_pos > audio_length):
 				current_pos = audio_length
 				
 		# Scroll down 1 tick
@@ -262,13 +262,13 @@ func setup_project(jsonString : Dictionary) -> void:
 	current_pos = 0
 
 
-## Set up the audio using the provided path
+## Set up the [AudioStreamPlayer] using the provided path
 func setup_audio(audio_file : String) -> void:
 	# Remove the audio if the song file is blank
 	if audio_file == "":
 		audio_player.stream = null
 	else:
-		audio_player.stream = AudioStreamOggVorbis.load_from_file(Global.file_manager.song_file)
+		audio_player.stream = AudioStreamOggVorbis.load_from_file(audio_file)
 		current_pos = 0
 
 

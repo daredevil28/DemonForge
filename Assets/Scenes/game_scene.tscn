@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://bcoi5hfer5b8e"]
+[gd_scene load_steps=18 format=3 uid="uid://bcoi5hfer5b8e"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/drawer.gd" id="1_avsu0"]
 [ext_resource type="PackedScene" uid="uid://cdd5so8gpgl0q" path="res://Assets/Scenes/ui.tscn" id="1_obr5d"]
 [ext_resource type="Script" path="res://Assets/Scripts/audio_player_script.gd" id="2_w8v26"]
+[ext_resource type="Script" path="res://Assets/Scenes/instrument_player.gd" id="4_3wfi1"]
 [ext_resource type="AudioStream" uid="uid://dlwjgvij7hkhd" path="res://Assets/DrumKit/Kick.wav" id="5_cgcp7"]
 [ext_resource type="AudioStream" uid="uid://gdwmjr0n54nd" path="res://Assets/DrumKit/Snare.wav" id="5_klm7p"]
 [ext_resource type="AudioStream" uid="uid://b38qqrrk0bsa" path="res://Assets/DrumKit/TomHigh.wav" id="7_h73ft"]
@@ -32,28 +33,40 @@ script = ExtResource("2_w8v26")
 
 [node name="Snare" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("5_klm7p")
+max_polyphony = 16
 bus = &"Instruments"
+script = ExtResource("4_3wfi1")
 
 [node name="Kick" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("5_cgcp7")
+max_polyphony = 16
 bus = &"Instruments"
+script = ExtResource("4_3wfi1")
 
 [node name="TomHigh" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("7_h73ft")
+max_polyphony = 16
 bus = &"Instruments"
+script = ExtResource("4_3wfi1")
 
 [node name="TomLow" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("8_f62j3")
+max_polyphony = 16
 bus = &"Instruments"
+script = ExtResource("4_3wfi1")
 
 [node name="Crash" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("9_3opps")
 volume_db = -4.0
+max_polyphony = 16
 bus = &"Instruments"
+script = ExtResource("4_3wfi1")
 
 [node name="Ride" type="AudioStreamPlayer" parent="GameScene/DrumKit" groups=["Instruments"]]
 stream = ExtResource("10_ob81e")
+max_polyphony = 16
 bus = &"Instruments"
+script = ExtResource("4_3wfi1")
 
 [node name="Metronome" type="Node" parent="GameScene"]
 script = ExtResource("9_kp416")
