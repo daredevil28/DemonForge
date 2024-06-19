@@ -308,6 +308,16 @@ func _on_spin_box_value_changed(value: float, box : String) -> void:
 					
 			GameManager.add_undo_action(new_action)
 
+func _on_check_box_toggled(toggled_on: bool) -> void:
+	var new_action : ValueAction = ValueAction.new(Action.ActionName.VALUECHANGED)
+	new_action.time = _selected_note.time
+	new_action.color = _selected_note.color
+	new_action.value_type = ValueAction.ValueType.DOUBLETIME
+	new_action.old_value = _selected_note.double_time
+	
+	_selected_note.double_time = toggled_on
+	
+	GameManager.add_undo_action(new_action)
 
 ## Called on GameManager.note_selected
 func _on_note_selected(note : InternalNote) -> void:# < GameManager.note_selected
@@ -317,12 +327,13 @@ func _on_note_selected(note : InternalNote) -> void:# < GameManager.note_selecte
 	_opening_note_settings = true
 	# If note is a marker then show the marker panel, else show the note panel
 	if(note is Marker):
-		_note_settings[1].value = _selected_note.bpm
-		_note_settings[2].value = _selected_note.snapping
+		_note_settings[2].value = _selected_note.bpm
+		_note_settings[3].value = _selected_note.snapping
 		_note_settings_panel.get_child(0).visible = false
 		_note_settings_panel.get_child(1).visible = true
 	if(note is Note):
 		_note_settings[0].value = _selected_note.interval
+		_note_settings[1].button_pressed = _selected_note.double_time
 		_note_settings_panel.get_child(0).visible = true
 		_note_settings_panel.get_child(1).visible = false
 	_note_settings_panel.visible = true

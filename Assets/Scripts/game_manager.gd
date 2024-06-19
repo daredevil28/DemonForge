@@ -411,6 +411,12 @@ func run_action(action : Action) -> void:
 					
 					note.snapping = int(action.old_value)
 					new_action.value_type = ValueAction.ValueType.SNAPPING
+					
+				ValueAction.ValueType.DOUBLETIME:
+					new_action.old_value = note.double_time
+					
+					note.double_time = action.old_value
+					new_action.value_type = ValueAction.ValueType.DOUBLETIME
 				
 			Global.game_scene_node.queue_redraw()
 			Global.notification_popup.play_notification(str(Action.ActionType.keys()[action.action_type]) +

@@ -586,6 +586,20 @@ size_flags_horizontal = 8
 size_flags_vertical = 4
 mouse_filter = 1
 
+[node name="HBoxContainer2" type="HBoxContainer" parent="NoteSettings/NoteSettingsBox"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="NoteSettings/NoteSettingsBox/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Double Time"
+
+[node name="DoubleTime" type="CheckBox" parent="NoteSettings/NoteSettingsBox/HBoxContainer2" groups=["NoteSettings"]]
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Enabling this will make any drum roll play twice as fast (only cosmetical and won't change anything about the chart itself)"
+
 [node name="BPMMarkerSettingsBox" type="VBoxContainer" parent="NoteSettings"]
 visible = false
 layout_mode = 2
@@ -702,6 +716,7 @@ script = ExtResource("8_om2vj")
 [connection signal="mouse_entered" from="NoteSettings" to="." method="_on_note_settings_mouse_entered"]
 [connection signal="mouse_exited" from="NoteSettings" to="." method="_on_note_settings_mouse_exited"]
 [connection signal="value_changed" from="NoteSettings/NoteSettingsBox/HBoxContainer/NoteInterval" to="." method="_on_spin_box_value_changed" binds= ["interval"]]
+[connection signal="toggled" from="NoteSettings/NoteSettingsBox/HBoxContainer2/DoubleTime" to="." method="_on_check_box_toggled"]
 [connection signal="value_changed" from="NoteSettings/BPMMarkerSettingsBox/HBoxContainer/bpm" to="." method="_on_spin_box_value_changed" binds= ["bpm"]]
 [connection signal="value_changed" from="NoteSettings/BPMMarkerSettingsBox/HBoxContainer2/Snapping" to="." method="_on_spin_box_value_changed" binds= ["snapping"]]
 [connection signal="canceled" from="ConfirmationDialog" to="ConfirmationDialog" method="_on_canceled"]

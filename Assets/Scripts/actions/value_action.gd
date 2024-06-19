@@ -7,6 +7,7 @@ enum ValueType {
 	INTERVAL,
 	BPM,
 	SNAPPING,
+	DOUBLETIME,
 }
 
 ## The [enum ValueType] of the [ValueAction]

@@ -6,7 +6,7 @@ var interval : int :
 		interval = value
 		$Label.text = str(value)
 
-var time_between_roll : float
+var double_time : bool
 
 
 func _ready() -> void:
