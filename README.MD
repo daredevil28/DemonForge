@@ -28,6 +28,8 @@ In order to make your custom assets work, you have to do the following:
 2. name the files appropiately like this:
 - `note.png`
 - `marker.png`
+- `background.png`
+- `background.jpg`
 - `snare.wav` (yellow note)
 - `kick.wav` (red note)
 - `tomhigh.wav` (Orange note)

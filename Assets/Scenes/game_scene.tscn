@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Assets/Scripts/drawer.gd" id="1_avsu0"]
 [ext_resource type="PackedScene" uid="uid://cdd5so8gpgl0q" path="res://Assets/Scenes/ui.tscn" id="1_obr5d"]
 [ext_resource type="Script" path="res://Assets/Scripts/audio_player_script.gd" id="2_w8v26"]
-[ext_resource type="Script" path="res://Assets/Scenes/instrument_player.gd" id="4_3wfi1"]
+[ext_resource type="Script" path="res://Assets/Scripts/instrument_player.gd" id="4_3wfi1"]
 [ext_resource type="AudioStream" uid="uid://dlwjgvij7hkhd" path="res://Assets/DrumKit/Kick.wav" id="5_cgcp7"]
 [ext_resource type="AudioStream" uid="uid://gdwmjr0n54nd" path="res://Assets/DrumKit/Snare.wav" id="5_klm7p"]
 [ext_resource type="AudioStream" uid="uid://b38qqrrk0bsa" path="res://Assets/DrumKit/TomHigh.wav" id="7_h73ft"]

@@ -53,6 +53,10 @@ var seconds_per_measure : float :
 var seconds_per_beat : float :
 	get:
 		return seconds_per_measure / snapping_frequency
+
+var time_between_tick : float :
+	get:
+		return seconds_per_beat / snapping_frequency
 		
 var current_beat : int :
 	get:
@@ -121,8 +125,6 @@ func _process(_delta : float) -> void:
 
 func _input(event : InputEvent) -> void:
 	if(event is InputEventMouseButton):
-		#TODO replace with the proper seconds_per_beat
-		var seconds_per_beat : float = 60 / bpm
 		
 		# If we are in any of the note lanes
 		if(current_lane != 0):
@@ -434,6 +436,7 @@ func _play_music() -> void:
 func _stop_music() -> void:
 	current_pos = audio_player.get_playback_position()
 	audio_player.stop()
+	current_pos = current_pos
 	Global.notification_popup.play_notification("Music stopped", 0.5)
 
 

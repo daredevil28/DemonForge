@@ -5,7 +5,7 @@ extends AudioStreamPlayer
 
 func play_instrument(roll_count : int, time_between_roll : float):
 	var current_count : int = 1
-	if(time_between_roll == 0):
+	if(roll_count == 0):
 		play()
 		return
 	while current_count <= roll_count:

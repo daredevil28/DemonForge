@@ -48,10 +48,9 @@ func play_notes(object : InternalNote, new_time : float) -> void:
 		# If the note is ahead of the judgement line
 		if(object.time >= new_time):
 			
-			# If it's not visible then make it visible and enable collision for the mouse cursor
+			# If it's not visible then make it visible
 			if(!object.visible):
 				object.visible = true
-				object.enable_collision()
 				
 			# Update position of the note
 			object.position.x = new_pos
@@ -64,7 +63,7 @@ func play_notes(object : InternalNote, new_time : float) -> void:
 				if(object.time >= GameManager.current_pos - 0.02 || new_pos < offset):
 					object.disable_collision()
 					if(object.color != 7):
-						get_tree().get_nodes_in_group("Instruments")[object.color - 1].play_instrument(object.interval, object.time_between_roll)
+						get_tree().get_nodes_in_group("Instruments")[object.color - 1].play_instrument(object.interval, GameManager.time_between_tick)
 					object.visible = false
 	else:
 		# No audio is playing so make every note behind the judgement line visible
