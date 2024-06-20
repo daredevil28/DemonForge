@@ -49,22 +49,32 @@ var _current_bpm_marker : Marker
 var seconds_per_measure : float :
 	get:
 		return 60 / (bpm / snapping_frequency)
+	set(value):
+		print("seconds_per_measure is being set, this is not intended.")
 
 var seconds_per_beat : float :
 	get:
 		return seconds_per_measure / snapping_frequency
+	set(value):
+		print("seconds_per_beat is being set, this is not intended.")
 
-var time_between_tick : float :
+var seconds_per_tick : float :
 	get:
 		return seconds_per_beat / snapping_frequency
-		
+	set(value):
+		print("seconds_per_tick is being set, this is not intended.")
+
 var current_beat : int :
 	get:
 		return (current_pos - _current_bpm_marker.time) / seconds_per_beat
+	set(value):
+		print("current_beat is being set, this is not intended.")
 
 var current_measure : int :
 	get:
 		return current_beat / snapping_frequency
+	set(value):
+		print("current_measure is being set, this is not intended.")
 
 ## The speed of the notes.
 var scroll_speed : int = 50 :
@@ -183,6 +193,7 @@ func _input(event : InputEvent) -> void:
 		if(event.is_action_pressed("ScrollUp") && !audio_player.playing && !is_another_window_focused):
 			current_pos += seconds_per_beat / snapping_frequency
 			current_pos = get_closest_snap_value(current_pos)
+			# Make sure we don't scroll past the end of the song
 			if(current_pos > audio_length):
 				current_pos = audio_length
 				
@@ -190,12 +201,13 @@ func _input(event : InputEvent) -> void:
 		if(event.is_action_pressed("ScrollDown") && !audio_player.playing && !is_another_window_focused):
 			
 			# Check if we are on a marker, use the previous marker for the seconds_per_beat if we are
+			var scroll_seconds_per_beat : float = seconds_per_beat
 			for i : int in range(0,NoteManager.marker_nodes.size()):
 				if(NoteManager.marker_nodes[i].time == current_pos):
-					seconds_per_beat = 60 / NoteManager.marker_nodes[i-1].bpm
+					scroll_seconds_per_beat = 60 / NoteManager.marker_nodes[i-1].bpm
 					break
 			
-			current_pos -= seconds_per_beat / snapping_frequency
+			current_pos -= scroll_seconds_per_beat / snapping_frequency
 			current_pos = get_closest_snap_value(current_pos)
 			if(current_pos < 0):
 				current_pos = 0

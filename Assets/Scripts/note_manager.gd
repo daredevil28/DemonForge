@@ -37,7 +37,7 @@ func play_notes(object : InternalNote, new_time : float) -> void:
 	# (NoteTimestamp - TimePassed ) + offset
 	var new_pos : float = (GameManager.music_time_to_screen_time(object.time) - GameManager.music_time_to_screen_time(new_time)) + offset
 	
-	# Check if the note is outside the frame, hide and skip if we do
+	# Check if the note is outside the frame, hide and skip if it is
 	if(new_pos > DisplayServer.window_get_size().x + 20 || new_pos < -20):
 		object.visible = false
 		object.disable_collision()
@@ -63,13 +63,16 @@ func play_notes(object : InternalNote, new_time : float) -> void:
 				if(object.time >= GameManager.current_pos - 0.02 || new_pos < offset):
 					object.disable_collision()
 					if(object.color != 7):
-						get_tree().get_nodes_in_group("Instruments")[object.color - 1].play_instrument(object.interval, GameManager.time_between_tick)
+						var seconds_per_tick : float = GameManager.seconds_per_tick
+						if(object.double_time == true):
+							seconds_per_tick = seconds_per_tick / 2
+						get_tree().get_nodes_in_group("Instruments")[object.color - 1].play_instrument(object.interval, seconds_per_tick)
 					object.visible = false
 	else:
 		# No audio is playing so make every note behind the judgement line visible
 		object.position.x = new_pos
+		object.enable_collision()
 		if(!object.visible):
-			object.enable_collision()
 			object.visible = true
 
 

@@ -262,6 +262,7 @@ func _on_folder_name_text_changed(new_text : String) -> void:
 	Global.file_manager.folder_name = 	"/"+new_text
 #endregion
 
+
 #region Note settings panel
 ## If mouse has entered the note settings box.
 func _on_note_settings_mouse_entered() -> void:
@@ -318,6 +319,7 @@ func _on_check_box_toggled(toggled_on: bool) -> void:
 	_selected_note.double_time = toggled_on
 	
 	GameManager.add_undo_action(new_action)
+
 
 ## Called on GameManager.note_selected
 func _on_note_selected(note : InternalNote) -> void:# < GameManager.note_selected
