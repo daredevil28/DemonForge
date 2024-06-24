@@ -301,7 +301,7 @@ func sort_all_notes() -> void:
 	note_nodes.sort_custom(_sort_ascending_time)
 
 
-func _sort_ascending_time(a : Note, b : Note) -> bool:
+func _sort_ascending_time(a : InternalNote, b : InternalNote) -> bool:
 	return(a.time < b.time)
 
 
