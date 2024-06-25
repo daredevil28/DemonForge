@@ -12,12 +12,12 @@ func _draw() -> void:
 	draw_line(Vector2(NoteManager.offset, 0), Vector2(NoteManager.offset,DisplayServer.window_get_size().y), line_color, 4)
 	
 	# The note lines
-	for i in range(1,7):
+	for i : int in range(1,7):
 		draw_line(Vector2(0,NoteManager.get_note_lane_y(i)),Vector2(DisplayServer.window_get_size().x,NoteManager.get_note_lane_y(i)),line_color,1)
 	
 	# Beat markers
 	# Loop for each marker
-	for x in range(0,NoteManager.marker_nodes.size()):
+	for x : int in range(0,NoteManager.marker_nodes.size()):
 		var length : float
 		
 		# Draw the markers up until the next marker or until song end

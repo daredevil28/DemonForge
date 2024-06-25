@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cxqqsd1lraejc" path="res://Assets/Sprites/FolderIconPressed.png" id="4_6ftkc"]
 [ext_resource type="Texture2D" uid="uid://cse04ob740oo4" path="res://Assets/Sprites/FolderIconHover.png" id="5_16p63"]
 [ext_resource type="Script" path="res://Assets/Scripts/errors_label.gd" id="6_hsjtr"]
-[ext_resource type="Script" path="res://Assets/Scripts/popup_notification.gd" id="7_bt6ck"]
+[ext_resource type="Script" path="res://Assets/Scripts/notification_manager.gd" id="7_bt6ck"]
 [ext_resource type="Script" path="res://Assets/Scripts/dialog_manager.gd" id="8_om2vj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hp2c"]
@@ -595,7 +595,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "Double Time"
 
-[node name="DoubleTime" type="CheckBox" parent="NoteSettings/NoteSettingsBox/HBoxContainer2" groups=["NoteSettings"]]
+[node name="DoubleTime" type="CheckButton" parent="NoteSettings/NoteSettingsBox/HBoxContainer2" groups=["NoteSettings"]]
 layout_mode = 2
 size_flags_horizontal = 8
 tooltip_text = "Enabling this will make any drum roll play twice as fast (only cosmetical and won't change anything about the chart itself)"

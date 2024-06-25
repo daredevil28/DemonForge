@@ -99,6 +99,11 @@ Redo={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Note"
+2d_physics/layer_2="Mouse"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

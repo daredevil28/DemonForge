@@ -5,6 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mwhet"]
 
 [node name="note_lane" type="Area2D"]
+collision_mask = 0
 monitoring = false
 monitorable = false
 script = ExtResource("1_8keh3")

@@ -3,8 +3,8 @@ extends Node
 ##
 ## Manages everything related to audio, undo/redo, actions and more.
 
-signal note_selected(note : InternalNote)
-signal note_deselected(note : InternalNote)
+signal note_selected(note : Array[InternalNote])
+signal note_deselected()
 
 ## Audio player gets automatically set as soon as the audioplayer enters the scene tree.
 var audio_player : AudioStreamPlayer
@@ -29,7 +29,7 @@ var project_changed : bool
 ## The current hovered note.
 var current_hovered_note : InternalNote
 ## The current selected note.
-var current_selected_note : InternalNote
+var current_selected_notes : Array[InternalNote]
 ## The lane that the mouse is currently in.
 var current_lane : int
 ## Gets automatically set in [code]cursor_note.gd[/code].
@@ -92,7 +92,7 @@ var audio_length : float = 60 :
 			return audio_player.stream.get_length()
 		else:
 			return audio_length
-
+ 
 ## The current position in the song.
 ## Any time this gets set it'll move any note with it too.[br]
 ## [param _current_bpm_marker] also gets set depending on which [Marker] it has passed.
@@ -115,7 +115,7 @@ func _process(_delta : float) -> void:
 	if(audio_player.playing):
 		current_pos = (audio_player.get_playback_position() + AudioServer.get_time_since_last_mix()) + audio_offset / 100
 	
-	if(current_lane == 0 || is_another_window_focused || current_hovered_note != null):
+	if(current_lane == 0 || is_another_window_focused || current_hovered_note != null || Global.multi_select.currently_dragging):
 		cursor_note.visible = false
 	else:
 		cursor_note.position.y = NoteManager.reset_note_y(cursor_note, current_lane)
@@ -144,8 +144,9 @@ func _input(event : InputEvent) -> void:
 			
 			# Check if note or marker already exists
 			var note_exists: bool = NoteManager.check_if_note_exists(new_pos["time_pos"], current_lane)
+			
 			if(!is_another_window_focused):
-				if(event.is_action_pressed("LeftClick")):
+				if(event.is_action_released("LeftClick") && !Global.multi_select.currently_dragging):
 					
 					# Check if note exists
 					if(!note_exists && current_hovered_note == null):
@@ -162,15 +163,15 @@ func _input(event : InputEvent) -> void:
 								
 					# If we are hovering over a note then set the note as the selected note
 					if(current_hovered_note != null):
-						current_selected_note = current_hovered_note
-						note_selected.emit(current_selected_note)
-						
-				if(event.is_action_pressed("RightClick")):
+						deselect_notes()
+						current_selected_notes.append(current_hovered_note)
+						select_note(current_hovered_note)
+												
+				if(event.is_action_released("RightClick") && !Global.multi_select.currently_dragging):
 					
 					# Unselect the selected note if we right click anywhere else in the scene
-					if(current_selected_note != null):
-						note_deselected.emit(current_selected_note)
-						current_selected_note = null
+					if(!current_selected_notes.is_empty()):
+						deselect_notes()
 						
 					# Remove the note if we are hovering over a note
 					if(current_hovered_note != null):
@@ -179,11 +180,13 @@ func _input(event : InputEvent) -> void:
 						var new_action : NoteAction = NoteAction.new(Action.ActionName.NOTEREMOVE)
 						new_action.time = current_hovered_note.time
 						new_action.color = current_hovered_note.color
+						
 						if(current_hovered_note is Note):
 							new_action.interval = current_hovered_note.interval
 						if(current_hovered_note is Marker):
 							new_action.bpm = current_hovered_note.bpm
 							new_action.snapping = current_hovered_note.snapping
+							
 						add_undo_action(new_action)
 						
 						NoteManager.remove_note_at_time(current_hovered_note.time, current_hovered_note.color)
@@ -214,9 +217,8 @@ func _input(event : InputEvent) -> void:
 
 	if(event.is_action_pressed("TogglePlay") && is_another_window_focused == false):
 		# Reset note selected when playing the song
-		if(current_selected_note != null):
-			note_deselected.emit(current_selected_note)
-			current_selected_note = null
+		if(!current_selected_notes.is_empty()):
+			deselect_notes()
 			
 		# If we are playing, then stop the music and snap to the nearest beat
 		if(audio_player.playing):
@@ -356,7 +358,7 @@ func add_redo_action(action : Action) -> void:
 
 
 ## Run an undo/redo [Action]
-func run_action(action : Action) -> void:
+func run_action(action : Action, add_to_undo_redo : bool = true) -> Action:
 	var new_action : Action
 	match action.action_name:
 		# The action was an add so remove the note
@@ -368,6 +370,7 @@ func run_action(action : Action) -> void:
 			new_action = NoteAction.new(Action.ActionName.NOTEREMOVE)
 			new_action.time = old_note.time
 			new_action.color = old_note.color
+			
 			if(old_note is Note):
 				new_action.interval = action.interval
 			if(old_note is Marker):
@@ -436,13 +439,43 @@ func run_action(action : Action) -> void:
 			" to " + str(action.old_value) +
 			" at " + str(snapped(action.time,0.01)), 1)
 		
-	if(action.action_type == action.ActionType.UNDO):
-		new_action.action_type = Action.ActionType.REDO
-		redo_actions.append(new_action)
-		
-	elif(action.action_type == action.ActionType.REDO):
-		undo_actions.append(new_action)
+		Action.ActionName.MULTIACTION:
+			new_action = MultiAction.new(Action.ActionName.MULTIACTION)
+			for multi_action in action.actions:
+				new_action.actions.append(run_action(multi_action, false))
+			Global.notification_popup.play_notification(str(Action.ActionType.keys()[action.action_type]) + " multiple notes.", 1)
+				
+	match action.action_type:
+			action.ActionType.UNDO:
+				new_action.action_type = Action.ActionType.REDO
+				if(add_to_undo_redo):
+					redo_actions.append(new_action)
+			action.ActionType.REDO:
+				new_action.action_type = Action.ActionType.UNDO
+				if(add_to_undo_redo):
+					undo_actions.append(new_action)
+	return new_action
 #endregion
+
+
+## Add note to the [member current_selected_notes] array and emit [signal note_selected]
+func select_note(note : InternalNote) -> void:
+	current_selected_notes.append(note)
+	note_selected.emit(current_selected_notes)
+
+
+## Duplicates [param notes], sets it as the [member current_selected_notes] and emit [signal note_selected]
+func select_multiple_notes(notes : Array[InternalNote]) -> void:
+	current_selected_notes.clear()
+	current_selected_notes = notes.duplicate()
+	note_selected.emit(notes)
+
+
+## clears [member current_selected_notes] and emit [signal note_deselected]
+func deselect_notes() -> void:
+	current_selected_notes.clear()
+	note_deselected.emit()
+
 
 ## Play the music
 func _play_music() -> void:

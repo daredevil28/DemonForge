@@ -21,7 +21,6 @@ func play_notification(text : String, timer : float) -> void:
 	_notification_opacity = 1
 	_notification_timer = timer
 	label.text = text
-	
 
 
 func _process(delta: float) -> void:

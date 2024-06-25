@@ -1,28 +1,28 @@
 class_name FileManager
 extends Node
-## Manages anything related to files
+## Manages anything related to files.
 ##
-## Does actions like saving the project, exporting to the custom songs folder and saving the settings
+## Does actions like saving the project, exporting to the custom songs folder and saving the settings.
 
-## Emits if we found any errors
+## Emits if we found any errors.
 signal errors_found(errors : String)
 
-## The location of the custom songs folder
+## The location of the custom songs folder.
 var custom_songs_folder : String = ""
 
-## The location of the project .json 
+## The location of the project .json.
 var project_file : String = ""
 
-## The name of the exporting folder inside the custom songs folder
+## The name of the exporting folder inside the custom songs folder.
 var folder_name : String = ""
 
-## The preview file
+## The preview file.
 var preview_file : String = ""
 
-## The location of where the .exe location
+## The location of where the .exe is located.
 var exe_dir : String = OS.get_executable_path().get_base_dir()
 
-## The song file
+## The song file.
 var song_file : String = "" :
 	# Set up audiostreamplayer in GameManager as soon as it's set
 	set(value):
@@ -279,7 +279,7 @@ func export_project() -> void:
 ## Saves the client settings to [code]user://settings.cfg[/code]
 func save_settings() -> void:
 	# Initialise config file
-	var config = ConfigFile.new()
+	var config : ConfigFile = ConfigFile.new()
 	
 	# Set all the variables into the config file
 	config.set_value("volume","master",Global.volume_sliders[0].value)
@@ -300,10 +300,10 @@ func save_settings() -> void:
 ## Loads the client settings from [code]user://settings.cfg[/code]
 func load_settings() -> void:
 	# Initialise config file
-	var config = ConfigFile.new()
+	var config : ConfigFile = ConfigFile.new()
 	
 	# Check for errors
-	var err = config.load("user://settings.cfg")
+	var err : Error = config.load("user://settings.cfg")
 	if err != OK:
 		printerr(err)
 		return
@@ -323,7 +323,7 @@ func load_settings() -> void:
 	
 	# Line offset
 	if(config.has_section_key(settings,"lineOffset")):
-		NoteManager.offset = float(config.get_value(settings, "lineOffset"))
+		NoteManager.offset = int(config.get_value(settings, "lineOffset"))
 	
 	# FPS
 	if(config.has_section_key(settings,"fps")):
