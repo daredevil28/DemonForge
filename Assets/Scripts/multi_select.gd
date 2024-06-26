@@ -36,7 +36,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			query.collide_with_areas = true
 			query.collision_mask = 2
 			query.transform = Transform2D(0, (end_pos + first_pos) / 2)
-			_send_query_to_note_select(space.intersect_shape(query))
+			var shape_query : Array = space.intersect_shape(query)
+			if(!shape_query.is_empty()):
+				_send_query_to_note_select(shape_query)
 		else:
 			starting_dragging = false
 		
