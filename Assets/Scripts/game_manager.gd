@@ -311,6 +311,7 @@ func clean_project() -> void:
 	NoteManager.add_new_note(0,7)
 	undo_actions.clear()
 	redo_actions.clear()
+	project_changed = false
 	Global.notification_popup.play_notification(tr("NOTIFICATION_PROJECT_RESET"), 0.5)
 #endregion
 

@@ -102,7 +102,8 @@ func save_project(path : String) -> void:
 		var individual_note : Dictionary = {
 		"time" : i.time,
 		"color" : i.color,
-		"interval" : i.interval
+		"interval" : i.interval,
+		"double_time" : i.double_time
 		}
 		note_array.append(individual_note)
 		
