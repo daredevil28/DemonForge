@@ -17,7 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://bae2fu377vmfw" path="res://Assets/DrumKit/Ride.wav" id="10_ob81e"]
 [ext_resource type="AudioStream" uid="uid://jfr6lnwq11fh" path="res://Assets/DrumKit/MetronomeHigh.wav" id="11_aohh4"]
 [ext_resource type="Script" path="res://Assets/Scripts/file_manager.gd" id="12_ejln6"]
-[ext_resource type="Script" path="res://Assets/Scenes/multi_select.gd" id="17_tqqau"]
+[ext_resource type="Script" path="res://Assets/Scripts/multi_select.gd" id="17_tqqau"]
 
 [node name="MainNode" type="Node"]
 
@@ -123,3 +123,4 @@ script = ExtResource("10_2cfoa")
 script = ExtResource("17_tqqau")
 
 [node name="ui" parent="." instance=ExtResource("1_obr5d")]
+localize_numeral_system = false

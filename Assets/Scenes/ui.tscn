@@ -35,6 +35,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+auto_translate = false
 mouse_filter = 2
 script = ExtResource("1_hk45x")
 
@@ -48,6 +49,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+auto_translate = false
 mouse_filter = 2
 expand_mode = 3
 stretch_mode = 6
@@ -56,11 +58,13 @@ script = ExtResource("2_774o7")
 [node name="MarginContainer" parent="." instance=ExtResource("2_t6ae7")]
 layout_mode = 1
 offset_top = -4.0
+auto_translate = false
 
 [node name="OpenDialog" type="FileDialog" parent="."]
 title = "Open a File"
 initial_position = 2
 size = Vector2i(500, 300)
+auto_translate = false
 ok_button_text = "Open"
 dialog_hide_on_ok = true
 file_mode = 0
@@ -70,6 +74,7 @@ use_native_dialog = true
 
 [node name="SaveDialog" type="FileDialog" parent="."]
 size = Vector2i(452, 159)
+auto_translate = false
 dialog_hide_on_ok = true
 access = 2
 filters = PackedStringArray("*.json")
@@ -79,6 +84,7 @@ use_native_dialog = true
 title = "Open a File"
 position = Vector2i(0, 36)
 size = Vector2i(335, 159)
+auto_translate = false
 ok_button_text = "Open"
 file_mode = 0
 access = 2
@@ -89,6 +95,7 @@ use_native_dialog = true
 title = "Open a File"
 position = Vector2i(0, 36)
 size = Vector2i(335, 159)
+auto_translate = false
 ok_button_text = "Open"
 file_mode = 0
 access = 2
@@ -99,6 +106,7 @@ use_native_dialog = true
 title = "Open a Directory"
 position = Vector2i(0, 36)
 size = Vector2i(392, 159)
+auto_translate = false
 ok_button_text = "Select Current Folder"
 file_mode = 2
 access = 2
@@ -108,10 +116,11 @@ use_native_dialog = true
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+auto_translate = false
 
 [node name="File" type="PopupMenu" parent="MenuBar"]
-title = "Test"
 size = Vector2i(194, 116)
+auto_translate = false
 hide_on_state_item_selection = true
 item_count = 4
 item_0/text = "New Project (Ctrl + N)"
@@ -125,6 +134,7 @@ item_3/id = 3
 
 [node name="Properties" type="PopupMenu" parent="MenuBar"]
 size = Vector2i(151, 100)
+auto_translate = false
 item_count = 2
 item_0/text = "Song Properties"
 item_0/id = 0
@@ -133,12 +143,13 @@ item_1/id = 1
 
 [node name="Tools" type="PopupMenu" parent="MenuBar"]
 size = Vector2i(150, 100)
+auto_translate = false
 item_count = 1
 item_0/text = "Snap to nearest"
 item_0/id = 0
 
 [node name="SongProperties" type="Window" parent="."]
-title = "Song Properties"
+title = "WINDOW_SONG_PROPERTIES"
 initial_position = 1
 size = Vector2i(1000, 300)
 visible = false
@@ -164,19 +175,19 @@ grow_vertical = 2
 [node name="SongName" type="LineEdit" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
 layout_mode = 2
 size_flags_vertical = 3
-tooltip_text = "Name of the song"
-placeholder_text = "Song Name"
+tooltip_text = "WINDOW_SONG_PROPERTIES_SONG_NAME_DESCRIPTION"
+placeholder_text = "WINDOW_SONG_PROPERTIES_SONG_NAME"
 
 [node name="ArtistName" type="LineEdit" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
 layout_mode = 2
 size_flags_vertical = 3
-tooltip_text = "Name of the song artist"
-placeholder_text = "Artist Name"
+tooltip_text = "WINDOW_SONG_PROPERTIES_ARTIST_NAME_DESCRIPTION"
+placeholder_text = "WINDOW_SONG_PROPERTIES_ARTIST_NAME"
 
 [node name="Difficulty" type="OptionButton" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
 layout_mode = 2
 size_flags_vertical = 3
-tooltip_text = "Difficulty of the map (affects scroll speed in-game)"
+tooltip_text = "WINDOW_SONG_PROPERTIES_DIFFICULTY_DESCRIPTION"
 item_count = 4
 selected = 0
 popup/item_0/text = "Easy"
@@ -191,7 +202,7 @@ popup/item_3/id = 3
 [node name="Map" type="OptionButton" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
 layout_mode = 2
 size_flags_vertical = 3
-tooltip_text = "The map the level is played on"
+tooltip_text = "WINDOW_SONG_PROPERTIES_MAP_DESCRIPTION"
 item_count = 3
 selected = 0
 popup/item_0/text = "Volcano"
@@ -211,13 +222,13 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-tooltip_text = "Path to the song file (only .ogg is supported)"
-placeholder_text = "Song Location"
+tooltip_text = "WINDOW_SONG_PROPERTIES_SONG_LOCATION_DESCRIPTION"
+placeholder_text = "WINDOW_SONG_PROPERTIES_SONG_LOCATION"
 
 [node name="SongSelectFile" type="TextureButton" parent="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
-tooltip_text = "File Select"
+tooltip_text = "WINDOW_SONG_PROPERTIES_FILE_SELECT_TOOLTIP"
 texture_normal = ExtResource("3_m2luq")
 texture_pressed = ExtResource("4_6ftkc")
 texture_hover = ExtResource("5_16p63")
@@ -232,21 +243,21 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-tooltip_text = "Path to the song file (only .ogg is supported)"
-placeholder_text = "Preview file location"
+tooltip_text = "WINDOW_SONG_PROPERTIES_PREVIEW_LOCATION_DESCRIPTION"
+placeholder_text = "WINDOW_SONG_PROPERTIES_PREVIEW_LOCATION"
 
 [node name="PreviewSelectFile" type="TextureButton" parent="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 4
-tooltip_text = "File Select"
+tooltip_text = "WINDOW_SONG_PROPERTIES_FILE_SELECT_TOOLTIP"
 texture_normal = ExtResource("3_m2luq")
 texture_pressed = ExtResource("4_6ftkc")
 texture_hover = ExtResource("5_16p63")
 
 [node name="ClientSettings" type="Window" parent="."]
-title = "Client Settings"
+title = "WINDOW_CLIENT_SETTINGS"
 initial_position = 1
-size = Vector2i(500, 300)
+size = Vector2i(800, 400)
 visible = false
 
 [node name="ColorRect" type="ColorRect" parent="ClientSettings"]
@@ -275,38 +286,53 @@ size_flags_horizontal = 0
 layout_mode = 2
 
 [node name="LabelVolume" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-text = "Volume Settings"
+text = "WINDOW_CLIENT_SETTINGS_VOLUME_LABEL"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="LabelMaster" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-text = "Master Volume:"
+text = "WINDOW_CLIENT_SETTINGS_VOLUME_MASTER"
+autowrap_mode = 3
 
 [node name="MasterSlider" type="HSlider" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer" groups=["VolumeSliders"]]
 layout_mode = 2
 value = 100.0
 
 [node name="LabelMusic" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-text = "Music Volume:"
+text = "WINDOW_CLIENT_SETTINGS_VOLUME_MUSIC"
+autowrap_mode = 3
 
 [node name="MusicSlider" type="HSlider" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer" groups=["VolumeSliders"]]
 layout_mode = 2
 value = 100.0
 
 [node name="LabelInstruments" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-text = "Instruments"
+text = "WINDOW_CLIENT_SETTINGS_VOLUME_INSTRUMENTS"
+autowrap_mode = 3
 
 [node name="SFXInstruments" type="HSlider" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer" groups=["VolumeSliders"]]
 layout_mode = 2
 value = 100.0
 
 [node name="LabelSFX" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-text = "SFX Volume:"
+text = "WINDOW_CLIENT_SETTINGS_VOLUME_SFX"
+autowrap_mode = 3
 
 [node name="SFXSlider" type="HSlider" parent="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer" groups=["VolumeSliders"]]
 layout_mode = 2
@@ -321,7 +347,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
 layout_mode = 2
-text = "Settings"
+text = "WINDOW_CLIENT_SETTINGS_LABEL"
 horizontal_alignment = 1
 
 [node name="ScrollSpeedContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
@@ -331,13 +357,13 @@ size_flags_vertical = 0
 [node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/ScrollSpeedContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "Scrollspeed"
+text = "WINDOW_CLIENT_SETTINGS_SCROLLSPEED"
 
 [node name="ScrollSpeed" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/ScrollSpeedContainer" groups=["ClientSettings"]]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
-tooltip_text = "Affects how fast the note goes by"
+tooltip_text = "WINDOW_CLIENT_SETTINGS_SCROLLSPEED_DESCRIPTION"
 max_value = 10000.0
 
 [node name="OffsetContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
@@ -347,13 +373,13 @@ size_flags_vertical = 0
 [node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/OffsetContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "Judgement line offset"
+text = "WINDOW_CLIENT_SETTINGS_LINE_OFFSET"
 
 [node name="Offset" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/OffsetContainer" groups=["ClientSettings"]]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
-tooltip_text = "Changes offset of the judgement line in px"
+tooltip_text = "WINDOW_CLIENT_SETTINGS_LINE_OFFSET_DESCRIPTION"
 max_value = 10000.0
 
 [node name="MaxFPSContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
@@ -363,13 +389,13 @@ size_flags_vertical = 0
 [node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/MaxFPSContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "Max FPS"
+text = "WINDOW_CLIENT_SETTINGS_MAX_FPS"
 
 [node name="MaxFPS" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/MaxFPSContainer" groups=["ClientSettings"]]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
-tooltip_text = "Max FPS (0 = infinite)"
+tooltip_text = "WINDOW_CLIENT_SETTINGS_MAX_FPS_DESCRIPTION"
 max_value = 10000.0
 value = 15.0
 
@@ -380,13 +406,13 @@ size_flags_vertical = 0
 [node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/TimeBetweenFramesContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "Time between frames"
+text = "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES"
 
 [node name="TimeBetweenFrames" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/TimeBetweenFramesContainer" groups=["ClientSettings"]]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
-tooltip_text = "The time between frames in microseconds (Lower values mean more FPS but higher power usage)"
+tooltip_text = "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES_DESCRIPTION"
 max_value = 100000.0
 
 [node name="AudioOffsetContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
@@ -396,13 +422,13 @@ size_flags_vertical = 0
 [node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/AudioOffsetContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "Audio offset"
+text = "WINDOW_CLIENT_SETTINGS_AUDIO_OFFSET"
 
 [node name="AudioOffset" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/AudioOffsetContainer" groups=["ClientSettings"]]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
-tooltip_text = "Audio offset in ms"
+tooltip_text = "WINDOW_CLIENT_SETTINGS_AUDIO_OFFSET_DESCRIPTION"
 min_value = -100000.0
 max_value = 100000.0
 
@@ -431,7 +457,7 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 50
-text = "Export"
+text = "WINDOW_EXPORT_PANEL_LABEL"
 horizontal_alignment = 1
 
 [node name="ColorRect" type="ColorRect" parent="ExportPanel/ColorRect/VBoxContainer"]
@@ -459,7 +485,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 1
-text = "Custom song folder location"
+text = "WINDOW_EXPORT_PANEL_CUSTOMSONGSFOLDER_LOCATION"
 
 [node name="CustomFolderSelect" type="TextureButton" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -478,7 +504,7 @@ size_flags_vertical = 0
 [node name="Label" type="Label" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 1
-text = "Folder name"
+text = "WINDOW_EXPORT_PANEL_FOLDER_NAME"
 
 [node name="FolderName" type="LineEdit" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer" groups=["ExportSettings"]]
 layout_mode = 2
@@ -488,7 +514,7 @@ size_flags_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 10
-text = "Export project"
+text = "WINDOW_EXPORT_PANEL_BUTTON"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer"]
 layout_mode = 2
@@ -498,7 +524,7 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 20
-text = "Issues"
+text = "WINDOW_EXPORT_PANEL_ISSUES"
 horizontal_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer2"]
@@ -512,6 +538,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 size_flags_vertical = 3
+auto_translate = false
 theme_override_font_sizes/font_size = 32
 text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\" \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
 autowrap_mode = 2
@@ -528,6 +555,7 @@ offset_left = -40.0
 offset_top = -23.0
 grow_horizontal = 0
 grow_vertical = 0
+auto_translate = false
 text = "1000"
 
 [node name="NoteSettings" type="PanelContainer" parent="."]
@@ -536,69 +564,67 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -169.0
-offset_right = 147.0
-offset_bottom = -69.0
+offset_left = 2.0
+offset_top = -191.0
+offset_right = 149.0
+offset_bottom = -78.0
 grow_vertical = 0
 mouse_filter = 1
 
 [node name="NoteSettingsBox" type="VBoxContainer" parent="NoteSettings"]
 visible = false
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
+size_flags_horizontal = 0
 
 [node name="ColorRect" type="ColorRect" parent="NoteSettings/NoteSettingsBox"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 2
+size_flags_vertical = 3
 mouse_filter = 1
 color = Color(0.0885599, 0.0885599, 0.0885599, 1)
 
 [node name="Label" type="Label" parent="NoteSettings/NoteSettingsBox/ColorRect"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 14
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -52.0
 offset_top = -11.5
-offset_right = 52.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Note Settings"
+text = "NOTE_SETTINGS_LABEL"
+horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="NoteSettings/NoteSettingsBox"]
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="NoteSettings/NoteSettingsBox/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
-text = "Interval"
+size_flags_horizontal = 3
+text = "NOTE_SETTINGS_INTERVAL"
 
 [node name="NoteInterval" type="SpinBox" parent="NoteSettings/NoteSettingsBox/HBoxContainer" groups=["NoteSettings"]]
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
+size_flags_horizontal = 3
+tooltip_text = "NOTE_SETTINGS_INTERVAL_DESCRIPTION"
 mouse_filter = 1
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="NoteSettings/NoteSettingsBox"]
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="NoteSettings/NoteSettingsBox/HBoxContainer2"]
 layout_mode = 2
-size_flags_horizontal = 0
-text = "Double Time"
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "NOTE_SETTINGS_DOUBLETIME"
 
 [node name="DoubleTime" type="CheckButton" parent="NoteSettings/NoteSettingsBox/HBoxContainer2" groups=["NoteSettings"]]
 layout_mode = 2
-size_flags_horizontal = 8
-tooltip_text = "Enabling this will make any drum roll play twice as fast (only cosmetical and won't change anything about the chart itself)"
+size_flags_horizontal = 3
+tooltip_text = "NOTE_SETTINGS_DOUBLETIME_DESCRIPTION"
 
 [node name="BPMMarkerSettingsBox" type="VBoxContainer" parent="NoteSettings"]
 visible = false
@@ -627,7 +653,7 @@ offset_right = 52.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Marker Settings"
+text = "MARKER_SETTINGS_LABEL"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="NoteSettings/BPMMarkerSettingsBox"]
 layout_mode = 2
@@ -636,12 +662,13 @@ size_flags_vertical = 0
 [node name="Label" type="Label" parent="NoteSettings/BPMMarkerSettingsBox/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
-text = "bpm"
+text = "MARKER_SETTINGS_BPM"
 
 [node name="bpm" type="SpinBox" parent="NoteSettings/BPMMarkerSettingsBox/HBoxContainer" groups=["NoteSettings"]]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
+tooltip_text = "MARKER_SETTINGS_BPM_DESCRIPTION"
 mouse_filter = 1
 max_value = 1000.0
 
@@ -652,12 +679,13 @@ size_flags_vertical = 0
 [node name="Label" type="Label" parent="NoteSettings/BPMMarkerSettingsBox/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 0
-text = "snapping"
+text = "MARKER_SETTINGS_SNAPPING"
 
 [node name="Snapping" type="SpinBox" parent="NoteSettings/BPMMarkerSettingsBox/HBoxContainer2" groups=["NoteSettings"]]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
+tooltip_text = "MARKER_SETTINGS_SNAPPING_DESCRIPTION"
 mouse_filter = 1
 
 [node name="NotificationContainer" type="PanelContainer" parent="."]
@@ -669,11 +697,13 @@ anchor_right = 1.0
 offset_left = -49.0
 offset_bottom = 40.0
 grow_horizontal = 0
+auto_translate = false
 theme_override_styles/panel = SubResource("StyleBoxFlat_0hp2c")
 script = ExtResource("7_bt6ck")
 
 [node name="NotificationLabel" type="Label" parent="NotificationContainer"]
 layout_mode = 2
+auto_translate = false
 text = "Lorem ipsum doloses de bora"
 
 [node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
@@ -681,6 +711,7 @@ title = "Project has not been saved!"
 initial_position = 1
 size = Vector2i(533, 100)
 unresizable = true
+auto_translate = false
 dialog_text = "Project has not been saved yet, are you sure you want to continue?"
 script = ExtResource("8_om2vj")
 

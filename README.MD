@@ -46,7 +46,7 @@ You can also download the files directly in the [custom](custom) folder
 - [x] Save charts in a custom json format
 - [x] Read the original game format (.csv)
 - [x] Editing charts inside the application
-- [ ] Figure out how to properly play sound for drum rolls
+- [x] Figure out how to properly play sound for drum rolls
 - [x] Snap editing
 - [x] Adjustable client settings (scroll speed, note size,volume etc)
 - [x] Custom asset support for audio/sprites

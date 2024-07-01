@@ -111,6 +111,12 @@ var current_pos : float = 0 :
 #endregion
 
 
+func _ready() -> void:
+	# Setting up translation strings for auto generation
+	tr("UNDO")
+	tr("REDO")
+	
+
 func _process(_delta : float) -> void:
 	if(audio_player.playing):
 		current_pos = (audio_player.get_playback_position() + AudioServer.get_time_since_last_mix()) + audio_offset / 100
@@ -164,7 +170,6 @@ func _input(event : InputEvent) -> void:
 					# If we are hovering over a note then set the note as the selected note
 					if(current_hovered_note != null):
 						deselect_notes()
-						current_selected_notes.append(current_hovered_note)
 						select_note(current_hovered_note)
 												
 				if(event.is_action_released("RightClick") && !Global.multi_select.currently_dragging):
@@ -255,7 +260,7 @@ func _notification(what: int) -> void:
 	if(what == NOTIFICATION_WM_CLOSE_REQUEST):
 		Global.file_manager.save_settings()
 		if(project_changed):
-			Global.popup_dialog.play_dialog("Project not saved!","The current project has not been saved, are you sure you want to exit?",get_tree().quit)
+			Global.popup_dialog.play_dialog(tr("WINDOW_DIALOG_NOTSAVED_TITLE"),tr("WINDOW_DIALOG_NOTSAVED_EXIT"),get_tree().quit)
 		else:
 			get_tree().quit()
 
@@ -298,13 +303,15 @@ func clean_project() -> void:
 	map = 0
 	Global.file_manager.song_file = ""
 	Global.file_manager.preview_file = ""
+	Global.file_manager.project_file = ""
+	Global.file_manager.folder_name = ""
 	bpm = 60.0
-
+	
 	current_pos = 0
 	NoteManager.add_new_note(0,7)
 	undo_actions.clear()
 	redo_actions.clear()
-	Global.notification_popup.play_notification("Project has been reset!", 0.5)
+	Global.notification_popup.play_notification(tr("NOTIFICATION_PROJECT_RESET"), 0.5)
 #endregion
 
 
@@ -379,8 +386,9 @@ func run_action(action : Action, add_to_undo_redo : bool = true) -> Action:
 			
 			# Run reverse of action
 			NoteManager.remove_note_at_time(action.time, action.color)
-			
-			Global.notification_popup.play_notification(str(Action.ActionType.keys()[action.action_type]) + " note at " + str(snapped(action.time,0.01)), 1)
+			print(tr("UNDO"))
+			Global.notification_popup.play_notification(tr("NOTIFICATION_{ACTION}_NOTE_AT_{TIME}","Use {ACTION} for undo/redo and {TIME} for time")
+			.format({ACTION = tr(str(Action.ActionType.keys()[action.action_type])),TIME = str(snapped(action.time,0.01))}), 1)
 			
 		# The action was a remove so add the note
 		Action.ActionName.NOTEREMOVE:
@@ -398,7 +406,8 @@ func run_action(action : Action, add_to_undo_redo : bool = true) -> Action:
 			new_action.time = action.time
 			new_action.color = action.color
 			
-			Global.notification_popup.play_notification(str(Action.ActionType.keys()[action.action_type]) + " note at " + str(snapped(action.time,0.01)), 1)
+			Global.notification_popup.play_notification(tr("NOTIFICATION_{ACTION}_NOTE_AT_{TIME}","Use {ACTION} for undo/redo and {TIME} for time")
+			.format({ACTION = tr(str(Action.ActionType.keys()[action.action_type])),TIME = str(snapped(action.time,0.01))}), 1)
 			
 		# The action was a value changed
 		Action.ActionName.VALUECHANGED:
@@ -434,16 +443,23 @@ func run_action(action : Action, add_to_undo_redo : bool = true) -> Action:
 					new_action.value_type = ValueAction.ValueType.DOUBLETIME
 				
 			Global.game_scene_node.queue_redraw()
-			Global.notification_popup.play_notification(str(Action.ActionType.keys()[action.action_type]) +
-			" " + str(ValueAction.ValueType.keys()[new_action.value_type]) +
-			" to " + str(action.old_value) +
-			" at " + str(snapped(action.time,0.01)), 1)
+			
+			Global.notification_popup.play_notification(
+				tr("NOTIFICATION_{ACTION}_NOTE_VALUECHANGED_AT_{TIME}_TO_{VALUE}",
+				"{ACTION} is undo/redo, {TIME} is song time and {VALUE} is the value it has changed to")
+			.format	(
+				{
+					ACTION = tr(str(Action.ActionType.keys()[action.action_type])),
+					TIME = str(snapped(action.time,0.01)),
+					VALUE = str(action.old_value)
+				}), 1)
+			
 		
 		Action.ActionName.MULTIACTION:
 			new_action = MultiAction.new(Action.ActionName.MULTIACTION)
 			for multi_action in action.actions:
 				new_action.actions.append(run_action(multi_action, false))
-			Global.notification_popup.play_notification(str(Action.ActionType.keys()[action.action_type]) + " multiple notes.", 1)
+			Global.notification_popup.play_notification(tr("NOTIFICATION_{ACTION}_MULTIPLE_NOTES", "{ACTION} is undo/redo").format({ACTION = tr(str(Action.ActionType.keys()[action.action_type]))}), 1)
 				
 	match action.action_type:
 			action.ActionType.UNDO:
@@ -480,7 +496,7 @@ func deselect_notes() -> void:
 ## Play the music
 func _play_music() -> void:
 	audio_player.play(current_pos)
-	Global.notification_popup.play_notification("Music playing", 0.5)
+	Global.notification_popup.play_notification(tr("NOTIFICATION_MUSIC_PLAYING"), 0.5)
 
 
 ## Stop the music
@@ -488,7 +504,7 @@ func _stop_music() -> void:
 	current_pos = audio_player.get_playback_position()
 	audio_player.stop()
 	current_pos = current_pos
-	Global.notification_popup.play_notification("Music stopped", 0.5)
+	Global.notification_popup.play_notification(tr("NOTIFICATION_MUSIC_STOPPED"), 0.5)
 
 
 ## Get the snapped value of the screen and time position based on screen position

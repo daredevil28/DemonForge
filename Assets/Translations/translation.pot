@@ -1,0 +1,300 @@
+# LANGUAGE translation for Demon Forge (A Drums Rock Editor) for the following files:
+# res://Assets/Scenes/ui.tscn
+# res://Assets/Scripts/ui_controller.gd
+# res://Assets/Scripts/game_manager.gd
+# res://Assets/Scripts/file_manager.gd
+# res://Assets/Scripts/metronome.gd
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Demon Forge (A Drums Rock Editor)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8-bit\n"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_SONG_NAME_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_SONG_NAME"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_ARTIST_NAME_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_ARTIST_NAME"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_DIFFICULTY_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_MAP_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_SONG_LOCATION_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_SONG_LOCATION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_FILE_SELECT_TOOLTIP"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_PREVIEW_LOCATION_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_PREVIEW_LOCATION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_VOLUME_LABEL"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_VOLUME_MASTER"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_VOLUME_MUSIC"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_VOLUME_INSTRUMENTS"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_VOLUME_SFX"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_LABEL"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_SCROLLSPEED"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_SCROLLSPEED_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_LINE_OFFSET"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_LINE_OFFSET_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_MAX_FPS"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_MAX_FPS_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_AUDIO_OFFSET"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_AUDIO_OFFSET_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_LABEL"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_CUSTOMSONGSFOLDER_LOCATION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_FOLDER_NAME"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_BUTTON"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_ISSUES"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "NOTE_SETTINGS_LABEL"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "NOTE_SETTINGS_INTERVAL"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "NOTE_SETTINGS_INTERVAL_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "NOTE_SETTINGS_DOUBLETIME"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "NOTE_SETTINGS_DOUBLETIME_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MARKER_SETTINGS_LABEL"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MARKER_SETTINGS_BPM"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MARKER_SETTINGS_BPM_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MARKER_SETTINGS_SNAPPING"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MARKER_SETTINGS_SNAPPING_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scripts/ui_controller.gd
+#: Assets/Scripts/game_manager.gd
+msgid "WINDOW_DIALOG_NOTSAVED_TITLE"
+msgstr ""
+
+#: Assets/Scripts/ui_controller.gd
+#: Assets/Scripts/game_manager.gd
+msgid "WINDOW_DIALOG_NOTSAVED_EXIT"
+msgstr ""
+
+#: Assets/Scripts/ui_controller.gd
+msgid "WINDOW_DIALOG_NOTSAVED_CONTINUE"
+msgstr ""
+
+#: Assets/Scripts/ui_controller.gd
+msgid "WINDOW_DIALOG_DESTRUCTIVE_TITLE"
+msgstr ""
+
+#: Assets/Scripts/ui_controller.gd
+msgid "WINDOW_DIALOG_WARNING_SNAP_NOTES"
+msgstr ""
+
+#: Assets/Scripts/ui_controller.gd
+msgctxt "{FILE} is the file that is being opend"
+msgid "POPUP_LOADING_{FILE}"
+msgstr ""
+
+#: Assets/Scripts/ui_controller.gd
+msgid "-"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgid "UNDO"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgid "REDO"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgid "NOTIFICATION_PROJECT_RESET"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgctxt "Use {ACTION} for undo/redo and {TIME} for time"
+msgid "NOTIFICATION_{ACTION}_NOTE_AT_{TIME}"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgctxt "{ACTION} is undo/redo, {TIME} is song time and {VALUE} is the value it has changed to"
+msgid "NOTIFICATION_{ACTION}_NOTE_VALUECHANGED_AT_{TIME}_TO_{VALUE}"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgctxt "{ACTION} is undo/redo"
+msgid "NOTIFICATION_{ACTION}_MULTIPLE_NOTES"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgid "NOTIFICATION_MUSIC_PLAYING"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgid "NOTIFICATION_MUSIC_STOPPED"
+msgstr ""
+
+#: Assets/Scripts/file_manager.gd
+msgctxt "File is the .json file"
+msgid "NOTIFICATION_PROJECT_SAVED_{FILE}"
+msgstr ""
+
+#: Assets/Scripts/file_manager.gd
+msgctxt "{PATH} is the folder name inside the custom songs folder"
+msgid "NOTIFICATION_PROJECT_EXPORTED_{PATH}"
+msgstr ""
+
+#: Assets/Scripts/file_manager.gd
+msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_SONG_NAME"
+msgstr ""
+
+#: Assets/Scripts/file_manager.gd
+msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_ARTIST_NAME"
+msgstr ""
+
+#: Assets/Scripts/file_manager.gd
+msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_SONG_FILE"
+msgstr ""
+
+#: Assets/Scripts/file_manager.gd
+msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_PREVIEW_FILE"
+msgstr ""
+
+#: Assets/Scripts/file_manager.gd
+msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_FOLDER_NAME"
+msgstr ""
+
+#: Assets/Scripts/file_manager.gd
+msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_CUSTOM_SONGS_FOLDER"
+msgstr ""
+
+#: Assets/Scripts/metronome.gd
+msgid "NOTIFICATION_METRONOME_ENABLED"
+msgstr ""
+
+#: Assets/Scripts/metronome.gd
+msgid "NOTIFICATION_METRONOME_DISABLED"
+msgstr ""

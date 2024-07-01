@@ -33,13 +33,13 @@ func _on_file_index_pressed(index : int) -> void:
 		0:
 			print("New File")
 			if(GameManager.project_changed):
-				Global.popup_dialog.play_dialog("Project not saved!","The current project has not been saved, are you sure you want to continue?", GameManager.clean_project)
+				Global.popup_dialog.play_dialog(tr("WINDOW_DIALOG_NOTSAVED_TITLE"),tr("WINDOW_DIALOG_NOTSAVED_EXIT"), GameManager.clean_project)
 			else:
 				GameManager.clean_project()
 		1:
 			print("Load File")
 			if(GameManager.project_changed):
-				Global.popup_dialog.play_dialog("Project not saved!","The current project has not been saved, are you sure you want to continue?", _open_dialog.popup)
+				Global.popup_dialog.play_dialog(tr("WINDOW_DIALOG_NOTSAVED_TITLE"),tr("WINDOW_DIALOG_NOTSAVED_CONTINUE"), _open_dialog.popup)
 			else:
 				_open_dialog.popup()# > _on_open_dialog_file_selected()
 		2:
@@ -75,7 +75,7 @@ func _on_properties_index_pressed(index : int) -> void:
 func _on_tools_index_pressed(index: int) -> void:
 	match index:
 		0:
-			Global.popup_dialog.play_dialog("Destructive action!","This will snap all the notes to the closest snap value. This can not be undone. Are you sure?",NoteManager.snap_all_notes_to_nearest)
+			Global.popup_dialog.play_dialog(tr("WINDOW_DIALOG_DESTRUCTIVE_TITLE"),tr("WINDOW_DIALOG_WARNING_SNAP_NOTES"),NoteManager.snap_all_notes_to_nearest)
 #endregion
 
 
@@ -88,7 +88,7 @@ func _on_open_dialog_file_selected(path : String) -> void:
 	regex.compile("\\.(json|csv)")
 	var result : RegExMatch = regex.search(path)
 	print("Opening file: " + path)
-	Global.notification_popup.play_notification("Loading file: " + path, 2)
+	Global.notification_popup.play_notification(tr("POPUP_LOADING_{FILE}","{FILE} is the file that is being opend") + path, 2)
 	match result.get_string():
 		".json":
 			Global.file_manager.project_file = path

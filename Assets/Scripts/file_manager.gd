@@ -136,7 +136,7 @@ func save_project(path : String) -> void:
 	file.close()
 	
 	GameManager.project_changed = false
-	Global.notification_popup.play_notification("Project has been saved to: " + str(file.get_path()), 2)
+	Global.notification_popup.play_notification(tr("NOTIFICATION_PROJECT_SAVED_{FILE}", "File is the .json file").format({FILE = str(file.get_path())}), 2)
 
 
 ## Convert an existing .csv file to json.
@@ -274,7 +274,7 @@ func export_project() -> void:
 			notes.store_csv_line(PackedStringArray([note_time,enemy_type,color_1,color_2,"1",interval,aux]))
 		notes.close()
 		
-		Global.notification_popup.play_notification("Project succesfully exported to: " + path, 1)
+		Global.notification_popup.play_notification(tr("NOTIFICATION_PROJECT_EXPORTED_{PATH}", "{PATH} is the folder name inside the custom songs folder").format({PATH = path}), 1)
 
 ## Saves the client settings to [code]user://settings.cfg[/code]
 func save_settings() -> void:
@@ -346,15 +346,15 @@ func check_for_errors() -> String:
 	# Check for errors before exporting the project
 	var errors : String = ""
 	if(GameManager.song_name == ""):
-		errors += "No song name set\n"
+		errors += tr("WINDOW_EXPORT_PANEL_ISSUES_NO_SONG_NAME")
 	if(GameManager.artist_name == ""):
-		errors += "Artist name not set\n"
+		errors += tr("WINDOW_EXPORT_PANEL_ISSUES_NO_ARTIST_NAME")
 	if(Global.file_manager.song_file == ""):
-		errors += "No song file specified\n"
+		errors += tr("WINDOW_EXPORT_PANEL_ISSUES_NO_SONG_FILE")
 	if(Global.file_manager.preview_file == ""):
-		errors += "No preview file specified\n"
+		errors += tr("WINDOW_EXPORT_PANEL_ISSUES_NO_PREVIEW_FILE")
 	if(Global.file_manager.folder_name == ""):
-		errors += "Folder name not specified\n"
+		errors += tr("WINDOW_EXPORT_PANEL_ISSUES_NO_FOLDER_NAME")
 	if(Global.file_manager.custom_songs_folder == ""):
-		errors += "Custom songs folder not set\n"
+		errors += tr("WINDOW_EXPORT_PANEL_ISSUES_NO_CUSTOM_SONGS_FOLDER")
 	return errors

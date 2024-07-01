@@ -165,7 +165,6 @@ func reset_note_y(instance : Node2D, color : int) -> float:
 func reset_collision_location(instance : Node2D, color : int) -> void:
 	# Reset the position and size of the note lanes to span across the screen size
 	instance.position = DisplayServer.window_get_size() / 2
-	@warning_ignore("integer_division")
 	instance.scale.x = DisplayServer.window_get_size().x / 2 / 10
 	instance.scale.y = 0.0048 * DisplayServer.window_get_size().y
 	instance.position.y = get_note_lane_y(color)

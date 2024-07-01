@@ -1,0 +1,313 @@
+# LANGUAGE translation for Demon Forge (A Drums Rock Editor) for the following files:
+# res://Assets/Scenes/ui.tscn
+# res://Assets/Scripts/ui_controller.gd
+# res://Assets/Scripts/game_manager.gd
+# res://Assets/Scripts/file_manager.gd
+# res://Assets/Scripts/metronome.gd
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Demon Forge (A Drums Rock Editor)\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES"
+msgstr "Song Properties"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_SONG_NAME_DESCRIPTION"
+msgstr "The name of the song."
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_SONG_NAME"
+msgstr "Song Name"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_ARTIST_NAME_DESCRIPTION"
+msgstr "The name of the artist."
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_ARTIST_NAME"
+msgstr "Artist Name"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_DIFFICULTY_DESCRIPTION"
+msgstr "The difficulty of the song. Higher difficulty means faster notes."
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_MAP_DESCRIPTION"
+msgstr "The map that the song will play on."
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_SONG_LOCATION_DESCRIPTION"
+msgstr "The location of the song file (Only .ogg is supported)."
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_SONG_LOCATION"
+msgstr "Song File Location"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_FILE_SELECT_TOOLTIP"
+msgstr "File Select"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_PREVIEW_LOCATION_DESCRIPTION"
+msgstr "The location of the preview file (Only .ogg is supported)."
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_SONG_PROPERTIES_PREVIEW_LOCATION"
+msgstr "Preview File Location"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS"
+msgstr "Client Settings"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_VOLUME_LABEL"
+msgstr "Volume"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_VOLUME_MASTER"
+msgstr "Master:"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_VOLUME_MUSIC"
+msgstr "Music:"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_VOLUME_INSTRUMENTS"
+msgstr "Instruments:"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_VOLUME_SFX"
+msgstr "SFX:"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_LABEL"
+msgstr "Settings"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_SCROLLSPEED"
+msgstr "Scroll Speed"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_SCROLLSPEED_DESCRIPTION"
+msgstr "The speed of the notes in the application"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_LINE_OFFSET"
+msgstr "Line Offset"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_LINE_OFFSET_DESCRIPTION"
+msgstr ""
+"The amount of pixels between the left of the screen and the judgement line."
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_MAX_FPS"
+msgstr "Max FPS"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_MAX_FPS_DESCRIPTION"
+msgstr "Max FPS of the program (0 = infinite)"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES"
+msgstr "Time Between Frames"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES_DESCRIPTION"
+msgstr ""
+"The time in μs between frames (The lower the value the more frames at the "
+"cost of higher power usage)."
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_AUDIO_OFFSET"
+msgstr "Audio Offset"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_AUDIO_OFFSET_DESCRIPTION"
+msgstr "The audio offset in miliseconds."
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_LABEL"
+msgstr "Export"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_CUSTOMSONGSFOLDER_LOCATION"
+msgstr "Customs Songs Folder Location"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_FOLDER_NAME"
+msgstr "Folder Name"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_BUTTON"
+msgstr "Export Project"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_ISSUES"
+msgstr "Issues:"
+
+#: Assets/Scenes/ui.tscn
+msgid "NOTE_SETTINGS_LABEL"
+msgstr "Note Settings"
+
+#: Assets/Scenes/ui.tscn
+msgid "NOTE_SETTINGS_INTERVAL"
+msgstr "Interval"
+
+#: Assets/Scenes/ui.tscn
+msgid "NOTE_SETTINGS_INTERVAL_DESCRIPTION"
+msgstr "The amount of times you have to hit a note."
+
+#: Assets/Scenes/ui.tscn
+msgid "NOTE_SETTINGS_DOUBLETIME"
+msgstr "Double time"
+
+#: Assets/Scenes/ui.tscn
+msgid "NOTE_SETTINGS_DOUBLETIME_DESCRIPTION"
+msgstr ""
+"Enabling this will make any drum roll play twice as fast (Only cosmetical "
+"and won't change anything about the chart itself)."
+
+#: Assets/Scenes/ui.tscn
+msgid "MARKER_SETTINGS_LABEL"
+msgstr "Marker Settings"
+
+#: Assets/Scenes/ui.tscn
+msgid "MARKER_SETTINGS_BPM"
+msgstr "BPM"
+
+#: Assets/Scenes/ui.tscn
+msgid "MARKER_SETTINGS_BPM_DESCRIPTION"
+msgstr "The Beats Per Minute at the marker."
+
+#: Assets/Scenes/ui.tscn
+msgid "MARKER_SETTINGS_SNAPPING"
+msgstr "Snapping"
+
+#: Assets/Scenes/ui.tscn
+msgid "MARKER_SETTINGS_SNAPPING_DESCRIPTION"
+msgstr "The amount of lines between each beat."
+
+#: Assets/Scripts/ui_controller.gd Assets/Scripts/game_manager.gd
+msgid "WINDOW_DIALOG_NOTSAVED_TITLE"
+msgstr "Not saved!"
+
+#: Assets/Scripts/ui_controller.gd Assets/Scripts/game_manager.gd
+msgid "WINDOW_DIALOG_NOTSAVED_EXIT"
+msgstr "The project has not been saved! Are you sure you want to exit?"
+
+#: Assets/Scripts/ui_controller.gd
+msgid "WINDOW_DIALOG_NOTSAVED_CONTINUE"
+msgstr "The project has not been saved! Are you sure you want to continue?"
+
+#: Assets/Scripts/ui_controller.gd
+msgid "WINDOW_DIALOG_DESTRUCTIVE_TITLE"
+msgstr "DESTRUCTIVE ACTION!"
+
+#: Assets/Scripts/ui_controller.gd
+msgid "WINDOW_DIALOG_WARNING_SNAP_NOTES"
+msgstr ""
+"The notes will be snapped to each tick. This can not be un-done. Are you "
+"sure you want to continue?"
+
+#: Assets/Scripts/ui_controller.gd
+msgctxt "{FILE} is the file that is being opend"
+msgid "POPUP_LOADING_{FILE}"
+msgstr "Loading file {file}"
+
+#: Assets/Scripts/ui_controller.gd
+msgid "-"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgid "UNDO"
+msgstr "Undo"
+
+#: Assets/Scripts/game_manager.gd
+msgid "REDO"
+msgstr "Redo"
+
+#: Assets/Scripts/game_manager.gd
+msgid "NOTIFICATION_PROJECT_RESET"
+msgstr "Project has been reset."
+
+#: Assets/Scripts/game_manager.gd
+msgctxt "Use {ACTION} for undo/redo and {TIME} for time"
+msgid "NOTIFICATION_{ACTION}_NOTE_AT_{TIME}"
+msgstr "{ACTION} note at {TIME}"
+
+#: Assets/Scripts/game_manager.gd
+msgctxt ""
+"{ACTION} is undo/redo, {TIME} is song time and {VALUE} is the value it has "
+"changed to"
+msgid "NOTIFICATION_{ACTION}_NOTE_VALUECHANGED_AT_{TIME}_TO_{VALUE}"
+msgstr "{ACTION} note value at {TIME} to {VALUE}"
+
+#: Assets/Scripts/game_manager.gd
+msgctxt "{ACTION} is undo/redo"
+msgid "NOTIFICATION_{ACTION}_MULTIPLE_NOTES"
+msgstr "{ACTION} Multiple notes"
+
+#: Assets/Scripts/game_manager.gd
+msgid "NOTIFICATION_MUSIC_PLAYING"
+msgstr "Music playing."
+
+#: Assets/Scripts/game_manager.gd
+msgid "NOTIFICATION_MUSIC_STOPPED"
+msgstr "Music stopped."
+
+#: Assets/Scripts/file_manager.gd
+msgctxt "File is the .json file"
+msgid "NOTIFICATION_PROJECT_SAVED_{FILE}"
+msgstr "Project saved to {FILE}"
+
+#: Assets/Scripts/file_manager.gd
+msgctxt "{PATH} is the folder name inside the custom songs folder"
+msgid "NOTIFICATION_PROJECT_EXPORTED_{PATH}"
+msgstr "Project has been exported to {PATH}"
+
+#: Assets/Scripts/file_manager.gd
+msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_SONG_NAME"
+msgstr "No song name has been set."
+
+#: Assets/Scripts/file_manager.gd
+msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_ARTIST_NAME"
+msgstr "No artist name has been set."
+
+#: Assets/Scripts/file_manager.gd
+msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_SONG_FILE"
+msgstr "No song file has been set."
+
+#: Assets/Scripts/file_manager.gd
+msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_PREVIEW_FILE"
+msgstr "No preview file has been set."
+
+#: Assets/Scripts/file_manager.gd
+msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_FOLDER_NAME"
+msgstr "No folder name has been set."
+
+#: Assets/Scripts/file_manager.gd
+msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_CUSTOM_SONGS_FOLDER"
+msgstr "No custom songs folder has been set."
+
+#: Assets/Scripts/metronome.gd
+msgid "NOTIFICATION_METRONOME_ENABLED"
+msgstr "Metronome enabled."
+
+#: Assets/Scripts/metronome.gd
+msgid "NOTIFICATION_METRONOME_DISABLED"
+msgstr "Metronome Disabled"
