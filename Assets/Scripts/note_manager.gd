@@ -91,7 +91,8 @@ func initialise_notes(json_notes : Array) -> void:
 		instance.time = note["time"]
 		instance.color = note["color"]
 		instance.interval = note["interval"]
-		instance.double_time = note["double_time"]
+		if(note.has("double_time")):
+			instance.double_time = note["double_time"]
 		instance.position.y = reset_note_y(instance, note["color"])
 		note_nodes.append(instance)
 		

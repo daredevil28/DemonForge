@@ -2,10 +2,16 @@ class_name MultiSelect
 extends Node2D
 ## Class for managing the box select
 
+## If we have pressed left click
 var starting_dragging : bool = false
+## If we have moved our mouse after holding left click
 var currently_dragging : bool = false
+## First position where we holding the mouse
 var first_pos : Vector2
+## Last position after we release the mouse
 var end_pos : Vector2
+## Amount of frames where we have moved the mouse (to make setting notes easier)
+var multi_select_frames : int
 var select_rectangle : RectangleShape2D = RectangleShape2D.new()
 
 
@@ -20,9 +26,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	if(starting_dragging):
 		if(event is InputEventMouseMotion):
-			currently_dragging = true
+			multi_select_frames += 1
+			if(multi_select_frames > 20):
+				currently_dragging = true
 		
 	if(event.is_action_released("LeftClick")):
+		multi_select_frames = 0
 		if(currently_dragging):
 			currently_dragging = false
 			starting_dragging = false
