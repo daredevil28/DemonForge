@@ -11,9 +11,11 @@ var metronome_enabled : bool = true
 @onready var _metronome_high : AudioStreamPlayer = $MetronomeLow
 @onready var _metronome_low : AudioStreamPlayer = $MetronomeHigh
 
+
 func _init() -> void:
 	Global.metronome = self
-	
+
+
 func _process(_delta: float) -> void:
 	if(GameManager.audio_player.playing && metronome_enabled):
 		# Make sure we play the metronome only once
@@ -25,10 +27,11 @@ func _process(_delta: float) -> void:
 			else:
 				_metronome_high.play(0)
 
+
 func _input(event: InputEvent) -> void:
 	if(event.is_action_pressed("ToggleMetronome")):
 		if(metronome_enabled == true):
-			Global.notification_popup.play_notification(tr("NOTIFICATION_METRONOME_ENABLED"), 0.5)
-		if(metronome_enabled == false):
 			Global.notification_popup.play_notification(tr("NOTIFICATION_METRONOME_DISABLED"), 0.5)
+		if(metronome_enabled == false):
+			Global.notification_popup.play_notification(tr("NOTIFICATION_METRONOME_ENABLED"), 0.5)
 		metronome_enabled = !metronome_enabled
