@@ -5,7 +5,12 @@ extends ProgressBar
 
 @onready var _progress_ball : Sprite2D = $ProgressBall
 var _mouse_in_ball : bool
-var _holding_ball : bool
+var holding_ball : bool
+
+
+func _init() -> void:
+	Global.progress_bar = self
+	
 
 func _on_area_2d_mouse_entered() -> void:
 	_mouse_in_ball = true
@@ -20,7 +25,7 @@ func _process(_delta : float) -> void:
 	_progress_ball.position.x = percentage_passed * DisplayServer.window_get_size().x
 	
 	# If we are holding the progess bar ball then move current pos
-	if(_holding_ball):
+	if(holding_ball):
 		GameManager.current_pos = clamp(get_viewport().get_mouse_position().x / DisplayServer.window_get_size().x * GameManager.audio_length,0,GameManager.audio_length)
 	
 func _input(event: InputEvent) -> void:
@@ -29,9 +34,9 @@ func _input(event: InputEvent) -> void:
 		# If the mouse is inside the ball collider
 		if(_mouse_in_ball):
 			if(event.is_action_pressed("LeftClick")):
-				_holding_ball = true
+				holding_ball = true
 		# Only release the ball if we release the button
 		if(event.is_action_released("LeftClick")):
-			_holding_ball = false
+			holding_ball = false
 	else:
-		_holding_ball = false
+		holding_ball = false

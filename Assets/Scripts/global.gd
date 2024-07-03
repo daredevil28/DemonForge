@@ -8,6 +8,7 @@ var file_manager : FileManager
 var metronome : Node
 var background_image : TextureRect
 var multi_select : MultiSelect
+var progress_bar : ProgressBar
 @onready var client_settings : Array = get_tree().get_nodes_in_group("ClientSettings")
 @onready var volume_sliders : Array = get_tree().get_nodes_in_group("VolumeSliders")
 @onready var instruments : Array = get_tree().get_nodes_in_group("Instruments")

@@ -20,7 +20,7 @@ func _init() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if(event.is_action_pressed("LeftClick")):
+	if(event.is_action_pressed("LeftClick") && !Global.progress_bar.holding_ball):
 		starting_dragging = true
 		first_pos = event.position
 		
