@@ -15,7 +15,7 @@ msgstr ""
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: en\n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -103,7 +103,7 @@ msgstr "Scroll Speed"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_SCROLLSPEED_DESCRIPTION"
-msgstr "The speed of the notes in the application"
+msgstr "The speed of the notes in the application."
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_LINE_OFFSET"
@@ -139,6 +139,14 @@ msgstr "Audio Offset"
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_AUDIO_OFFSET_DESCRIPTION"
 msgstr "The audio offset in miliseconds."
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_LANGUAGE"
+msgstr "Language"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_LANGUAGE_DESCRIPTION"
+msgstr "Change the language of the program."
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_EXPORT_PANEL_LABEL"
@@ -260,7 +268,7 @@ msgstr "{ACTION} note value at {TIME} to {VALUE}"
 #: Assets/Scripts/game_manager.gd
 msgctxt "{ACTION} is undo/redo"
 msgid "NOTIFICATION_{ACTION}_MULTIPLE_NOTES"
-msgstr "{ACTION} Multiple notes"
+msgstr "{ACTION} multiple notes"
 
 #: Assets/Scripts/game_manager.gd
 msgid "NOTIFICATION_MUSIC_PLAYING"

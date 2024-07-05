@@ -294,6 +294,7 @@ func save_settings() -> void:
 	config.set_value("settings","sleep",OS.low_processor_usage_mode_sleep_usec)
 	config.set_value("settings","audioOffset",GameManager.audio_offset)
 	config.set_value("settings", "metronomeEnabled",Global.metronome.metronome_enabled)
+	config.set_value("settings", "language",TranslationServer.get_locale())
 	
 	# Save the config file
 	config.save("user://settings.cfg")
@@ -341,6 +342,10 @@ func load_settings() -> void:
 	# If the metronome is enabled or disabled
 	if(config.has_section_key(settings,"metronomeEnabled")):
 		Global.metronome.metronome_enabled = bool(config.get_value(settings, "metronomeEnabled"))
+	
+	# Locale of the program
+	if(config.has_section_key(settings,"language")):
+		TranslationServer.set_locale(config.get_value(settings, "language"))
 
 ## Checks for errors in the current project
 func check_for_errors() -> String:

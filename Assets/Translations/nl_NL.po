@@ -11,220 +11,231 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Demon Forge (A Drums Rock Editor)\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8-bit\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES"
-msgstr ""
+msgstr "Muziek Eigenschappen"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_SONG_NAME_DESCRIPTION"
-msgstr ""
+msgstr "De naam van het nummer."
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_SONG_NAME"
-msgstr ""
+msgstr "Nummer naam"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_ARTIST_NAME_DESCRIPTION"
-msgstr ""
+msgstr "De naam van de artiest."
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_ARTIST_NAME"
-msgstr ""
+msgstr "Artiesten naam"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_DIFFICULTY_DESCRIPTION"
-msgstr ""
+msgstr "Hoe moeilijk het nummer is. De hoger de nummer de sneller het nummer gaat."
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_MAP_DESCRIPTION"
-msgstr ""
+msgstr "De omgeving waar het nummer wordt gespeeld"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_SONG_LOCATION_DESCRIPTION"
-msgstr ""
+msgstr "De bestand locatie van het nummer (Alleen .ogg wordt ondersteund)."
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_SONG_LOCATION"
-msgstr ""
+msgstr "Nummer Bestand locatie"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_FILE_SELECT_TOOLTIP"
-msgstr ""
+msgstr "Bestand selecteren"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_PREVIEW_LOCATION_DESCRIPTION"
-msgstr ""
+msgstr "De locatie van de nummer preview (Alleen .ogg wordt ondersteund)."
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_PREVIEW_LOCATION"
-msgstr ""
+msgstr "Preview Bestand Location"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS"
-msgstr ""
+msgstr "Programma Instellingen"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_VOLUME_LABEL"
-msgstr ""
+msgstr "Volume"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_VOLUME_MASTER"
-msgstr ""
+msgstr "Master:"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_VOLUME_MUSIC"
-msgstr ""
+msgstr "Muziek:"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_VOLUME_INSTRUMENTS"
-msgstr ""
+msgstr "Instrumenten:"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_VOLUME_SFX"
-msgstr ""
+msgstr "SFX:"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_LABEL"
-msgstr ""
+msgstr "Instellingen"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_SCROLLSPEED"
-msgstr ""
+msgstr "Scroll Snelheid"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_SCROLLSPEED_DESCRIPTION"
-msgstr ""
+msgstr "De snelheid van de noten in het programma."
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_LINE_OFFSET"
-msgstr ""
+msgstr "Lijn Compensatie"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_LINE_OFFSET_DESCRIPTION"
 msgstr ""
+"Het nummer aan pixels tussen de linkerkant van het scherm en de lijn"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_MAX_FPS"
-msgstr ""
+msgstr "Max FPS"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_MAX_FPS_DESCRIPTION"
-msgstr ""
+msgstr "Maximale FPS van het programma (0 = oneindig)"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES"
-msgstr ""
+msgstr "Tijd Tussen Frames"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES_DESCRIPTION"
 msgstr ""
+"De tijd in μs tussen frames (De lager deze waarde is de meer frames ten "
+"koste van een hogere stroom gebruik)."
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_AUDIO_OFFSET"
-msgstr ""
+msgstr "Audio Compensatie"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_AUDIO_OFFSET_DESCRIPTION"
-msgstr ""
+msgstr "De audio compensatie in miliseconden."
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_LANGUAGE"
-msgstr ""
+msgstr "Taal"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_LANGUAGE_DESCRIPTION"
-msgstr ""
+msgstr "Verander de taal van het programma."
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_EXPORT_PANEL_LABEL"
-msgstr ""
+msgstr "Export"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_EXPORT_PANEL_CUSTOMSONGSFOLDER_LOCATION"
-msgstr ""
+msgstr "Customs Songs Folder Locatie"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_EXPORT_PANEL_FOLDER_NAME"
-msgstr ""
+msgstr "Folder Naam"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_EXPORT_PANEL_BUTTON"
-msgstr ""
+msgstr "Export Project"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_EXPORT_PANEL_ISSUES"
-msgstr ""
+msgstr "Problemen:"
 
 #: Assets/Scenes/ui.tscn
 msgid "NOTE_SETTINGS_LABEL"
-msgstr ""
+msgstr "Noot Instellingen"
 
 #: Assets/Scenes/ui.tscn
 msgid "NOTE_SETTINGS_INTERVAL"
-msgstr ""
+msgstr "Interval"
 
 #: Assets/Scenes/ui.tscn
 msgid "NOTE_SETTINGS_INTERVAL_DESCRIPTION"
-msgstr ""
+msgstr "Het aantal keren dat je een noot moet raken."
 
 #: Assets/Scenes/ui.tscn
 msgid "NOTE_SETTINGS_DOUBLETIME"
-msgstr ""
+msgstr "Dubbele tijd"
 
 #: Assets/Scenes/ui.tscn
 msgid "NOTE_SETTINGS_DOUBLETIME_DESCRIPTION"
 msgstr ""
+"Deze instelling zorgt ervoor dat noten twee keer zo snel wordt afgespeeld (Dit is "
+"alleen cosmetische en veranderd niks aan het nummer)."
 
 #: Assets/Scenes/ui.tscn
 msgid "MARKER_SETTINGS_LABEL"
-msgstr ""
+msgstr "Marker Instellingen"
 
 #: Assets/Scenes/ui.tscn
 msgid "MARKER_SETTINGS_BPM"
-msgstr ""
+msgstr "BPM"
 
 #: Assets/Scenes/ui.tscn
 msgid "MARKER_SETTINGS_BPM_DESCRIPTION"
-msgstr ""
+msgstr "The Beats Per Minuten bij de marker."
 
 #: Assets/Scenes/ui.tscn
 msgid "MARKER_SETTINGS_SNAPPING"
-msgstr ""
+msgstr "Breuken"
 
 #: Assets/Scenes/ui.tscn
 msgid "MARKER_SETTINGS_SNAPPING_DESCRIPTION"
-msgstr ""
+msgstr "Het aantal lijnen tussen elke beat."
 
-#: Assets/Scripts/ui_controller.gd
-#: Assets/Scripts/game_manager.gd
+#: Assets/Scripts/ui_controller.gd Assets/Scripts/game_manager.gd
 msgid "WINDOW_DIALOG_NOTSAVED_TITLE"
-msgstr ""
+msgstr "Niet opgeslagen!"
 
-#: Assets/Scripts/ui_controller.gd
-#: Assets/Scripts/game_manager.gd
+#: Assets/Scripts/ui_controller.gd Assets/Scripts/game_manager.gd
 msgid "WINDOW_DIALOG_NOTSAVED_EXIT"
-msgstr ""
+msgstr "Het project is nog niet opgeslagen! Weet je zeker dat je wilt afsluiten?"
 
 #: Assets/Scripts/ui_controller.gd
 msgid "WINDOW_DIALOG_NOTSAVED_CONTINUE"
-msgstr ""
+msgstr "Het project is nog niet opgeslagen! Weet je zeker dat je verder wilt gaan?"
 
 #: Assets/Scripts/ui_controller.gd
 msgid "WINDOW_DIALOG_DESTRUCTIVE_TITLE"
-msgstr ""
+msgstr "DESTRUCTIEVE ACTIE!"
 
 #: Assets/Scripts/ui_controller.gd
 msgid "WINDOW_DIALOG_WARNING_SNAP_NOTES"
 msgstr ""
+"De noten worden op elke tick vastgeklikt. Dit kan niet ongedaan worden gemaakt. Weet je "
+"zeker dat je verder wilt gaan?"
 
 #: Assets/Scripts/ui_controller.gd
 msgctxt "{FILE} is the file that is being opend"
 msgid "POPUP_LOADING_{FILE}"
-msgstr ""
+msgstr "{FILE} laden"
 
 #: Assets/Scripts/ui_controller.gd
 msgid "-"
@@ -232,77 +243,79 @@ msgstr ""
 
 #: Assets/Scripts/game_manager.gd
 msgid "UNDO"
-msgstr ""
+msgstr "Ongedaan"
 
 #: Assets/Scripts/game_manager.gd
 msgid "REDO"
-msgstr ""
+msgstr "Opnieuw"
 
 #: Assets/Scripts/game_manager.gd
 msgid "NOTIFICATION_PROJECT_RESET"
-msgstr ""
+msgstr "Project is opnieuw ingesteld"
 
 #: Assets/Scripts/game_manager.gd
 msgctxt "Use {ACTION} for undo/redo and {TIME} for time"
 msgid "NOTIFICATION_{ACTION}_NOTE_AT_{TIME}"
-msgstr ""
+msgstr "{ACTION} note op {TIME}"
 
 #: Assets/Scripts/game_manager.gd
-msgctxt "{ACTION} is undo/redo, {TIME} is song time and {VALUE} is the value it has changed to"
+msgctxt ""
+"{ACTION} is undo/redo, {TIME} is song time and {VALUE} is the value it has "
+"changed to"
 msgid "NOTIFICATION_{ACTION}_NOTE_VALUECHANGED_AT_{TIME}_TO_{VALUE}"
-msgstr ""
+msgstr "{ACTION} note waarde op {TIME} naar {VALUE}"
 
 #: Assets/Scripts/game_manager.gd
 msgctxt "{ACTION} is undo/redo"
 msgid "NOTIFICATION_{ACTION}_MULTIPLE_NOTES"
-msgstr ""
+msgstr "{ACTION} meerdere noten"
 
 #: Assets/Scripts/game_manager.gd
 msgid "NOTIFICATION_MUSIC_PLAYING"
-msgstr ""
+msgstr "Muziek speelt nu."
 
 #: Assets/Scripts/game_manager.gd
 msgid "NOTIFICATION_MUSIC_STOPPED"
-msgstr ""
+msgstr "Muziek is gestopt"
 
 #: Assets/Scripts/file_manager.gd
 msgctxt "File is the .json file"
 msgid "NOTIFICATION_PROJECT_SAVED_{FILE}"
-msgstr ""
+msgstr "Project is opgeslagen in {FILE}"
 
 #: Assets/Scripts/file_manager.gd
 msgctxt "{PATH} is the folder name inside the custom songs folder"
 msgid "NOTIFICATION_PROJECT_EXPORTED_{PATH}"
-msgstr ""
+msgstr "Project is ge-exporteert naar {PATH}"
 
 #: Assets/Scripts/file_manager.gd
 msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_SONG_NAME"
-msgstr ""
+msgstr "Nummer naam is niet gezet."
 
 #: Assets/Scripts/file_manager.gd
 msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_ARTIST_NAME"
-msgstr ""
+msgstr "Artiesten naam is niet gezet."
 
 #: Assets/Scripts/file_manager.gd
 msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_SONG_FILE"
-msgstr ""
+msgstr "Nummer bestand is niet gezet."
 
 #: Assets/Scripts/file_manager.gd
 msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_PREVIEW_FILE"
-msgstr ""
+msgstr "Preview bestand is niet gezet."
 
 #: Assets/Scripts/file_manager.gd
 msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_FOLDER_NAME"
-msgstr ""
+msgstr "Folder naam is niet gezet."
 
 #: Assets/Scripts/file_manager.gd
 msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_CUSTOM_SONGS_FOLDER"
-msgstr ""
-
-#: Assets/Scripts/metronome.gd
-msgid "NOTIFICATION_METRONOME_DISABLED"
-msgstr ""
+msgstr "Custom songs folder is niet gezet."
 
 #: Assets/Scripts/metronome.gd
 msgid "NOTIFICATION_METRONOME_ENABLED"
-msgstr ""
+msgstr "Metronome is aan gezet."
+
+#: Assets/Scripts/metronome.gd
+msgid "NOTIFICATION_METRONOME_DISABLED"
+msgstr "Metronome is uit gezet."

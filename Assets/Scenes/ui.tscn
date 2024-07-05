@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cdd5so8gpgl0q"]
+[gd_scene load_steps=12 format=3 uid="uid://cdd5so8gpgl0q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ui_controller.gd" id="1_hk45x"]
 [ext_resource type="Script" path="res://Assets/Scripts/background_image.gd" id="2_774o7"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Assets/Scripts/errors_label.gd" id="6_hsjtr"]
 [ext_resource type="Script" path="res://Assets/Scripts/notification_manager.gd" id="7_bt6ck"]
 [ext_resource type="Script" path="res://Assets/Scripts/dialog_manager.gd" id="8_om2vj"]
+[ext_resource type="Script" path="res://Assets/Scripts/language_changer.gd" id="9_wuf8q"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hp2c"]
 content_margin_left = 5.0
@@ -432,6 +433,20 @@ tooltip_text = "WINDOW_CLIENT_SETTINGS_AUDIO_OFFSET_DESCRIPTION"
 min_value = -100000.0
 max_value = 100000.0
 
+[node name="LanguageSelection" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/LanguageSelection"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "WINDOW_CLIENT_SETTINGS_LANGUAGE"
+
+[node name="Language" type="OptionButton" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/LanguageSelection"]
+layout_mode = 2
+tooltip_text = "WINDOW_CLIENT_SETTINGS_LANGUAGE_DESCRIPTION"
+script = ExtResource("9_wuf8q")
+
 [node name="ExportPanel" type="Window" parent="."]
 initial_position = 1
 size = Vector2i(900, 500)
@@ -738,6 +753,7 @@ script = ExtResource("8_om2vj")
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/MaxFPSContainer/MaxFPS" to="." method="_on_max_fps_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/TimeBetweenFramesContainer/TimeBetweenFrames" to="." method="_on_time_between_frames_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/AudioOffsetContainer/AudioOffset" to="." method="_on_audio_offset_value_changed"]
+[connection signal="item_selected" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/LanguageSelection/Language" to="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/LanguageSelection/Language" method="_on_item_selected"]
 [connection signal="about_to_popup" from="ExportPanel" to="." method="_on_export_panel_about_to_popup"]
 [connection signal="close_requested" from="ExportPanel" to="." method="_on_export_panel_close_requested"]
 [connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer/CustomFolderSelect" to="." method="_on_custom_folder_button_up"]
