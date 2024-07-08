@@ -104,6 +104,7 @@ func _on_open_dialog_file_selected(path : String) -> void:
 ## When we select a file in the save dialog.
 func _on_save_dialog_file_selected(path : String) -> void:
 	# File > Save File
+	Global.file_manager.project_file = path
 	Global.file_manager.save_project(path)
 #endregion
 
