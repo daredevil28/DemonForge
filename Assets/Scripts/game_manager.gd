@@ -219,7 +219,30 @@ func _input(event : InputEvent) -> void:
 			current_pos = get_closest_snap_value(current_pos)
 			if(current_pos < 0):
 				current_pos = 0
-
+		
+	if(event.is_action_pressed("Delete") && !is_another_window_focused):
+		if(!current_selected_notes.is_empty()):
+			var new_multi_action : MultiAction = MultiAction.new(Action.ActionName.MULTIACTION)
+				
+			for note : InternalNote in current_selected_notes:
+				var new_action : NoteAction = NoteAction.new(NoteAction.ActionName.NOTEREMOVE)
+				new_action.time = note.time
+				new_action.color = note.color
+				if(note is Note):
+					new_action.interval = note.interval
+				if(note is Marker):
+					new_action.bpm = note.bpm
+					new_action.snapping = note.snapping
+					
+				# If the array is bigger than 1 then add it to new_multi_action	
+				if(current_selected_notes.size() > 1):
+					new_multi_action.actions.append(new_action)
+				else:
+					add_undo_action(new_action)
+				NoteManager.remove_note_at_time(note.time,note.color)
+			if(current_selected_notes.size() > 1):
+				add_undo_action(new_multi_action)
+			Global.notification_popup.play_notification(tr("NOTIFICATION_DELETE_MULTIPLE_NOTES"),0.5)
 	if(event.is_action_pressed("TogglePlay") && is_another_window_focused == false):
 		# Reset note selected when playing the song
 		if(!current_selected_notes.is_empty()):
@@ -240,7 +263,7 @@ func _input(event : InputEvent) -> void:
 					else:
 						continue
 				_play_music()
-
+	
 
 func _shortcut_input(event: InputEvent) -> void:
 	# Ctrl + Y
@@ -387,7 +410,6 @@ func run_action(action : Action, add_to_undo_redo : bool = true) -> Action:
 			
 			# Run reverse of action
 			NoteManager.remove_note_at_time(action.time, action.color)
-			print(tr("UNDO"))
 			Global.notification_popup.play_notification(tr("NOTIFICATION_{ACTION}_NOTE_AT_{TIME}","Use {ACTION} for undo/redo and {TIME} for time")
 			.format({ACTION = tr(str(Action.ActionType.keys()[action.action_type])),TIME = str(snapped(action.time,0.01))}), 1)
 			
