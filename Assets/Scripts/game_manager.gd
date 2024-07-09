@@ -159,12 +159,11 @@ func _input(event : InputEvent) -> void:
 						
 						# Check if double note exists
 						if(!NoteManager.check_if_double_note_exists_at_time(new_pos["time_pos"]) || current_lane == 7):
-							NoteManager.add_new_note(new_pos["time_pos"], current_lane)
+							var note : InternalNote = NoteManager.add_new_note(new_pos["time_pos"], current_lane)
+							
+							var new_action : NoteAction = make_note_actions(NoteAction.ActionName.NOTEADD,note)
 							
 							# Add action to the undo array
-							var new_action : NoteAction = NoteAction.new(Action.ActionName.NOTEADD)
-							new_action.time = new_pos["time_pos"]
-							new_action.color = current_lane
 							add_undo_action(new_action)
 								
 					# If we are hovering over a note then set the note as the selected note
@@ -182,15 +181,7 @@ func _input(event : InputEvent) -> void:
 					if(current_hovered_note != null):
 						
 						#Add action to the undo array
-						var new_action : NoteAction = NoteAction.new(Action.ActionName.NOTEREMOVE)
-						new_action.time = current_hovered_note.time
-						new_action.color = current_hovered_note.color
-						
-						if(current_hovered_note is Note):
-							new_action.interval = current_hovered_note.interval
-						if(current_hovered_note is Marker):
-							new_action.bpm = current_hovered_note.bpm
-							new_action.snapping = current_hovered_note.snapping
+						var new_action : NoteAction = make_note_actions(NoteAction.ActionName.NOTEREMOVE,current_hovered_note)
 							
 						add_undo_action(new_action)
 						
@@ -225,24 +216,21 @@ func _input(event : InputEvent) -> void:
 			var new_multi_action : MultiAction = MultiAction.new(Action.ActionName.MULTIACTION)
 				
 			for note : InternalNote in current_selected_notes:
-				var new_action : NoteAction = NoteAction.new(NoteAction.ActionName.NOTEREMOVE)
-				new_action.time = note.time
-				new_action.color = note.color
-				if(note is Note):
-					new_action.interval = note.interval
-				if(note is Marker):
-					new_action.bpm = note.bpm
-					new_action.snapping = note.snapping
+				var new_action : NoteAction = make_note_actions(NoteAction.ActionName.NOTEREMOVE,note)
 					
 				# If the array is bigger than 1 then add it to new_multi_action	
 				if(current_selected_notes.size() > 1):
 					new_multi_action.actions.append(new_action)
 				else:
 					add_undo_action(new_action)
+					
 				NoteManager.remove_note_at_time(note.time,note.color)
+				
 			if(current_selected_notes.size() > 1):
 				add_undo_action(new_multi_action)
+				
 			Global.notification_popup.play_notification(tr("NOTIFICATION_DELETE_MULTIPLE_NOTES"),0.5)
+			
 	if(event.is_action_pressed("TogglePlay") && is_another_window_focused == false):
 		# Reset note selected when playing the song
 		if(!current_selected_notes.is_empty()):
@@ -496,6 +484,19 @@ func run_action(action : Action, add_to_undo_redo : bool = true) -> Action:
 	return new_action
 #endregion
 
+
+## Easier way to make a new [Action] using [InternalNote]
+func make_note_actions(action_name : Action.ActionName, note : InternalNote) -> Action:
+	var new_action : NoteAction = NoteAction.new(action_name)
+	new_action.time = note.time
+	new_action.color = note.color
+	if(note is Note):
+		new_action.interval = note.interval
+	if(note is Marker):
+		new_action.bpm = note.bpm
+		new_action.snapping = note.snapping
+	return new_action
+	
 
 ## Add note to the [member current_selected_notes] array and emit [signal note_selected]
 func select_note(note : InternalNote) -> void:
