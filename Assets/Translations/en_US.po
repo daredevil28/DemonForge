@@ -165,6 +165,14 @@ msgid "WINDOW_EXPORT_PANEL_BUTTON"
 msgstr "Export Project"
 
 #: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_OPEN_CUSTOM_DESCRIPTION"
+msgstr "Opens the custom songs folder in the file browser."
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_OPEN_CUSTOM"
+msgstr "Open custom songs folder"
+
+#: Assets/Scenes/ui.tscn
 msgid "WINDOW_EXPORT_PANEL_ISSUES"
 msgstr "Issues:"
 
@@ -250,8 +258,12 @@ msgid "REDO"
 msgstr "Redo"
 
 #: Assets/Scripts/game_manager.gd
+msgid "NOTIFICATION_DELETE_MULTIPLE_NOTES"
+msgstr "Deleting multiple notes"
+
+#: Assets/Scripts/game_manager.gd
 msgid "NOTIFICATION_PROJECT_RESET"
-msgstr "Project has been reset."
+msgstr "Project has been reset"
 
 #: Assets/Scripts/game_manager.gd
 msgctxt "Use {ACTION} for undo/redo and {TIME} for time"
@@ -313,9 +325,9 @@ msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_CUSTOM_SONGS_FOLDER"
 msgstr "No custom songs folder has been set."
 
 #: Assets/Scripts/metronome.gd
-msgid "NOTIFICATION_METRONOME_ENABLED"
-msgstr "Metronome enabled."
-
-#: Assets/Scripts/metronome.gd
 msgid "NOTIFICATION_METRONOME_DISABLED"
 msgstr "Metronome Disabled"
+
+#: Assets/Scripts/metronome.gd
+msgid "NOTIFICATION_METRONOME_ENABLED"
+msgstr "Metronome enabled."

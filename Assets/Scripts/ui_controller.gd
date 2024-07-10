@@ -253,6 +253,12 @@ func _on_export_project_button_up() -> void:
 	Global.file_manager.export_project()
 
 
+## Open the custom songs folder
+func _on_open_customs_button_button_up() -> void:
+	if(Global.file_manager.custom_songs_folder != ""):
+		OS.shell_open(Global.file_manager.custom_songs_folder)
+
+
 ## If we edit the custom song folder location or press the custom song folder location button
 func _on_folder_selected(dir : String) -> void:# Connects to both the texturebutton and the lineEdit button
 	Global.file_manager.custom_songs_folder = dir

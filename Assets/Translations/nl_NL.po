@@ -43,11 +43,13 @@ msgstr "Artiesten naam"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_DIFFICULTY_DESCRIPTION"
-msgstr "Hoe moeilijk het nummer is. De hoger de nummer de sneller het nummer gaat."
+msgstr ""
+"Hoe moeilijk het nummer is. De hoger de moeilijkheid, de sneller het "
+"nummer gaat."
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_MAP_DESCRIPTION"
-msgstr "De omgeving waar het nummer wordt gespeeld"
+msgstr "De omgeving waar het nummer wordt gespeeld."
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_SONG_LOCATION_DESCRIPTION"
@@ -111,8 +113,7 @@ msgstr "Lijn Compensatie"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_LINE_OFFSET_DESCRIPTION"
-msgstr ""
-"Het nummer aan pixels tussen de linkerkant van het scherm en de lijn"
+msgstr "Het nummer aan pixels tussen de linkerkant van het scherm en de lijn"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_MAX_FPS"
@@ -165,6 +166,14 @@ msgid "WINDOW_EXPORT_PANEL_BUTTON"
 msgstr "Export Project"
 
 #: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_OPEN_CUSTOM_DESCRIPTION"
+msgstr "Open de custom songs folder locatie."
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_OPEN_CUSTOM"
+msgstr "Open custom songs folder"
+
+#: Assets/Scenes/ui.tscn
 msgid "WINDOW_EXPORT_PANEL_ISSUES"
 msgstr "Problemen:"
 
@@ -187,8 +196,8 @@ msgstr "Dubbele tijd"
 #: Assets/Scenes/ui.tscn
 msgid "NOTE_SETTINGS_DOUBLETIME_DESCRIPTION"
 msgstr ""
-"Deze instelling zorgt ervoor dat noten twee keer zo snel wordt afgespeeld (Dit is "
-"alleen cosmetische en veranderd niks aan het nummer)."
+"Deze instelling zorgt ervoor dat noten twee keer zo snel wordt afgespeeld "
+"(Dit is alleen cosmetische en veranderd niks aan het nummer)."
 
 #: Assets/Scenes/ui.tscn
 msgid "MARKER_SETTINGS_LABEL"
@@ -216,11 +225,13 @@ msgstr "Niet opgeslagen!"
 
 #: Assets/Scripts/ui_controller.gd Assets/Scripts/game_manager.gd
 msgid "WINDOW_DIALOG_NOTSAVED_EXIT"
-msgstr "Het project is nog niet opgeslagen! Weet je zeker dat je wilt afsluiten?"
+msgstr ""
+"Het project is nog niet opgeslagen! Weet je zeker dat je wilt afsluiten?"
 
 #: Assets/Scripts/ui_controller.gd
 msgid "WINDOW_DIALOG_NOTSAVED_CONTINUE"
-msgstr "Het project is nog niet opgeslagen! Weet je zeker dat je verder wilt gaan?"
+msgstr ""
+"Het project is nog niet opgeslagen! Weet je zeker dat je verder wilt gaan?"
 
 #: Assets/Scripts/ui_controller.gd
 msgid "WINDOW_DIALOG_DESTRUCTIVE_TITLE"
@@ -229,8 +240,8 @@ msgstr "DESTRUCTIEVE ACTIE!"
 #: Assets/Scripts/ui_controller.gd
 msgid "WINDOW_DIALOG_WARNING_SNAP_NOTES"
 msgstr ""
-"De noten worden op elke tick vastgeklikt. Dit kan niet ongedaan worden gemaakt. Weet je "
-"zeker dat je verder wilt gaan?"
+"De noten worden op elke tick vastgeklikt. Dit kan niet ongedaan worden "
+"gemaakt. Weet je zeker dat je verder wilt gaan?"
 
 #: Assets/Scripts/ui_controller.gd
 msgctxt "{FILE} is the file that is being opend"
@@ -248,6 +259,10 @@ msgstr "Ongedaan"
 #: Assets/Scripts/game_manager.gd
 msgid "REDO"
 msgstr "Opnieuw"
+
+#: Assets/Scripts/game_manager.gd
+msgid "NOTIFICATION_DELETE_MULTIPLE_NOTES"
+msgstr "Meerdere noten verwijderen"
 
 #: Assets/Scripts/game_manager.gd
 msgid "NOTIFICATION_PROJECT_RESET"
@@ -313,9 +328,9 @@ msgid "WINDOW_EXPORT_PANEL_ISSUES_NO_CUSTOM_SONGS_FOLDER"
 msgstr "Custom songs folder is niet gezet."
 
 #: Assets/Scripts/metronome.gd
-msgid "NOTIFICATION_METRONOME_ENABLED"
-msgstr "Metronome is aan gezet."
-
-#: Assets/Scripts/metronome.gd
 msgid "NOTIFICATION_METRONOME_DISABLED"
 msgstr "Metronome is uit gezet."
+
+#: Assets/Scripts/metronome.gd
+msgid "NOTIFICATION_METRONOME_ENABLED"
+msgstr "Metronome is aan gezet."

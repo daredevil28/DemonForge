@@ -156,6 +156,14 @@ msgid "WINDOW_EXPORT_PANEL_BUTTON"
 msgstr ""
 
 #: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_OPEN_CUSTOM_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_EXPORT_PANEL_OPEN_CUSTOM"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
 msgid "WINDOW_EXPORT_PANEL_ISSUES"
 msgstr ""
 
@@ -236,6 +244,10 @@ msgstr ""
 
 #: Assets/Scripts/game_manager.gd
 msgid "REDO"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgid "NOTIFICATION_DELETE_MULTIPLE_NOTES"
 msgstr ""
 
 #: Assets/Scripts/game_manager.gd

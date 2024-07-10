@@ -182,7 +182,7 @@ func _input(event : InputEvent) -> void:
 						
 						#Add action to the undo array
 						var new_action : NoteAction = make_note_actions(NoteAction.ActionName.NOTEREMOVE,current_hovered_note)
-							
+						
 						add_undo_action(new_action)
 						
 						NoteManager.remove_note_at_time(current_hovered_note.time, current_hovered_note.color)

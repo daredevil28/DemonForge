@@ -525,31 +525,39 @@ text = "WINDOW_EXPORT_PANEL_FOLDER_NAME"
 layout_mode = 2
 size_flags_vertical = 2
 
-[node name="ExportProjectButton" type="Button" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 10
+
+[node name="ExportProjectButton" type="Button" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "WINDOW_EXPORT_PANEL_BUTTON"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer"]
+[node name="OpenCustomsButton" type="Button" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "WINDOW_EXPORT_PANEL_OPEN_CUSTOM_DESCRIPTION"
+text = "WINDOW_EXPORT_PANEL_OPEN_CUSTOM"
+
+[node name="ErrorsContainer" type="VBoxContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer2"]
+[node name="Label" type="Label" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/ErrorsContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 20
 text = "WINDOW_EXPORT_PANEL_ISSUES"
 horizontal_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer2"]
+[node name="ScrollContainer" type="ScrollContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/ErrorsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer2/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/ErrorsContainer/ScrollContainer"]
 layout_mode = 2
 
-[node name="Errors" type="Label" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer" groups=["ExportSettings"]]
+[node name="Errors" type="Label" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/ErrorsContainer/ScrollContainer/VBoxContainer" groups=["ExportSettings"]]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 size_flags_vertical = 3
@@ -759,7 +767,8 @@ script = ExtResource("8_om2vj")
 [connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer/CustomFolderSelect" to="." method="_on_custom_folder_button_up"]
 [connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/CustomFolderLocation" to="." method="_on_folder_selected"]
 [connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/FolderName" to="." method="_on_folder_name_text_changed"]
-[connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/ExportProjectButton" to="." method="_on_export_project_button_up"]
+[connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer3/ExportProjectButton" to="." method="_on_export_project_button_up"]
+[connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer3/OpenCustomsButton" to="." method="_on_open_customs_button_button_up"]
 [connection signal="mouse_entered" from="NoteSettings" to="." method="_on_note_settings_mouse_entered"]
 [connection signal="mouse_exited" from="NoteSettings" to="." method="_on_note_settings_mouse_exited"]
 [connection signal="value_changed" from="NoteSettings/NoteSettingsBox/HBoxContainer/NoteInterval" to="." method="_on_spin_box_value_changed" binds= ["interval"]]
