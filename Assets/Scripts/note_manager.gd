@@ -32,8 +32,6 @@ func _ready() -> void:
 ## Moves the notes on the screen according to time.[br]
 ## Takes [InternalNote] and [param time] as argument.
 func play_notes(object : InternalNote, new_time : float) -> void:
-	Global.game_scene_node.queue_redraw()
-	
 	# (NoteTimestamp - TimePassed ) + offset
 	var new_pos : float = (GameManager.music_time_to_screen_time(object.time) - GameManager.music_time_to_screen_time(new_time)) + offset
 	
@@ -74,6 +72,9 @@ func play_notes(object : InternalNote, new_time : float) -> void:
 		object.enable_collision()
 		if(!object.visible):
 			object.visible = true
+	
+	Global.game_scene_node.queue_redraw()
+	object.queue_redraw()
 
 
 #region Note manipulation

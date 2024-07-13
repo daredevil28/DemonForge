@@ -6,6 +6,10 @@ extends Node2D
 var time : float = 0
 ## The color lane of the note
 var color : int = 0
+## If this value gets set to true the outline gets enabled
+var _outline : bool = false
+## Bool to check if the note has been selected
+var selected : bool = false
 ## The color of the note
 var canvas_color : Color = Color.WHITE : 
 	set(value):
@@ -31,6 +35,20 @@ func disable_collision() -> void:
 	_collider.disabled = true
 
 
+## Enables the outline around the note
+func select_note() -> void:
+	_outline = true
+	selected = true
+	queue_redraw()
+
+
+## Disables the outline around the note
+func deselect_note() -> void:
+	_outline = false
+	selected = false
+	queue_redraw()
+
+
 func _on_mouse_shape_entered(_id : int) -> void:
 	# Make the note dark grey whenever we hover the mouse over it
 	if(GameManager.current_hovered_note == null):
@@ -43,3 +61,8 @@ func _on_mouse_shape_exited(_id : int) -> void:
 	if(GameManager.current_hovered_note == self):
 		GameManager.current_hovered_note = null
 	modulate = canvas_color
+	
+
+func _draw() -> void:
+	if(_outline):
+		draw_rect(_collider.shape.get_rect(), canvas_color,false,2)

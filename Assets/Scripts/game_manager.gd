@@ -168,14 +168,23 @@ func _input(event : InputEvent) -> void:
 								
 					# If we are hovering over a note then set the note as the selected note
 					if(current_hovered_note != null):
-						deselect_notes()
-						select_note(current_hovered_note)
+						if(!Input.is_key_pressed(KEY_SHIFT)):
+							deselect_all_notes()
+							select_note(current_hovered_note)
+						else:
+							if(current_hovered_note.selected):
+								deselect_note(current_hovered_note)
+							else:
+								select_note(current_hovered_note)
+						
+
+						
 												
 				if(event.is_action_released("RightClick") && !Global.multi_select.currently_dragging):
 					
 					# Unselect the selected note if we right click anywhere else in the scene
 					if(!current_selected_notes.is_empty()):
-						deselect_notes()
+						deselect_all_notes()
 						
 					# Remove the note if we are hovering over a note
 					if(current_hovered_note != null):
@@ -234,7 +243,7 @@ func _input(event : InputEvent) -> void:
 	if(event.is_action_pressed("TogglePlay") && is_another_window_focused == false):
 		# Reset note selected when playing the song
 		if(!current_selected_notes.is_empty()):
-			deselect_notes()
+			deselect_all_notes()
 			
 		# If we are playing, then stop the music and snap to the nearest beat
 		if(audio_player.playing):
@@ -501,18 +510,34 @@ func make_note_actions(action_name : Action.ActionName, note : InternalNote) -> 
 ## Add note to the [member current_selected_notes] array and emit [signal note_selected]
 func select_note(note : InternalNote) -> void:
 	current_selected_notes.append(note)
+	note.select_note()
 	note_selected.emit(current_selected_notes)
 
 
 ## Duplicates [param notes], sets it as the [member current_selected_notes] and emit [signal note_selected]
 func select_multiple_notes(notes : Array[InternalNote]) -> void:
-	current_selected_notes.clear()
-	current_selected_notes = notes.duplicate()
-	note_selected.emit(notes)
+	if(!Input.is_key_pressed(KEY_SHIFT)):
+		current_selected_notes.clear()
+	for note : InternalNote in notes:
+		note.select_note()
+		current_selected_notes.append(note)
+	note_selected.emit(current_selected_notes)
+
+
+## Deselects a note
+func deselect_note(note : InternalNote) -> void:
+	note.deselect_note()
+	current_selected_notes.erase(note)
+	if(current_selected_notes.size() <= 0):
+		note_deselected.emit()
+	else:
+		note_selected.emit(current_selected_notes)
 
 
 ## clears [member current_selected_notes] and emit [signal note_deselected]
-func deselect_notes() -> void:
+func deselect_all_notes() -> void:
+	for note in current_selected_notes:
+		note.deselect_note()
 	current_selected_notes.clear()
 	note_deselected.emit()
 
