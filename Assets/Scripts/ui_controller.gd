@@ -97,7 +97,7 @@ func _on_open_dialog_file_selected(path : String) -> void:
 			GameManager.setup_project(json_file)
 		".csv":
 			print(".csv")
-			NoteManager.clear_all_notes()
+			GameManager.clean_project()
 			NoteManager.initialise_notes(Global.file_manager.csv_to_json(path))
 
 

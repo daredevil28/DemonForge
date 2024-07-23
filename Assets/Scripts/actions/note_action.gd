@@ -8,6 +8,8 @@ var time : float
 var color : int
 ## The interval of the [NoteAction],
 var interval : int = 0
+## If double_time is enabled on [NoteAction]
+var double_time : bool
 ## If it's a marker then the BPM of the [NoteAction],
 var bpm : float
 ## If it's a marker then the snapping of the [NoteAction],

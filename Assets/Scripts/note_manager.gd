@@ -72,9 +72,6 @@ func play_notes(object : InternalNote, new_time : float) -> void:
 		object.enable_collision()
 		if(!object.visible):
 			object.visible = true
-	
-	Global.game_scene_node.queue_redraw()
-	object.queue_redraw()
 
 
 #region Note manipulation
@@ -208,7 +205,7 @@ func add_new_note(time : float, color : int) -> InternalNote:
 		instance.time = time
 		marker_nodes.append(instance)
 		# Some logic (snapping) depend on the order of the markers in the array
-		marker_nodes.sort_custom(_sort_ascending_time)
+		marker_nodes.sort_custom(sort_ascending_time)
 	else:
 		instance = note_scene.instantiate()
 		instance.color = color
@@ -300,12 +297,20 @@ func check_if_double_note_exists_at_time(time : float) -> bool:
 
 ## Sorts all notes by [param time].
 func sort_all_notes() -> void:
-	note_nodes.sort_custom(_sort_ascending_time)
+	note_nodes.sort_custom(sort_ascending_time)
 
 
-func _sort_ascending_time(a : InternalNote, b : InternalNote) -> bool:
+func sort_ascending_time(a : InternalNote, b : InternalNote) -> bool:
 	return(a.time < b.time)
 
+
+func get_lowest_note_time_in_array(note_array : Array) -> InternalNote:
+	var lowest_note : InternalNote = note_array[0]
+	for note : InternalNote in note_array:
+		if(note.time < lowest_note.time):
+			lowest_note = note
+	return lowest_note
+	
 
 ## Removes all the [param note_nodes] and [param marker_nodes].
 func clear_all_notes() -> void:

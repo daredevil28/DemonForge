@@ -15,8 +15,10 @@ func _init() -> void:
 func _on_area_2d_mouse_entered() -> void:
 	_mouse_in_ball = true
 
+
 func _on_area_2d_mouse_exited() -> void:
 	_mouse_in_ball = false
+
 
 func _process(_delta : float) -> void:
 	# Get percentage of time passed and use that to get a percentage of screen width
@@ -27,7 +29,8 @@ func _process(_delta : float) -> void:
 	# If we are holding the progess bar ball then move current pos
 	if(holding_ball):
 		GameManager.current_pos = clamp(get_viewport().get_mouse_position().x / DisplayServer.window_get_size().x * GameManager.audio_length,0,GameManager.audio_length)
-	
+
+
 func _input(event: InputEvent) -> void:
 	# Don't move the ball if we are playing the song
 	if(!GameManager.audio_player.playing):

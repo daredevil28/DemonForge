@@ -28,8 +28,10 @@ var is_another_window_focused : bool = false #ui_controller.gd -> check_for_wind
 var project_changed : bool
 ## The current hovered note.
 var current_hovered_note : InternalNote
-## The current selected note.
+## The current selected notes.
 var current_selected_notes : Array[InternalNote]
+## The current copied notes.
+var current_copied_notes : Array[InternalNote]
 ## The lane that the mouse is currently in.
 var current_lane : int
 ## Gets automatically set in [code]cursor_note.gd[/code].
@@ -106,8 +108,11 @@ var current_pos : float = 0 :
 				bpm = marker.bpm
 				snapping_frequency = marker.snapping
 			NoteManager.play_notes(marker, current_pos)
+			marker.queue_redraw()
 		for note : Note in NoteManager.note_nodes:
 			NoteManager.play_notes(note, current_pos)
+			note.queue_redraw()
+		Global.game_scene_node.queue_redraw()
 #endregion
 
 
@@ -177,9 +182,6 @@ func _input(event : InputEvent) -> void:
 							else:
 								select_note(current_hovered_note)
 						
-
-						
-												
 				if(event.is_action_released("RightClick") && !Global.multi_select.currently_dragging):
 					
 					# Unselect the selected note if we right click anywhere else in the scene
@@ -263,6 +265,53 @@ func _input(event : InputEvent) -> void:
 	
 
 func _shortcut_input(event: InputEvent) -> void:
+	# Ctrl + C
+	if(event.is_action_pressed("Copy")):
+		current_copied_notes = current_selected_notes.duplicate()
+		current_copied_notes.sort_custom(NoteManager.sort_ascending_time)
+		Global.notification_popup.play_notification(tr("NOTIFICATION_COPIED_NOTES"),0.5)
+	# Ctrl + V
+	if(event.is_action_pressed("Paste")):
+		# Make a new multi action.
+		var new_multi_action : MultiAction = MultiAction.new(Action.ActionName.MULTIACTION)
+		deselect_all_notes()
+		
+		# Get the time positiion at the mouse. This is where it pastes the new notes.
+		var mouse_pos = _get_snapped_screen_and_time_pos(get_viewport().get_mouse_position())
+		# The delta of the lowest note. This gets added to the new notes.
+		var lowest_note_delta = mouse_pos["time_pos"] - NoteManager.get_lowest_note_time_in_array(current_copied_notes).time
+		
+		for note : InternalNote in current_copied_notes:
+			
+			var new_note = NoteManager.add_new_note(note.time, note.color)
+			
+			new_note.time += lowest_note_delta
+			
+			if(new_note is Marker):
+				new_note.bpm = note.bpm
+				new_note.snapping = note.snapping
+			if(new_note is Note):
+				new_note.interval = note.interval
+				new_note.double_time = note.double_time
+			
+			var new_action : NoteAction = make_note_actions(Action.ActionName.NOTEADD,new_note)
+			
+			# If the array is bigger than 1 then add it to new_multi_action.
+			if(current_copied_notes.size() > 1):
+				new_multi_action.actions.append(new_action)
+			else:
+				add_undo_action(new_action)
+			
+			# Select the new note
+			select_note(new_note)
+			note.queue_redraw()
+		
+		if(current_copied_notes.size() > 1):
+			add_undo_action(new_multi_action)
+			
+		GameManager.current_pos = GameManager.current_pos
+		Global.notification_popup.play_notification(tr("NOTIFICATION_PASTED_NOTES"),0.5)
+		
 	# Ctrl + Y
 	if(event.is_action_pressed("Redo")):
 		if(redo_actions.size() != 0):
@@ -401,6 +450,7 @@ func run_action(action : Action, add_to_undo_redo : bool = true) -> Action:
 			
 			if(old_note is Note):
 				new_action.interval = action.interval
+				new_action.double_time = action.double_time
 			if(old_note is Marker):
 				new_action.bpm = old_note.bpm
 				new_action.snapping = old_note.snapping
@@ -417,6 +467,7 @@ func run_action(action : Action, add_to_undo_redo : bool = true) -> Action:
 			#Set the old values back
 			if(new_note is Note):
 				new_note.interval = action.interval
+				new_note.double_time = action.double_time
 			if(new_note is Marker):
 				new_note.bpm = action.bpm
 				new_note.snapping = action.snapping
@@ -501,6 +552,7 @@ func make_note_actions(action_name : Action.ActionName, note : InternalNote) -> 
 	new_action.color = note.color
 	if(note is Note):
 		new_action.interval = note.interval
+		new_action.double_time = note.double_time
 	if(note is Marker):
 		new_action.bpm = note.bpm
 		new_action.snapping = note.snapping
