@@ -16,6 +16,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8-bit\n"
 
 #: Assets/Scenes/ui.tscn
+msgid "MENUBAR_FILE_NEW"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_FILE_LOAD"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_FILE_SAVE"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_FILE_EXPORT"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_PROPERTIES_SONG"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_PROPERTIES_CLIENT"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_TOOLS_SNAP"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES"
 msgstr ""
 
@@ -40,7 +68,35 @@ msgid "WINDOW_SONG_PROPERTIES_DIFFICULTY_DESCRIPTION"
 msgstr ""
 
 #: Assets/Scenes/ui.tscn
+msgid "DIFFICULTY_EASY"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "DIFFICULTY_MEDIUM"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "DIFFICULTY_HARD"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "DIFFICULTY_EXTREME"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_MAP_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MAP_VOLCANO"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MAP_DESERT"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MAP_STORM"
 msgstr ""
 
 #: Assets/Scenes/ui.tscn
@@ -248,6 +304,14 @@ msgstr ""
 
 #: Assets/Scripts/game_manager.gd
 msgid "NOTIFICATION_DELETE_MULTIPLE_NOTES"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgid "NOTIFICATION_COPIED_NOTES"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgid "NOTIFICATION_PASTED_NOTES"
 msgstr ""
 
 #: Assets/Scripts/game_manager.gd

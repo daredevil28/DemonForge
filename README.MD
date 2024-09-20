@@ -1,6 +1,7 @@
 # Demon Forge; A Drums Rock Editor
 
 A custom song editor for Drums Rock that supports editing and previewing charts.
+![Preview Image](preview.png)
 
 # Installation
 
@@ -75,4 +76,3 @@ The executable should be exported into ProjectFolder/Build/*
 # Contributing
 
 Other than fixing some bugs I am currently not accepting contributions until I at least finish the editing part of the application
-

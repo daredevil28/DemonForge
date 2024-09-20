@@ -198,71 +198,73 @@ func _input(event : InputEvent) -> void:
 						
 						NoteManager.remove_note_at_time(current_hovered_note.time, current_hovered_note.color)
 						current_hovered_note = null
-					
-		# Scroll up 1 tick
-		if(event.is_action_pressed("ScrollUp") && !audio_player.playing && !is_another_window_focused):
-			current_pos += seconds_per_beat / snapping_frequency
-			current_pos = get_closest_snap_value(current_pos)
-			# Make sure we don't scroll past the end of the song
-			if(current_pos > audio_length):
-				current_pos = audio_length
-				
-		# Scroll down 1 tick
-		if(event.is_action_pressed("ScrollDown") && !audio_player.playing && !is_another_window_focused):
-			
-			# Check if we are on a marker, use the previous marker for the seconds_per_beat if we are
-			var scroll_seconds_per_beat : float = seconds_per_beat
-			for i : int in range(0,NoteManager.marker_nodes.size()):
-				if(NoteManager.marker_nodes[i].time == current_pos):
-					scroll_seconds_per_beat = 60 / NoteManager.marker_nodes[i-1].bpm
-					break
-			
-			current_pos -= scroll_seconds_per_beat / snapping_frequency
-			current_pos = get_closest_snap_value(current_pos)
-			if(current_pos < 0):
-				current_pos = 0
 		
-	if(event.is_action_pressed("Delete") && !is_another_window_focused):
-		if(!current_selected_notes.is_empty()):
-			var new_multi_action : MultiAction = MultiAction.new(Action.ActionName.MULTIACTION)
-				
-			for note : InternalNote in current_selected_notes:
-				var new_action : NoteAction = make_note_actions(NoteAction.ActionName.NOTEREMOVE,note)
+		if(!is_another_window_focused):
+		# Scroll up 1 tick
+			if(event.is_action_pressed("ScrollUp") && !audio_player.playing):
+				current_pos += seconds_per_beat / snapping_frequency
+				current_pos = get_closest_snap_value(current_pos)
+				# Make sure we don't scroll past the end of the song
+				if(current_pos > audio_length):
+					current_pos = audio_length
 					
-				# If the array is bigger than 1 then add it to new_multi_action	
-				if(current_selected_notes.size() > 1):
-					new_multi_action.actions.append(new_action)
-				else:
-					add_undo_action(new_action)
-					
-				NoteManager.remove_note_at_time(note.time,note.color)
+			# Scroll down 1 tick
+			if(event.is_action_pressed("ScrollDown") && !audio_player.playing):
 				
-			if(current_selected_notes.size() > 1):
-				add_undo_action(new_multi_action)
+				# Check if we are on a marker, use the previous marker for the seconds_per_beat if we are
+				var scroll_seconds_per_beat : float = seconds_per_beat
+				for i : int in range(0,NoteManager.marker_nodes.size()):
+					if(NoteManager.marker_nodes[i].time == current_pos):
+						scroll_seconds_per_beat = 60 / NoteManager.marker_nodes[i-1].bpm
+						break
 				
-			Global.notification_popup.play_notification(tr("NOTIFICATION_DELETE_MULTIPLE_NOTES"),0.5)
-			
-	if(event.is_action_pressed("TogglePlay") && is_another_window_focused == false):
-		# Reset note selected when playing the song
-		if(!current_selected_notes.is_empty()):
-			deselect_all_notes()
-			
-		# If we are playing, then stop the music and snap to the nearest beat
-		if(audio_player.playing):
-			_stop_music()
-			current_pos = get_closest_snap_value(current_pos)
-		else:
-			# Hide all the notes that are behind the judgement line if we are going to play
-			if(audio_player.stream != null):
-				
-				for i : Note in NoteManager.note_nodes:
-					if(i.time < current_pos):
-						i.disable_collision()
-						i.visible = false
-					else:
-						continue
-				_play_music()
+				current_pos -= scroll_seconds_per_beat / snapping_frequency
+				current_pos = get_closest_snap_value(current_pos)
+				if(current_pos < 0):
+					current_pos = 0
 	
+	if(!is_another_window_focused):
+		if(event.is_action_pressed("Delete")):
+			if(!current_selected_notes.is_empty()):
+				var new_multi_action : MultiAction = MultiAction.new(Action.ActionName.MULTIACTION)
+					
+				for note : InternalNote in current_selected_notes:
+					var new_action : NoteAction = make_note_actions(NoteAction.ActionName.NOTEREMOVE,note)
+						
+					# If the array is bigger than 1 then add it to new_multi_action	
+					if(current_selected_notes.size() > 1):
+						new_multi_action.actions.append(new_action)
+					else:
+						add_undo_action(new_action)
+						
+					NoteManager.remove_note_at_time(note.time,note.color)
+					
+				if(current_selected_notes.size() > 1):
+					add_undo_action(new_multi_action)
+					
+				Global.notification_popup.play_notification(tr("NOTIFICATION_DELETE_MULTIPLE_NOTES"),0.5)
+				
+		if(event.is_action_pressed("TogglePlay")):
+			# Reset note selected when playing the song
+			if(!current_selected_notes.is_empty()):
+				deselect_all_notes()
+				
+			# If we are playing, then stop the music and snap to the nearest beat
+			if(audio_player.playing):
+				_stop_music()
+				current_pos = get_closest_snap_value(current_pos)
+			else:
+				# Hide all the notes that are behind the judgement line if we are going to play
+				if(audio_player.stream != null):
+					
+					for i : Note in NoteManager.note_nodes:
+						if(i.time < current_pos):
+							i.disable_collision()
+							i.visible = false
+						else:
+							continue
+					_play_music()
+					
 
 func _shortcut_input(event: InputEvent) -> void:
 	# Ctrl + C
@@ -304,7 +306,6 @@ func _shortcut_input(event: InputEvent) -> void:
 			
 			# Select the new note
 			select_note(new_note)
-			note.queue_redraw()
 		
 		if(current_copied_notes.size() > 1):
 			add_undo_action(new_multi_action)
@@ -324,7 +325,7 @@ func _shortcut_input(event: InputEvent) -> void:
 		return
 
 
-func _notification(what: int) -> void:
+func _notification(what : int) -> void:
 	# Warn before exiting the program if we have not saved
 	if(what == NOTIFICATION_WM_CLOSE_REQUEST):
 		Global.file_manager.save_settings()

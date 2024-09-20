@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://cdd5so8gpgl0q"]
+[gd_scene load_steps=13 format=3 uid="uid://cdd5so8gpgl0q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ui_controller.gd" id="1_hk45x"]
 [ext_resource type="Script" path="res://Assets/Scripts/background_image.gd" id="2_774o7"]
+[ext_resource type="Texture2D" uid="uid://dei544185tv4o" path="res://Assets/background.jpg" id="2_g5m3y"]
 [ext_resource type="PackedScene" uid="uid://bxv46rdbd272o" path="res://Assets/Scenes/progress_bar.tscn" id="2_t6ae7"]
 [ext_resource type="Texture2D" uid="uid://cskljke58e2fj" path="res://Assets/Sprites/FolderIcon.png" id="3_m2luq"]
 [ext_resource type="Texture2D" uid="uid://cxqqsd1lraejc" path="res://Assets/Sprites/FolderIconPressed.png" id="4_6ftkc"]
@@ -30,17 +31,18 @@ corner_radius_bottom_left = 20
 corner_detail = 16
 
 [node name="Control" type="Control"]
+auto_translate_mode = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-auto_translate = false
 mouse_filter = 2
 script = ExtResource("1_hk45x")
 
 [node name="BackgroundImage" type="TextureRect" parent="."]
+auto_translate_mode = 2
 z_index = -50
 texture_filter = 2
 clip_contents = true
@@ -50,18 +52,19 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-auto_translate = false
 mouse_filter = 2
+texture = ExtResource("2_g5m3y")
 expand_mode = 3
 stretch_mode = 6
 script = ExtResource("2_774o7")
 
 [node name="MarginContainer" parent="." instance=ExtResource("2_t6ae7")]
+auto_translate_mode = 2
 layout_mode = 1
 offset_top = -4.0
-auto_translate = false
 
 [node name="OpenDialog" type="FileDialog" parent="."]
+auto_translate_mode = 2
 title = "Open a File"
 initial_position = 2
 size = Vector2i(500, 300)
@@ -74,7 +77,8 @@ filters = PackedStringArray("*.json, *.csv")
 use_native_dialog = true
 
 [node name="SaveDialog" type="FileDialog" parent="."]
-size = Vector2i(452, 159)
+auto_translate_mode = 2
+size = Vector2i(452, 175)
 auto_translate = false
 dialog_hide_on_ok = true
 access = 2
@@ -82,9 +86,10 @@ filters = PackedStringArray("*.json")
 use_native_dialog = true
 
 [node name="SongFileDialog" type="FileDialog" parent="."]
+auto_translate_mode = 2
 title = "Open a File"
 position = Vector2i(0, 36)
-size = Vector2i(335, 159)
+size = Vector2i(335, 175)
 auto_translate = false
 ok_button_text = "Open"
 file_mode = 0
@@ -93,9 +98,10 @@ filters = PackedStringArray("*.ogg")
 use_native_dialog = true
 
 [node name="PreviewFileDialog" type="FileDialog" parent="."]
+auto_translate_mode = 2
 title = "Open a File"
 position = Vector2i(0, 36)
-size = Vector2i(335, 159)
+size = Vector2i(335, 175)
 auto_translate = false
 ok_button_text = "Open"
 file_mode = 0
@@ -104,9 +110,10 @@ filters = PackedStringArray("*.ogg")
 use_native_dialog = true
 
 [node name="FolderDialog" type="FileDialog" parent="."]
+auto_translate_mode = 2
 title = "Open a Directory"
 position = Vector2i(0, 36)
-size = Vector2i(392, 159)
+size = Vector2i(392, 175)
 auto_translate = false
 ok_button_text = "Select Current Folder"
 file_mode = 2
@@ -114,42 +121,40 @@ access = 2
 use_native_dialog = true
 
 [node name="MenuBar" type="MenuBar" parent="."]
+auto_translate_mode = 1
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-auto_translate = false
 
 [node name="File" type="PopupMenu" parent="MenuBar"]
 size = Vector2i(194, 116)
-auto_translate = false
 hide_on_state_item_selection = true
 item_count = 4
-item_0/text = "New Project (Ctrl + N)"
+item_0/text = "MENUBAR_FILE_NEW"
 item_0/id = 0
-item_1/text = "Load File (Ctrl + L)"
+item_1/text = "MENUBAR_FILE_LOAD"
 item_1/id = 1
-item_2/text = "Save File (Ctrl + S)"
+item_2/text = "MENUBAR_FILE_SAVE"
 item_2/id = 2
-item_3/text = "Export Project"
+item_3/text = "MENUBAR_FILE_EXPORT"
 item_3/id = 3
 
 [node name="Properties" type="PopupMenu" parent="MenuBar"]
 size = Vector2i(151, 100)
-auto_translate = false
 item_count = 2
-item_0/text = "Song Properties"
+item_0/text = "MENUBAR_PROPERTIES_SONG"
 item_0/id = 0
-item_1/text = "Client Options"
+item_1/text = "MENUBAR_PROPERTIES_CLIENT"
 item_1/id = 1
 
 [node name="Tools" type="PopupMenu" parent="MenuBar"]
 size = Vector2i(150, 100)
-auto_translate = false
 item_count = 1
-item_0/text = "Snap to nearest"
+item_0/text = "MENUBAR_TOOLS_SNAP"
 item_0/id = 0
 
 [node name="SongProperties" type="Window" parent="."]
+auto_translate_mode = 1
 title = "WINDOW_SONG_PROPERTIES"
 initial_position = 1
 size = Vector2i(1000, 300)
@@ -189,28 +194,28 @@ placeholder_text = "WINDOW_SONG_PROPERTIES_ARTIST_NAME"
 layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "WINDOW_SONG_PROPERTIES_DIFFICULTY_DESCRIPTION"
-item_count = 4
 selected = 0
-popup/item_0/text = "Easy"
+item_count = 4
+popup/item_0/text = "DIFFICULTY_EASY"
 popup/item_0/id = 0
-popup/item_1/text = "Medium"
+popup/item_1/text = "DIFFICULTY_MEDIUM"
 popup/item_1/id = 1
-popup/item_2/text = "Hard"
+popup/item_2/text = "DIFFICULTY_HARD"
 popup/item_2/id = 2
-popup/item_3/text = "Extreme"
+popup/item_3/text = "DIFFICULTY_EXTREME"
 popup/item_3/id = 3
 
 [node name="Map" type="OptionButton" parent="SongProperties/ColorRect/SongPropertiesValues" groups=["SongProperties"]]
 layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "WINDOW_SONG_PROPERTIES_MAP_DESCRIPTION"
-item_count = 3
 selected = 0
-popup/item_0/text = "Volcano"
+item_count = 3
+popup/item_0/text = "MAP_VOLCANO"
 popup/item_0/id = 0
-popup/item_1/text = "Desert"
+popup/item_1/text = "MAP_DESERT"
 popup/item_1/id = 1
-popup/item_2/text = "Storm"
+popup/item_2/text = "MAP_STORM"
 popup/item_2/id = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SongProperties/ColorRect/SongPropertiesValues"]
@@ -256,6 +261,7 @@ texture_pressed = ExtResource("4_6ftkc")
 texture_hover = ExtResource("5_16p63")
 
 [node name="ClientSettings" type="Window" parent="."]
+auto_translate_mode = 1
 title = "WINDOW_CLIENT_SETTINGS"
 initial_position = 1
 size = Vector2i(800, 400)
@@ -448,6 +454,7 @@ tooltip_text = "WINDOW_CLIENT_SETTINGS_LANGUAGE_DESCRIPTION"
 script = ExtResource("9_wuf8q")
 
 [node name="ExportPanel" type="Window" parent="."]
+auto_translate_mode = 1
 initial_position = 1
 size = Vector2i(900, 500)
 visible = false
@@ -558,16 +565,17 @@ size_flags_vertical = 3
 layout_mode = 2
 
 [node name="Errors" type="Label" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/ErrorsContainer/ScrollContainer/VBoxContainer" groups=["ExportSettings"]]
+auto_translate_mode = 2
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 size_flags_vertical = 3
-auto_translate = false
 theme_override_font_sizes/font_size = 32
 text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\" \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
 autowrap_mode = 2
 script = ExtResource("6_hsjtr")
 
 [node name="SongTimeLabel" type="Label" parent="."]
+auto_translate_mode = 2
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -578,7 +586,6 @@ offset_left = -40.0
 offset_top = -23.0
 grow_horizontal = 0
 grow_vertical = 0
-auto_translate = false
 text = "1000"
 
 [node name="NoteSettings" type="PanelContainer" parent="."]
@@ -712,6 +719,7 @@ tooltip_text = "MARKER_SETTINGS_SNAPPING_DESCRIPTION"
 mouse_filter = 1
 
 [node name="NotificationContainer" type="PanelContainer" parent="."]
+auto_translate_mode = 2
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 1
@@ -720,16 +728,16 @@ anchor_right = 1.0
 offset_left = -49.0
 offset_bottom = 40.0
 grow_horizontal = 0
-auto_translate = false
 theme_override_styles/panel = SubResource("StyleBoxFlat_0hp2c")
 script = ExtResource("7_bt6ck")
 
 [node name="NotificationLabel" type="Label" parent="NotificationContainer"]
+auto_translate_mode = 2
 layout_mode = 2
-auto_translate = false
 text = "Lorem ipsum doloses de bora"
 
 [node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+auto_translate_mode = 2
 title = "Project has not been saved!"
 initial_position = 1
 size = Vector2i(533, 100)

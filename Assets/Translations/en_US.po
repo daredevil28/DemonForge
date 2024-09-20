@@ -22,6 +22,34 @@ msgstr ""
 "X-Generator: Poedit 3.4.4\n"
 
 #: Assets/Scenes/ui.tscn
+msgid "MENUBAR_FILE_NEW"
+msgstr "New File (Ctrl + N)"
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_FILE_LOAD"
+msgstr "Load File (Ctrl + L)"
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_FILE_SAVE"
+msgstr "Save File (Ctrl +S)"
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_FILE_EXPORT"
+msgstr "Export Project"
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_PROPERTIES_SONG"
+msgstr "Song Settings"
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_PROPERTIES_CLIENT"
+msgstr "Client Settings"
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_TOOLS_SNAP"
+msgstr "Snap to nearest"
+
+#: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES"
 msgstr "Song Properties"
 
@@ -46,8 +74,36 @@ msgid "WINDOW_SONG_PROPERTIES_DIFFICULTY_DESCRIPTION"
 msgstr "The difficulty of the song. Higher difficulty means faster notes."
 
 #: Assets/Scenes/ui.tscn
+msgid "DIFFICULTY_EASY"
+msgstr "Easy"
+
+#: Assets/Scenes/ui.tscn
+msgid "DIFFICULTY_MEDIUM"
+msgstr "Medium"
+
+#: Assets/Scenes/ui.tscn
+msgid "DIFFICULTY_HARD"
+msgstr "Hard"
+
+#: Assets/Scenes/ui.tscn
+msgid "DIFFICULTY_EXTREME"
+msgstr "Extreme"
+
+#: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_MAP_DESCRIPTION"
 msgstr "The map that the song will play on."
+
+#: Assets/Scenes/ui.tscn
+msgid "MAP_VOLCANO"
+msgstr "Volcano"
+
+#: Assets/Scenes/ui.tscn
+msgid "MAP_DESERT"
+msgstr "Desert"
+
+#: Assets/Scenes/ui.tscn
+msgid "MAP_STORM"
+msgstr "Storm"
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES_SONG_LOCATION_DESCRIPTION"
@@ -243,7 +299,7 @@ msgstr ""
 #: Assets/Scripts/ui_controller.gd
 msgctxt "{FILE} is the file that is being opend"
 msgid "POPUP_LOADING_{FILE}"
-msgstr "Loading file {file}"
+msgstr "Loading file {FILE}"
 
 #: Assets/Scripts/ui_controller.gd
 msgid "-"
@@ -260,6 +316,14 @@ msgstr "Redo"
 #: Assets/Scripts/game_manager.gd
 msgid "NOTIFICATION_DELETE_MULTIPLE_NOTES"
 msgstr "Deleting multiple notes"
+
+#: Assets/Scripts/game_manager.gd
+msgid "NOTIFICATION_COPIED_NOTES"
+msgstr "Copied notes"
+
+#: Assets/Scripts/game_manager.gd
+msgid "NOTIFICATION_PASTED_NOTES"
+msgstr "Pasted notes"
 
 #: Assets/Scripts/game_manager.gd
 msgid "NOTIFICATION_PROJECT_RESET"
