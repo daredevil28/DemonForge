@@ -5,7 +5,7 @@ A custom song editor for Drums Rock that supports editing and previewing charts.
 
 # Installation
 
-Download the .exe from releases and run it, no further configuration required
+Download the .exe from [releases](https://github.com/daredevil28/DemonForge/releases) and run it, no further configuration required
 
 # Usage
 
@@ -60,7 +60,7 @@ You can also download the files directly in the [custom](custom) folder
 
 # Compiling
 
-I use Godot v4.2.2 stable to compile, but versions around it should still be compatible
+Development version is Godot v4.4-dev2.
 
 - Import project into godot
 - Project > Export

@@ -242,6 +242,7 @@ func _input(event : InputEvent) -> void:
 				if(current_selected_notes.size() > 1):
 					add_undo_action(new_multi_action)
 					
+				current_selected_notes.clear()
 				Global.notification_popup.play_notification(tr("NOTIFICATION_DELETE_MULTIPLE_NOTES"),0.5)
 				
 		if(event.is_action_pressed("TogglePlay")):
