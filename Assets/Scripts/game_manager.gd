@@ -124,7 +124,7 @@ func _ready() -> void:
 
 func _process(_delta : float) -> void:
 	if(audio_player.playing):
-		current_pos = (audio_player.get_playback_position() + AudioServer.get_time_since_last_mix()) + audio_offset / 100
+		current_pos = (audio_player.get_playback_position()) + audio_offset / 100
 	
 	if(current_lane == 0 || is_another_window_focused || current_hovered_note != null || Global.multi_select.currently_dragging):
 		cursor_note.visible = false
