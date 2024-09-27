@@ -1,8 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://bcoi5hfer5b8e"]
+[gd_scene load_steps=20 format=3 uid="uid://bcoi5hfer5b8e"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/drawer.gd" id="1_avsu0"]
 [ext_resource type="PackedScene" uid="uid://cdd5so8gpgl0q" path="res://Assets/Scenes/ui.tscn" id="1_obr5d"]
 [ext_resource type="Script" path="res://Assets/Scripts/audio_player_script.gd" id="2_w8v26"]
+[ext_resource type="Script" path="res://Assets/Scripts/persistent_lines.gd" id="3_04816"]
 [ext_resource type="Script" path="res://Assets/Scripts/instrument_player.gd" id="4_3wfi1"]
 [ext_resource type="AudioStream" uid="uid://dlwjgvij7hkhd" path="res://Assets/DrumKit/Kick.wav" id="5_cgcp7"]
 [ext_resource type="AudioStream" uid="uid://gdwmjr0n54nd" path="res://Assets/DrumKit/Snare.wav" id="5_klm7p"]
@@ -29,6 +30,9 @@ script = ExtResource("1_avsu0")
 volume_db = -6.0
 bus = &"Music"
 script = ExtResource("2_w8v26")
+
+[node name="PersistentLines" type="Node2D" parent="GameScene"]
+script = ExtResource("3_04816")
 
 [node name="DrumKit" type="Node" parent="GameScene"]
 
