@@ -39,8 +39,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			queue_redraw()
 			
 			select_rectangle.extents = abs(end_pos - first_pos) / 2
-			var space = get_world_2d().direct_space_state
-			var query = PhysicsShapeQueryParameters2D.new()
+			var space : PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
+			var query : PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 			query.shape = select_rectangle
 			query.collide_with_areas = true
 			query.collision_mask = 2
@@ -58,7 +58,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _send_query_to_note_select(shape_query : Array[Dictionary]) -> void:
 	var new_array : Array[InternalNote]
 	
-	for shapes in shape_query:
+	for shapes : Dictionary in shape_query:
 		new_array.append(shapes["collider"].get_parent())
 	GameManager.select_multiple_notes(new_array)
 	

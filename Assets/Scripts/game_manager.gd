@@ -280,13 +280,13 @@ func _shortcut_input(event: InputEvent) -> void:
 		deselect_all_notes()
 		
 		# Get the time positiion at the mouse. This is where it pastes the new notes.
-		var mouse_pos = _get_snapped_screen_and_time_pos(get_viewport().get_mouse_position())
+		var mouse_pos : Dictionary = _get_snapped_screen_and_time_pos(get_viewport().get_mouse_position())
 		# The delta of the lowest note. This gets added to the new notes.
-		var lowest_note_delta = mouse_pos["time_pos"] - NoteManager.get_lowest_note_time_in_array(current_copied_notes).time
+		var lowest_note_delta : float = mouse_pos["time_pos"] - NoteManager.get_lowest_note_time_in_array(current_copied_notes).time
 		
 		for note : InternalNote in current_copied_notes:
 			
-			var new_note = NoteManager.add_new_note(note.time, note.color)
+			var new_note : InternalNote = NoteManager.add_new_note(note.time, note.color)
 			
 			new_note.time += lowest_note_delta
 			
@@ -392,15 +392,15 @@ func clean_project() -> void:
 func music_time_to_screen_time(time : float) -> float:
 	var percentage_elapsed : float = 0.0
 	if time > 0:
-		percentage_elapsed = time / audio_length
+		percentage_elapsed = time / scroll_speed
 
-	return percentage_elapsed * DisplayServer.window_get_size().x * scroll_speed
+	return percentage_elapsed * DisplayServer.window_get_size().x
 
 
 ## Convert the location on screen to a time in the song
 func screen_time_to_music_time(location : float) -> float:
 	# Like previous function but in reverse
-	return location / DisplayServer.window_get_size().x * audio_length / scroll_speed
+	return (location / DisplayServer.window_get_size().x) * scroll_speed
 
 
 ## Get the closest snapped value using [param time]
@@ -530,7 +530,7 @@ func run_action(action : Action, add_to_undo_redo : bool = true) -> Action:
 		
 		Action.ActionName.MULTIACTION:
 			new_action = MultiAction.new(Action.ActionName.MULTIACTION)
-			for multi_action in action.actions:
+			for multi_action : Action in action.actions:
 				new_action.actions.append(run_action(multi_action, false))
 			Global.notification_popup.play_notification(tr("NOTIFICATION_{ACTION}_MULTIPLE_NOTES", "{ACTION} is undo/redo").format({ACTION = tr(str(Action.ActionType.keys()[action.action_type]))}), 1)
 				
@@ -590,7 +590,7 @@ func deselect_note(note : InternalNote) -> void:
 
 ## clears [member current_selected_notes] and emit [signal note_deselected]
 func deselect_all_notes() -> void:
-	for note in current_selected_notes:
+	for note : InternalNote in current_selected_notes:
 		note.deselect_note()
 	current_selected_notes.clear()
 	note_deselected.emit()

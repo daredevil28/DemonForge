@@ -181,8 +181,7 @@ func _on_client_settings_about_to_popup() -> void:
 	Global.client_settings[0].value = GameManager.scroll_speed
 	Global.client_settings[1].value = NoteManager.offset
 	Global.client_settings[2].value = Engine.max_fps
-	Global.client_settings[3].value = OS.low_processor_usage_mode_sleep_usec
-	Global.client_settings[4].value = GameManager.audio_offset
+	Global.client_settings[3].value = GameManager.audio_offset
 
 
 ## Close the client settings.

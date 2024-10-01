@@ -265,6 +265,7 @@ auto_translate_mode = 1
 title = "WINDOW_CLIENT_SETTINGS"
 initial_position = 1
 size = Vector2i(800, 400)
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="ClientSettings"]
 anchors_preset = 15
