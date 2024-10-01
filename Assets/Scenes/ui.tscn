@@ -265,7 +265,6 @@ auto_translate_mode = 1
 title = "WINDOW_CLIENT_SETTINGS"
 initial_position = 1
 size = Vector2i(800, 400)
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="ClientSettings"]
 anchors_preset = 15
@@ -405,22 +404,6 @@ size_flags_vertical = 4
 tooltip_text = "WINDOW_CLIENT_SETTINGS_MAX_FPS_DESCRIPTION"
 max_value = 10000.0
 value = 15.0
-
-[node name="TimeBetweenFramesContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/TimeBetweenFramesContainer"]
-layout_mode = 2
-size_flags_horizontal = 2
-text = "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES"
-
-[node name="TimeBetweenFrames" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/TimeBetweenFramesContainer" groups=["ClientSettings"]]
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-tooltip_text = "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES_DESCRIPTION"
-max_value = 100000.0
 
 [node name="AudioOffsetContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
 layout_mode = 2
@@ -769,7 +752,6 @@ script = ExtResource("8_om2vj")
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/ScrollSpeedContainer/ScrollSpeed" to="." method="_on_scroll_speed_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/OffsetContainer/Offset" to="." method="_on_offset_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/MaxFPSContainer/MaxFPS" to="." method="_on_max_fps_value_changed"]
-[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/TimeBetweenFramesContainer/TimeBetweenFrames" to="." method="_on_time_between_frames_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/AudioOffsetContainer/AudioOffset" to="." method="_on_audio_offset_value_changed"]
 [connection signal="item_selected" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/LanguageSelection/Language" to="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/LanguageSelection/Language" method="_on_item_selected"]
 [connection signal="about_to_popup" from="ExportPanel" to="." method="_on_export_panel_about_to_popup"]
