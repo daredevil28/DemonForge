@@ -589,6 +589,7 @@ grow_vertical = 0
 text = "1000"
 
 [node name="NoteSettings" type="PanelContainer" parent="."]
+auto_translate_mode = 1
 visible = false
 layout_mode = 1
 anchors_preset = 2

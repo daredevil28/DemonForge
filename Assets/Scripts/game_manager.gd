@@ -66,13 +66,13 @@ var seconds_per_tick : float :
 	set(value):
 		print("seconds_per_tick is being set, this is not intended.")
 
-var current_beat : int :
+var current_beat : float :
 	get:
 		return (current_pos - _current_bpm_marker.time) / seconds_per_beat
 	set(value):
 		print("current_beat is being set, this is not intended.")
 
-var current_measure : int :
+var current_measure : float :
 	get:
 		return current_beat / snapping_frequency
 	set(value):

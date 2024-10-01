@@ -3,8 +3,9 @@ extends Node
 ##
 ## Controls the metronome
 
-## The last beat that occured
+
 var _last_beat : int
+var _last_measure : int
 ## If the metronome is enabled or disabled
 var metronome_enabled : bool = true
 
@@ -19,13 +20,13 @@ func _init() -> void:
 func _process(_delta: float) -> void:
 	if(GameManager.audio_player.playing && metronome_enabled):
 		# Make sure we play the metronome only once
-		if(GameManager.current_beat != _last_beat):
-			_last_beat = GameManager.current_beat
-			# Use the snapping frequency to determine when to play a high metronome note
-			if(GameManager.current_beat % GameManager.snapping_frequency == 0):
-				_metronome_low.play(0)
-			else:
-				_metronome_high.play(0)
+		if(ceili(GameManager.current_measure) != _last_measure):
+			_last_measure = ceili(GameManager.current_measure)
+			_last_beat = ceili(GameManager.current_beat)
+			_metronome_low.play(0)
+		if(ceili(GameManager.current_beat) != _last_beat):
+			_last_beat = ceili(GameManager.current_beat)
+			_metronome_high.play(0)
 
 
 func _input(event: InputEvent) -> void:
