@@ -392,7 +392,7 @@ func clean_project() -> void:
 func music_time_to_screen_time(time : float) -> float:
 	var percentage_elapsed : float = 0.0
 	if time > 0:
-		percentage_elapsed = time / scroll_speed
+		percentage_elapsed = time * scroll_speed / 100
 
 	return percentage_elapsed * DisplayServer.window_get_size().x
 
@@ -400,7 +400,7 @@ func music_time_to_screen_time(time : float) -> float:
 ## Convert the location on screen to a time in the song
 func screen_time_to_music_time(location : float) -> float:
 	# Like previous function but in reverse
-	return (location / DisplayServer.window_get_size().x) * scroll_speed
+	return (location / DisplayServer.window_get_size().x) / scroll_speed * 100
 
 
 ## Get the closest snapped value using [param time]
