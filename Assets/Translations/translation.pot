@@ -44,6 +44,10 @@ msgid "MENUBAR_TOOLS_SNAP"
 msgstr ""
 
 #: Assets/Scenes/ui.tscn
+msgid "MENUBAR_TOOLS_SPEEDADJUST"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES"
 msgstr ""
 
@@ -120,6 +124,14 @@ msgid "WINDOW_SONG_PROPERTIES_PREVIEW_LOCATION"
 msgstr ""
 
 #: Assets/Scenes/ui.tscn
+msgid "WINDOW_SPEED_MENU"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "TOOLS_SPEED_AFFECT_INSTRUMENTS"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS"
 msgstr ""
 
@@ -169,14 +181,6 @@ msgstr ""
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_MAX_FPS_DESCRIPTION"
-msgstr ""
-
-#: Assets/Scenes/ui.tscn
-msgid "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES"
-msgstr ""
-
-#: Assets/Scenes/ui.tscn
-msgid "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES_DESCRIPTION"
 msgstr ""
 
 #: Assets/Scenes/ui.tscn

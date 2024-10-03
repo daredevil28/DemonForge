@@ -13,6 +13,7 @@ var _note_settings_focused : bool = false
 @onready var _song_properties_panel : Window = $SongProperties
 @onready var _client_settings_panel : Window = $ClientSettings
 @onready var _export_panel : Window = $ExportPanel
+@onready var _speed_menu_panel : Window = $SpeedMenu
 @onready var _song_properties : Array[Node] = get_tree().get_nodes_in_group("SongProperties")
 @onready var _export_settings : Array[Node] = get_tree().get_nodes_in_group("ExportSettings")
 @onready var _note_settings : Array[Node] = get_tree().get_nodes_in_group("NoteSettings")
@@ -76,6 +77,12 @@ func _on_tools_index_pressed(index: int) -> void:
 	match index:
 		0:
 			Global.popup_dialog.play_dialog(tr("WINDOW_DIALOG_DESTRUCTIVE_TITLE"),tr("WINDOW_DIALOG_WARNING_SNAP_NOTES"),NoteManager.snap_all_notes_to_nearest)
+		1:
+			print("Speed Menu")
+			if(!_speed_menu_panel.visible):
+				_speed_menu_panel.popup()
+			else:
+				_speed_menu_panel.visible = false
 #endregion
 
 
@@ -424,11 +431,35 @@ func _on_note_deselected() -> void:
 	_selected_notes.clear()
 #endregion
 
+#region Speed menu Panel
+var _last_speed_slider_value : float
+var _speed_slider_affect_instruments : bool
+
+func _on_speed_menu_close_requested() -> void:
+	_speed_menu_panel.visible = false
+
+func _on_speed_slider_value_changed(value: float) -> void:
+	_last_speed_slider_value = value
+	GameManager.audio_player.pitch_scale = value
+	if(_speed_slider_affect_instruments):
+		for instrument in Global.instruments:
+			instrument.pitch_scale = value
+	$SpeedMenu/PanelContainer/HBoxContainer/SpeedText.text = "x" + str(value)
+
+func _on_speed_menu_instruments_toggled(toggled_on: bool) -> void:
+	_speed_slider_affect_instruments = toggled_on
+	if(toggled_on):
+		for instrument in Global.instruments:
+			instrument.pitch_scale = _last_speed_slider_value
+	else:
+		for instrument in Global.instruments:
+			instrument.pitch_scale = 1
+#endregion
 
 ## Check if any window is being focused
 func _check_for_window_focus() -> void:
 	# Check the focus of windows so that we don't show the cursor note when we are focusing on a window
-	if _song_properties_panel.has_focus() || _client_settings_panel.has_focus() || _export_panel.has_focus() || _note_settings_focused:
+	if _song_properties_panel.has_focus() || _client_settings_panel.has_focus() || _export_panel.has_focus()|| _song_properties_panel.has_focus() || _note_settings_focused:
 		GameManager.is_another_window_focused = true
 	else:
 		GameManager.is_another_window_focused = false

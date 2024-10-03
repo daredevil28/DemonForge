@@ -149,9 +149,11 @@ item_1/id = 1
 
 [node name="Tools" type="PopupMenu" parent="MenuBar"]
 size = Vector2i(150, 100)
-item_count = 1
+item_count = 2
 item_0/text = "MENUBAR_TOOLS_SNAP"
 item_0/id = 0
+item_1/text = "MENUBAR_TOOLS_SPEEDADJUST"
+item_1/id = 1
 
 [node name="SongProperties" type="Window" parent="."]
 auto_translate_mode = 1
@@ -259,6 +261,54 @@ tooltip_text = "WINDOW_SONG_PROPERTIES_FILE_SELECT_TOOLTIP"
 texture_normal = ExtResource("3_m2luq")
 texture_pressed = ExtResource("4_6ftkc")
 texture_hover = ExtResource("5_16p63")
+
+[node name="SpeedMenu" type="Window" parent="."]
+auto_translate_mode = 1
+title = "WINDOW_SPEED_MENU"
+initial_position = 1
+size = Vector2i(200, 80)
+visible = false
+unresizable = true
+
+[node name="PanelContainer" type="PanelContainer" parent="SpeedMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="VBoxContainer" parent="SpeedMenu/PanelContainer"]
+layout_mode = 2
+
+[node name="SpeedSlider" type="HSlider" parent="SpeedMenu/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.25
+max_value = 2.0
+step = 0.05
+value = 1.0
+ticks_on_borders = true
+
+[node name="SpeedText" type="RichTextLabel" parent="SpeedMenu/PanelContainer/HBoxContainer"]
+auto_translate_mode = 2
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 3
+text = "x1.00"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="HBoxContainer" parent="SpeedMenu/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SpeedMenu/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "TOOLS_SPEED_AFFECT_INSTRUMENTS"
+
+[node name="SpeedMenuInstruments" type="CheckBox" parent="SpeedMenu/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
 
 [node name="ClientSettings" type="Window" parent="."]
 auto_translate_mode = 1
@@ -744,6 +794,9 @@ script = ExtResource("8_om2vj")
 [connection signal="close_requested" from="SongProperties" to="." method="_on_song_properties_close_requested"]
 [connection signal="button_up" from="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer/SongSelectFile" to="." method="_on_song_select_file_button_up"]
 [connection signal="button_up" from="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer2/PreviewSelectFile" to="." method="_on_preview_select_file_button_up"]
+[connection signal="close_requested" from="SpeedMenu" to="." method="_on_speed_menu_close_requested"]
+[connection signal="value_changed" from="SpeedMenu/PanelContainer/HBoxContainer/SpeedSlider" to="." method="_on_speed_slider_value_changed"]
+[connection signal="toggled" from="SpeedMenu/PanelContainer/HBoxContainer/VBoxContainer/SpeedMenuInstruments" to="." method="_on_speed_menu_instruments_toggled"]
 [connection signal="about_to_popup" from="ClientSettings" to="." method="_on_client_settings_about_to_popup"]
 [connection signal="close_requested" from="ClientSettings" to="." method="_on_client_settings_close_requested"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/MasterSlider" to="." method="_on_slider_changed" binds= [0]]

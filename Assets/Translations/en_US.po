@@ -50,6 +50,10 @@ msgid "MENUBAR_TOOLS_SNAP"
 msgstr "Snap to nearest"
 
 #: Assets/Scenes/ui.tscn
+msgid "MENUBAR_TOOLS_SPEEDADJUST"
+msgstr "Adjust Song Speed"
+
+#: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES"
 msgstr "Song Properties"
 
@@ -126,6 +130,14 @@ msgid "WINDOW_SONG_PROPERTIES_PREVIEW_LOCATION"
 msgstr "Preview File Location"
 
 #: Assets/Scenes/ui.tscn
+msgid "WINDOW_SPEED_MENU"
+msgstr "Adjust Speed"
+
+#: Assets/Scenes/ui.tscn
+msgid "TOOLS_SPEED_AFFECT_INSTRUMENTS"
+msgstr "Affect Instruments?"
+
+#: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS"
 msgstr "Client Settings"
 
@@ -177,16 +189,6 @@ msgstr "Max FPS"
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_MAX_FPS_DESCRIPTION"
 msgstr "Max FPS of the program (0 = infinite)"
-
-#: Assets/Scenes/ui.tscn
-msgid "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES"
-msgstr "Time Between Frames"
-
-#: Assets/Scenes/ui.tscn
-msgid "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES_DESCRIPTION"
-msgstr ""
-"The time in μs between frames (The lower the value the more frames at the "
-"cost of higher power usage)."
 
 #: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_AUDIO_OFFSET"
@@ -395,3 +397,11 @@ msgstr "Metronome Disabled"
 #: Assets/Scripts/metronome.gd
 msgid "NOTIFICATION_METRONOME_ENABLED"
 msgstr "Metronome enabled."
+
+#~ msgid "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES"
+#~ msgstr "Time Between Frames"
+
+#~ msgid "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES_DESCRIPTION"
+#~ msgstr ""
+#~ "The time in μs between frames (The lower the value the more frames at the "
+#~ "cost of higher power usage)."

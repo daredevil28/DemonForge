@@ -64,7 +64,7 @@ func play_notes(object : InternalNote, new_time : float) -> void:
 						var seconds_per_tick : float = GameManager.seconds_per_tick
 						if(object.double_time == true):
 							seconds_per_tick = seconds_per_tick / 2
-						get_tree().get_nodes_in_group("Instruments")[object.color - 1].play_instrument(object.interval, seconds_per_tick)
+						get_tree().get_nodes_in_group("Instruments")[object.color - 1].play_instrument(object.interval, seconds_per_tick / GameManager.audio_player.pitch_scale)
 					object.visible = false
 	else:
 		# No audio is playing so make every note behind the judgement line visible
