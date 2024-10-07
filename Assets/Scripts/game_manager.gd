@@ -200,16 +200,24 @@ func _input(event : InputEvent) -> void:
 						current_hovered_note = null
 		
 		if(!is_another_window_focused):
-		# Scroll up 1 tick
-			if(event.is_action_pressed("ScrollUp") && !audio_player.playing):
+			if(event.is_action_pressed("ZoomIn")):
+				scroll_speed += 1
+				
+			# Scroll up 1 tick
+			elif(event.is_action_pressed("ScrollUp") && !audio_player.playing):
 				current_pos += seconds_per_beat / snapping_frequency
 				current_pos = get_closest_snap_value(current_pos)
 				# Make sure we don't scroll past the end of the song
 				if(current_pos > audio_length):
 					current_pos = audio_length
+			
+				
+			if(event.is_action_pressed("ZoomOut")):
+				if(scroll_speed > 1):
+					scroll_speed -= 1
 					
 			# Scroll down 1 tick
-			if(event.is_action_pressed("ScrollDown") && !audio_player.playing):
+			elif(event.is_action_pressed("ScrollDown") && !audio_player.playing):
 				
 				# Check if we are on a marker, use the previous marker for the seconds_per_beat if we are
 				var scroll_seconds_per_beat : float = seconds_per_beat
@@ -222,6 +230,8 @@ func _input(event : InputEvent) -> void:
 				current_pos = get_closest_snap_value(current_pos)
 				if(current_pos < 0):
 					current_pos = 0
+
+			
 	
 	if(!is_another_window_focused):
 		if(event.is_action_pressed("Delete")):

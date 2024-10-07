@@ -421,7 +421,9 @@ layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 tooltip_text = "WINDOW_CLIENT_SETTINGS_SCROLLSPEED_DESCRIPTION"
+min_value = 1.0
 max_value = 10000.0
+value = 1.0
 
 [node name="OffsetContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
 layout_mode = 2
