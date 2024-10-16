@@ -29,7 +29,16 @@ func _unhandled_input(event: InputEvent) -> void:
 			multi_select_frames += 1
 			if(multi_select_frames > 20):
 				currently_dragging = true
-		
+				
+		if(event.is_action_pressed("ScrollUp")):
+			if(GameManager.current_pos != GameManager.audio_length):
+				first_pos.x -= GameManager.music_time_to_screen_time(GameManager.seconds_per_tick)
+				queue_redraw()
+		if(event.is_action_pressed("ScrollDown")):
+			if(GameManager.current_pos != 0):
+				first_pos.x += GameManager.music_time_to_screen_time(GameManager.seconds_per_tick)
+				queue_redraw()
+			
 	if(event.is_action_released("LeftClick")):
 		multi_select_frames = 0
 		if(currently_dragging):
