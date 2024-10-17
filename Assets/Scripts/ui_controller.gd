@@ -2,7 +2,6 @@ extends Control
 ## Anything related to the UI goes in here
 
 var _selected_notes : Array[InternalNote]
-var _opening_note_settings : bool
 var _note_settings_focused : bool = false
 
 @onready var _open_dialog : FileDialog = $OpenDialog
@@ -297,52 +296,51 @@ func _on_spin_box_value_changed(value: float, box : String) -> void:
 	if(!_selected_notes.is_empty()):
 		# Check to make sure we are not opening the note settings in this frame
 		# To prevent accidental note value changes
-		if(_opening_note_settings == false):
-			# Make a new multi action action even if the _selected_note array is bigger than 1
-			var new_multi_action : MultiAction = MultiAction.new(Action.ActionName.MULTIACTION)
-			
-			for array_note : InternalNote in _selected_notes:
+		# Make a new multi action action even if the _selected_note array is bigger than 1
+		var new_multi_action : MultiAction = MultiAction.new(Action.ActionName.MULTIACTION)
+		
+		for array_note : InternalNote in _selected_notes:
 				
-				if(array_note is Marker && box == "interval"):
-					continue
-				if(array_note is Note && (box == "bpm" || box == "snapping")):
-					continue
+			if(array_note is Marker && box == "interval"):
+				continue
+			if(array_note is Note && (box == "bpm" || box == "snapping")):
+				continue
 				
-				var new_action : ValueAction = ValueAction.new(Action.ActionName.VALUECHANGED)
-				new_action.time = array_note.time
-				new_action.color = array_note.color
+			var new_action : ValueAction = ValueAction.new(Action.ActionName.VALUECHANGED)
+			new_action.time = array_note.time
+			new_action.color = array_note.color
 				
-				match box:
+			match box:
 					
-					"interval":
+				"interval":
 						
-						new_action.value_type = ValueAction.ValueType.INTERVAL
-						new_action.old_value = array_note.interval
-						array_note.interval = value
+					new_action.value_type = ValueAction.ValueType.INTERVAL
+					new_action.old_value = array_note.interval
+					array_note.interval = value
 						
-					"bpm":
-						new_action.value_type = ValueAction.ValueType.BPM
-						new_action.old_value = array_note.bpm
-						array_note.bpm = value
-						Global.game_scene_node.queue_redraw()
-						GameManager.current_pos = GameManager.current_pos
+				"bpm":
+					new_action.value_type = ValueAction.ValueType.BPM
+					new_action.old_value = array_note.bpm
+					array_note.bpm = value
+					Global.game_scene_node.queue_redraw()
+					GameManager.current_pos = GameManager.current_pos
 						
-					"snapping":
-						new_action.value_type = ValueAction.ValueType.SNAPPING
-						new_action.old_value = array_note.snapping
-						array_note.snapping = value
-						Global.game_scene_node.queue_redraw()
-						GameManager.current_pos = GameManager.current_pos
+				"snapping":
+					new_action.value_type = ValueAction.ValueType.SNAPPING
+					new_action.old_value = array_note.snapping
+					array_note.snapping = value
+					Global.game_scene_node.queue_redraw()
+					GameManager.current_pos = GameManager.current_pos
 						
-				# If the array is bigger than 1 then add it to new_multi_action	
-				if(_selected_notes.size() > 1):
-					new_multi_action.actions.append(new_action)
-				else:
-					GameManager.add_undo_action(new_action)
-			
-			# Add mutli action to the undo array
+			# If the array is bigger than 1 then add it to new_multi_action	
 			if(_selected_notes.size() > 1):
-				GameManager.add_undo_action(new_multi_action)
+				new_multi_action.actions.append(new_action)
+			else:
+				GameManager.add_undo_action(new_action)
+			
+		# Add mutli action to the undo array
+		if(_selected_notes.size() > 1):
+			GameManager.add_undo_action(new_multi_action)
 
 
 func _on_check_box_toggled(toggled_on: bool) -> void:
