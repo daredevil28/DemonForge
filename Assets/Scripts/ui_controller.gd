@@ -374,7 +374,6 @@ func _on_check_box_toggled(toggled_on: bool) -> void:
 func _on_note_selected(notes : Array[InternalNote]) -> void:# < GameManager.note_selected
 	_selected_notes = notes.duplicate()
 	var first_note : InternalNote = _selected_notes[0]
-	_opening_note_settings = true
 	
 	var bpm_the_same : bool = true
 	var snapping_the_same : bool = true
@@ -405,24 +404,23 @@ func _on_note_selected(notes : Array[InternalNote]) -> void:# < GameManager.note
 	# If note is a marker then show the marker panel, else show the note panel
 	if(first_note is Marker):
 		if(bpm_the_same):
-			_note_settings[2].value = first_note.bpm
+			_note_settings[2].set_value_no_signal(first_note.bpm)
 			
 		if(snapping_the_same):
-			_note_settings[3].value = first_note.snapping
+			_note_settings[3].set_value_no_signal(first_note.snapping)
 			
 		_note_settings_panel.get_child(0).visible = false
 		_note_settings_panel.get_child(1).visible = true
 		
 	if(first_note is Note):
 		if(interval_the_same):
-			_note_settings[0].value = first_note.interval
+			_note_settings[0].set_value_no_signal(first_note.interval)
 			
 		_note_settings[1].button_pressed = first_note.double_time
 		_note_settings_panel.get_child(0).visible = true
 		_note_settings_panel.get_child(1).visible = false
 		
 	_note_settings_panel.visible = true
-	_opening_note_settings = false
 
 
 ## Called on GameManager.note_deselected
