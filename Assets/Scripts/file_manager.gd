@@ -242,7 +242,7 @@ func export_project() -> void:
 			
 			# If this note and the next one have the exact same time then it's a double note
 			if(i+1 < NoteManager.note_nodes.size()):
-				if(note.time == NoteManager.note_nodes[i+1].time):
+				if(is_equal_approx(note.time,NoteManager.note_nodes[i+1].time)):
 					double_note = true
 					enemy_type = "2"
 					color_2 = str(NoteManager.note_nodes[i+1].color)

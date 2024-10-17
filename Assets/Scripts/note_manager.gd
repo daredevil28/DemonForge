@@ -288,7 +288,7 @@ func check_if_double_note_exists_at_time(time : float) -> bool:
 	var note_count : int = 0
 	# Go through the note array and add to note_count if we encounter the same note
 	for note : Note in note_nodes:
-		if(note.time == time):
+		if(is_equal_approx(note.time,time)):
 				note_count += 1
 		# If we counted 2 or more then there is a double note at the location
 		if(note_count >= 2):
