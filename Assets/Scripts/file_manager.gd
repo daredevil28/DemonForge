@@ -204,7 +204,7 @@ func export_project() -> void:
 		
 		# Copy audio files to the folder
 		print(dir.copy(song_file,path + "/song.ogg"))
-		print(dir.copy(preview_file, path + "./preview.ogg"))
+		print(dir.copy(preview_file, path + "/preview.ogg"))
 		
 		# Making info.csv file
 		var info : FileAccess = FileAccess.open(path + "/info.csv",FileAccess.WRITE)
