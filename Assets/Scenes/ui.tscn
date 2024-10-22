@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cdd5so8gpgl0q"]
+[gd_scene load_steps=20 format=3 uid="uid://cdd5so8gpgl0q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ui_controller.gd" id="1_hk45x"]
 [ext_resource type="Script" path="res://Assets/Scripts/background_image.gd" id="2_774o7"]
@@ -7,10 +7,17 @@
 [ext_resource type="Texture2D" uid="uid://cskljke58e2fj" path="res://Assets/Sprites/FolderIcon.png" id="3_m2luq"]
 [ext_resource type="Texture2D" uid="uid://cxqqsd1lraejc" path="res://Assets/Sprites/FolderIconPressed.png" id="4_6ftkc"]
 [ext_resource type="Texture2D" uid="uid://cse04ob740oo4" path="res://Assets/Sprites/FolderIconHover.png" id="5_16p63"]
+[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/menu_bar.gd" id="5_yajol"]
 [ext_resource type="Script" path="res://Assets/Scripts/errors_label.gd" id="6_hsjtr"]
+[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/song_properties_panel.gd" id="6_iw480"]
 [ext_resource type="Script" path="res://Assets/Scripts/notification_manager.gd" id="7_bt6ck"]
+[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/speed_menu.gd" id="8_6x7ja"]
 [ext_resource type="Script" path="res://Assets/Scripts/dialog_manager.gd" id="8_om2vj"]
 [ext_resource type="Script" path="res://Assets/Scripts/language_changer.gd" id="9_wuf8q"]
+[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/song_time_label.gd" id="10_os2gm"]
+[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/note_settings.gd" id="11_csf8i"]
+[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/client_settings_panel.gd" id="11_vvsc6"]
+[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/export_panel.gd" id="13_cc75i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hp2c"]
 content_margin_left = 5.0
@@ -125,6 +132,7 @@ auto_translate_mode = 1
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("5_yajol")
 
 [node name="File" type="PopupMenu" parent="MenuBar"]
 size = Vector2i(194, 116)
@@ -161,6 +169,7 @@ title = "WINDOW_SONG_PROPERTIES"
 initial_position = 1
 size = Vector2i(1000, 300)
 visible = false
+script = ExtResource("6_iw480")
 
 [node name="ColorRect" type="ColorRect" parent="SongProperties"]
 anchors_preset = 15
@@ -269,6 +278,7 @@ initial_position = 1
 size = Vector2i(200, 80)
 visible = false
 unresizable = true
+script = ExtResource("8_6x7ja")
 
 [node name="PanelContainer" type="PanelContainer" parent="SpeedMenu"]
 anchors_preset = 15
@@ -316,6 +326,7 @@ title = "WINDOW_CLIENT_SETTINGS"
 initial_position = 1
 size = Vector2i(800, 400)
 visible = false
+script = ExtResource("11_vvsc6")
 
 [node name="ColorRect" type="ColorRect" parent="ClientSettings"]
 anchors_preset = 15
@@ -494,6 +505,7 @@ auto_translate_mode = 1
 initial_position = 1
 size = Vector2i(900, 500)
 visible = false
+script = ExtResource("13_cc75i")
 
 [node name="ColorRect" type="ColorRect" parent="ExportPanel"]
 anchors_preset = 15
@@ -623,6 +635,7 @@ offset_top = -23.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "1000"
+script = ExtResource("10_os2gm")
 
 [node name="NoteSettings" type="PanelContainer" parent="."]
 auto_translate_mode = 1
@@ -637,6 +650,7 @@ offset_right = 149.0
 offset_bottom = -78.0
 grow_vertical = 0
 mouse_filter = 1
+script = ExtResource("11_csf8i")
 
 [node name="NoteSettingsBox" type="VBoxContainer" parent="NoteSettings"]
 visible = false
@@ -784,44 +798,51 @@ auto_translate = false
 dialog_text = "Project has not been saved yet, are you sure you want to continue?"
 script = ExtResource("8_om2vj")
 
-[connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]
-[connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
-[connection signal="file_selected" from="SongFileDialog" to="." method="_on_song_file_dialog_file_selected"]
-[connection signal="file_selected" from="PreviewFileDialog" to="." method="_on_preview_file_dialog_file_selected"]
-[connection signal="dir_selected" from="FolderDialog" to="." method="_on_folder_selected"]
-[connection signal="index_pressed" from="MenuBar/File" to="." method="_on_file_index_pressed"]
-[connection signal="index_pressed" from="MenuBar/Properties" to="." method="_on_properties_index_pressed"]
-[connection signal="index_pressed" from="MenuBar/Tools" to="." method="_on_tools_index_pressed"]
-[connection signal="about_to_popup" from="SongProperties" to="." method="_on_song_properties_about_to_popup"]
-[connection signal="close_requested" from="SongProperties" to="." method="_on_song_properties_close_requested"]
-[connection signal="button_up" from="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer/SongSelectFile" to="." method="_on_song_select_file_button_up"]
-[connection signal="button_up" from="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer2/PreviewSelectFile" to="." method="_on_preview_select_file_button_up"]
-[connection signal="close_requested" from="SpeedMenu" to="." method="_on_speed_menu_close_requested"]
-[connection signal="value_changed" from="SpeedMenu/PanelContainer/HBoxContainer/SpeedSlider" to="." method="_on_speed_slider_value_changed"]
-[connection signal="toggled" from="SpeedMenu/PanelContainer/HBoxContainer/VBoxContainer/SpeedMenuInstruments" to="." method="_on_speed_menu_instruments_toggled"]
-[connection signal="about_to_popup" from="ClientSettings" to="." method="_on_client_settings_about_to_popup"]
-[connection signal="close_requested" from="ClientSettings" to="." method="_on_client_settings_close_requested"]
-[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/MasterSlider" to="." method="_on_slider_changed" binds= [0]]
-[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/MusicSlider" to="." method="_on_slider_changed" binds= [1]]
-[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/SFXInstruments" to="." method="_on_slider_changed" binds= [2]]
-[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/SFXSlider" to="." method="_on_slider_changed" binds= [3]]
-[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/ScrollSpeedContainer/ScrollSpeed" to="." method="_on_scroll_speed_value_changed"]
-[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/OffsetContainer/Offset" to="." method="_on_offset_value_changed"]
-[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/MaxFPSContainer/MaxFPS" to="." method="_on_max_fps_value_changed"]
-[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/AudioOffsetContainer/AudioOffset" to="." method="_on_audio_offset_value_changed"]
+[connection signal="file_selected" from="OpenDialog" to="MenuBar" method="_on_open_dialog_file_selected"]
+[connection signal="file_selected" from="SaveDialog" to="MenuBar" method="_on_save_dialog_file_selected"]
+[connection signal="file_selected" from="SongFileDialog" to="SongProperties" method="_on_song_file_dialog_file_selected"]
+[connection signal="file_selected" from="PreviewFileDialog" to="SongProperties" method="_on_preview_file_dialog_file_selected"]
+[connection signal="dir_selected" from="FolderDialog" to="ExportPanel" method="_on_folder_selected"]
+[connection signal="index_pressed" from="MenuBar/File" to="MenuBar" method="_on_file_index_pressed"]
+[connection signal="index_pressed" from="MenuBar/Properties" to="MenuBar" method="_on_properties_index_pressed"]
+[connection signal="index_pressed" from="MenuBar/Tools" to="MenuBar" method="_on_tools_index_pressed"]
+[connection signal="about_to_popup" from="SongProperties" to="SongProperties" method="_on_song_properties_about_to_popup"]
+[connection signal="close_requested" from="SongProperties" to="SongProperties" method="_on_song_properties_close_requested"]
+[connection signal="focus_entered" from="SongProperties" to="." method="_on_song_properties_focused" binds= [true]]
+[connection signal="focus_exited" from="SongProperties" to="." method="_on_song_properties_focused" binds= [false]]
+[connection signal="button_up" from="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer/SongSelectFile" to="SongProperties" method="_on_song_select_file_button_up"]
+[connection signal="button_up" from="SongProperties/ColorRect/SongPropertiesValues/HBoxContainer2/PreviewSelectFile" to="SongProperties" method="_on_preview_select_file_button_up"]
+[connection signal="close_requested" from="SpeedMenu" to="SpeedMenu" method="_on_speed_menu_close_requested"]
+[connection signal="focus_entered" from="SpeedMenu" to="." method="_on_speed_menu_focused" binds= [true]]
+[connection signal="focus_exited" from="SpeedMenu" to="." method="_on_speed_menu_focused" binds= [false]]
+[connection signal="value_changed" from="SpeedMenu/PanelContainer/HBoxContainer/SpeedSlider" to="SpeedMenu" method="_on_speed_slider_value_changed"]
+[connection signal="toggled" from="SpeedMenu/PanelContainer/HBoxContainer/VBoxContainer/SpeedMenuInstruments" to="SpeedMenu" method="_on_speed_menu_instruments_toggled"]
+[connection signal="about_to_popup" from="ClientSettings" to="ClientSettings" method="_on_client_settings_about_to_popup"]
+[connection signal="close_requested" from="ClientSettings" to="ClientSettings" method="_on_client_settings_close_requested"]
+[connection signal="focus_entered" from="ClientSettings" to="." method="_on_client_settings_focused" binds= [true]]
+[connection signal="focus_exited" from="ClientSettings" to="." method="_on_client_settings_focused" binds= [false]]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/MasterSlider" to="ClientSettings" method="_on_slider_changed" binds= [0]]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/MusicSlider" to="ClientSettings" method="_on_slider_changed" binds= [1]]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/SFXInstruments" to="ClientSettings" method="_on_slider_changed" binds= [2]]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerLeft/VBoxContainer/SFXSlider" to="ClientSettings" method="_on_slider_changed" binds= [3]]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/ScrollSpeedContainer/ScrollSpeed" to="ClientSettings" method="_on_scroll_speed_value_changed"]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/OffsetContainer/Offset" to="ClientSettings" method="_on_offset_value_changed"]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/MaxFPSContainer/MaxFPS" to="ClientSettings" method="_on_max_fps_value_changed"]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/AudioOffsetContainer/AudioOffset" to="ClientSettings" method="_on_audio_offset_value_changed"]
 [connection signal="item_selected" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/LanguageSelection/Language" to="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/LanguageSelection/Language" method="_on_item_selected"]
-[connection signal="about_to_popup" from="ExportPanel" to="." method="_on_export_panel_about_to_popup"]
-[connection signal="close_requested" from="ExportPanel" to="." method="_on_export_panel_close_requested"]
-[connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer/CustomFolderSelect" to="." method="_on_custom_folder_button_up"]
-[connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/CustomFolderLocation" to="." method="_on_folder_selected"]
-[connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/FolderName" to="." method="_on_folder_name_text_changed"]
-[connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer3/ExportProjectButton" to="." method="_on_export_project_button_up"]
-[connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer3/OpenCustomsButton" to="." method="_on_open_customs_button_button_up"]
-[connection signal="mouse_entered" from="NoteSettings" to="." method="_on_note_settings_mouse_entered"]
-[connection signal="mouse_exited" from="NoteSettings" to="." method="_on_note_settings_mouse_exited"]
-[connection signal="value_changed" from="NoteSettings/NoteSettingsBox/HBoxContainer/NoteInterval" to="." method="_on_spin_box_value_changed" binds= ["interval"]]
-[connection signal="toggled" from="NoteSettings/NoteSettingsBox/HBoxContainer2/DoubleTime" to="." method="_on_check_box_toggled"]
-[connection signal="value_changed" from="NoteSettings/BPMMarkerSettingsBox/HBoxContainer/bpm" to="." method="_on_spin_box_value_changed" binds= ["bpm"]]
-[connection signal="value_changed" from="NoteSettings/BPMMarkerSettingsBox/HBoxContainer2/Snapping" to="." method="_on_spin_box_value_changed" binds= ["snapping"]]
+[connection signal="about_to_popup" from="ExportPanel" to="ExportPanel" method="_on_export_panel_about_to_popup"]
+[connection signal="close_requested" from="ExportPanel" to="ExportPanel" method="_on_export_panel_close_requested"]
+[connection signal="focus_entered" from="ExportPanel" to="." method="_on_export_panel_focused" binds= [true]]
+[connection signal="focus_exited" from="ExportPanel" to="." method="_on_export_panel_focused" binds= [false]]
+[connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer/CustomFolderSelect" to="ExportPanel" method="_on_custom_folder_button_up"]
+[connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/CustomFolderLocation" to="ExportPanel" method="_on_folder_selected"]
+[connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/FolderName" to="ExportPanel" method="_on_folder_name_text_changed"]
+[connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer3/ExportProjectButton" to="ExportPanel" method="_on_export_project_button_up"]
+[connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer3/OpenCustomsButton" to="ExportPanel" method="_on_open_customs_button_button_up"]
+[connection signal="mouse_entered" from="NoteSettings" to="NoteSettings" method="_on_note_settings_mouse_entered"]
+[connection signal="mouse_exited" from="NoteSettings" to="NoteSettings" method="_on_note_settings_mouse_exited"]
+[connection signal="value_changed" from="NoteSettings/NoteSettingsBox/HBoxContainer/NoteInterval" to="NoteSettings" method="_on_spin_box_value_changed" binds= ["interval"]]
+[connection signal="toggled" from="NoteSettings/NoteSettingsBox/HBoxContainer2/DoubleTime" to="NoteSettings" method="_on_check_box_toggled"]
+[connection signal="value_changed" from="NoteSettings/BPMMarkerSettingsBox/HBoxContainer/bpm" to="NoteSettings" method="_on_spin_box_value_changed" binds= ["bpm"]]
 [connection signal="canceled" from="ConfirmationDialog" to="ConfirmationDialog" method="_on_canceled"]
 [connection signal="confirmed" from="ConfirmationDialog" to="ConfirmationDialog" method="_on_confirmed"]
