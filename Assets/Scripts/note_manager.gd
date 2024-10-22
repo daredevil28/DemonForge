@@ -36,8 +36,8 @@ func play_notes(object : InternalNote, new_time : float) -> void:
 	var new_pos : float = (GameManager.music_time_to_screen_time(object.time) - GameManager.music_time_to_screen_time(new_time)) + offset
 	
 	# Check if the note is outside the frame, hide and skip if it is
-	if(new_pos > DisplayServer.window_get_size().x + 20 || new_pos < -20):
-		if(!Global.multi_select.currently_dragging):
+	if(!Global.multi_select.currently_dragging):
+		if(new_pos > DisplayServer.window_get_size().x + 20 || new_pos < -20):
 			object.visible = false
 			object.disable_collision()
 			return

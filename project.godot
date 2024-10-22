@@ -15,6 +15,8 @@ config/version="v0.6.0"
 run/main_scene="res://Assets/Scenes/game_scene.tscn"
 config/auto_accept_quit=false
 config/features=PackedStringArray("4.4", "Mobile")
+boot_splash/bg_color=Color(0.0728426, 0.0728426, 0.0728426, 1)
+boot_splash/image="res://Assets/splash.png"
 config/icon="res://Assets/icon.png"
 
 [audio]

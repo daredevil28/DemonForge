@@ -46,7 +46,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			starting_dragging = false
 			end_pos = event.position
 			queue_redraw()
-			
+			#TODO Instead of doing using physics, it's probably better to use _screen_time_to_music_time
+			# to select all the notes instead of possibly expensive physics queries
 			select_rectangle.extents = abs(end_pos - first_pos) / 2
 			var space : PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
 			var query : PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
@@ -54,7 +55,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			query.collide_with_areas = true
 			query.collision_mask = 2
 			query.transform = Transform2D(0, (end_pos + first_pos) / 2)
-			var shape_query : Array = space.intersect_shape(query)
+			var shape_query : Array = space.intersect_shape(query,NoteManager.note_nodes.size())
 			if(!shape_query.is_empty()):
 				_send_query_to_note_select(shape_query)
 		else:
