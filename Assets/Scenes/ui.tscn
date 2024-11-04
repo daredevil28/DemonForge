@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cdd5so8gpgl0q"]
+[gd_scene load_steps=23 format=3 uid="uid://cdd5so8gpgl0q"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ui_controller.gd" id="1_hk45x"]
 [ext_resource type="Script" path="res://Assets/Scripts/background_image.gd" id="2_774o7"]
@@ -18,6 +18,9 @@
 [ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/note_settings.gd" id="11_csf8i"]
 [ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/client_settings_panel.gd" id="11_vvsc6"]
 [ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/export_panel.gd" id="13_cc75i"]
+[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/about.gd" id="15_d8k3u"]
+[ext_resource type="Texture2D" uid="uid://cror8hqxo1kdx" path="res://Assets/icon.png" id="15_sxp0n"]
+[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/credits.gd" id="17_n5sro"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hp2c"]
 content_margin_left = 5.0
@@ -156,12 +159,22 @@ item_1/text = "MENUBAR_PROPERTIES_CLIENT"
 item_1/id = 1
 
 [node name="Tools" type="PopupMenu" parent="MenuBar"]
-size = Vector2i(150, 100)
+size = Vector2i(271, 100)
 item_count = 2
 item_0/text = "MENUBAR_TOOLS_SNAP"
 item_0/id = 0
 item_1/text = "MENUBAR_TOOLS_SPEEDADJUST"
 item_1/id = 1
+
+[node name="About" type="PopupMenu" parent="MenuBar"]
+size = Vector2i(236, 100)
+item_count = 3
+item_0/text = "MENUBAR_ABOUT_GITREPO"
+item_0/id = 0
+item_1/text = "MENUBAR_ABOUT_INFO"
+item_1/id = 1
+item_2/text = "MENUBAR_ABOUT_CREDITS"
+item_2/id = 2
 
 [node name="SongProperties" type="Window" parent="."]
 auto_translate_mode = 1
@@ -622,6 +635,82 @@ text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmo
 autowrap_mode = 2
 script = ExtResource("6_hsjtr")
 
+[node name="About" type="Window" parent="."]
+title = "About"
+initial_position = 1
+size = Vector2i(600, 200)
+visible = false
+auto_translate = false
+script = ExtResource("15_d8k3u")
+
+[node name="MarginContainer" type="MarginContainer" parent="About"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="About/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="About/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("15_sxp0n")
+expand_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="About/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="About/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+text = "Demon Forge: A Drums Rock Editor
+
+By: Sean \"daredevil28\"
+
+Developed using Godot
+
+Drums Rock is owned by Garage51"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Credits" type="Window" parent="."]
+title = "Credits"
+initial_position = 1
+size = Vector2i(1025, 200)
+visible = false
+auto_translate = false
+script = ExtResource("17_n5sro")
+
+[node name="MarginContainer" type="MarginContainer" parent="Credits"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Credits/MarginContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "ROCK DRUM KIT by albasto -- [url]https://freesound.org/s/568873/[/url] -- License: Creative Commons 0
+MetronomeUp by Druminfected -- [url]https://freesound.org/s/250551/[/url] -- License: Creative Commons 0
+Perc_MetronomeQuartz_hi by LudwigMueller -- [url]https://freesound.org/s/548518/[/url] -- License: Creative Commons 0
+GdScriptAudioImport by Gianclgar and contributors -- [url]https://github.com/Gianclgar/GDScriptAudioImport[/url] -- License: MIT License
+Gameboy drum sample set by bedroomproducersblog.com. -- [url]https://bedroomproducersblog.com/2015/04/08/game-boy-drum-kit/[/url]
+Flags by koppi maintained by lipis -- [url]https://github.com/lipis/flag-icons[/url] -- License: MIT License
+DemonForge icon by JSaurusRex -- [url]https://github.com/JSaurusRex[/url] -- License MIT License
+"
+
 [node name="SongTimeLabel" type="Label" parent="."]
 auto_translate_mode = 2
 layout_mode = 1
@@ -806,6 +895,7 @@ script = ExtResource("8_om2vj")
 [connection signal="index_pressed" from="MenuBar/File" to="MenuBar" method="_on_file_index_pressed"]
 [connection signal="index_pressed" from="MenuBar/Properties" to="MenuBar" method="_on_properties_index_pressed"]
 [connection signal="index_pressed" from="MenuBar/Tools" to="MenuBar" method="_on_tools_index_pressed"]
+[connection signal="index_pressed" from="MenuBar/About" to="MenuBar" method="_on_about_index_pressed"]
 [connection signal="about_to_popup" from="SongProperties" to="SongProperties" method="_on_song_properties_about_to_popup"]
 [connection signal="close_requested" from="SongProperties" to="SongProperties" method="_on_song_properties_close_requested"]
 [connection signal="focus_entered" from="SongProperties" to="." method="_on_song_properties_focused" binds= [true]]
@@ -839,6 +929,13 @@ script = ExtResource("8_om2vj")
 [connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/FolderName" to="ExportPanel" method="_on_folder_name_text_changed"]
 [connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer3/ExportProjectButton" to="ExportPanel" method="_on_export_project_button_up"]
 [connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer3/OpenCustomsButton" to="ExportPanel" method="_on_open_customs_button_button_up"]
+[connection signal="close_requested" from="About" to="About" method="_on_close_requested"]
+[connection signal="focus_entered" from="About" to="." method="_on_about_focused" binds= [true]]
+[connection signal="focus_exited" from="About" to="." method="_on_about_focused" binds= [false]]
+[connection signal="close_requested" from="Credits" to="Credits" method="_on_close_requested"]
+[connection signal="focus_entered" from="Credits" to="." method="_on_credits_focused" binds= [true]]
+[connection signal="focus_exited" from="Credits" to="." method="_on_credits_focused" binds= [false]]
+[connection signal="meta_clicked" from="Credits/MarginContainer/RichTextLabel" to="Credits" method="_on_rich_text_label_meta_clicked"]
 [connection signal="mouse_entered" from="NoteSettings" to="NoteSettings" method="_on_note_settings_mouse_entered"]
 [connection signal="mouse_exited" from="NoteSettings" to="NoteSettings" method="_on_note_settings_mouse_exited"]
 [connection signal="value_changed" from="NoteSettings/NoteSettingsBox/HBoxContainer/NoteInterval" to="NoteSettings" method="_on_spin_box_value_changed" binds= ["interval"]]

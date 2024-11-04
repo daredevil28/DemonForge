@@ -7,6 +7,8 @@ extends MenuBar
 @onready var _speed_menu_panel : Window = $"../SpeedMenu"
 @onready var _song_properties_panel : Window = $"../SongProperties"
 @onready var _client_settings_panel : Window = $"../ClientSettings"
+@onready var _about_panel : Window = $"../About"
+@onready var _credits : Window = $"../Credits"
 
 
 ## When we press anything in the File menu bar.
@@ -67,7 +69,16 @@ func _on_tools_index_pressed(index: int) -> void:
 				_speed_menu_panel.visible = false
 
 
-#region Everything related to files
+func _on_about_index_pressed(index: int) -> void:
+	match index:
+		0:
+			OS.shell_open("https://github.com/daredevil28/DemonForge")
+		1:
+			_about_panel.popup()
+		2:
+			_credits.popup()
+
+
 ## When we select a file in the open dialog.
 func _on_open_dialog_file_selected(path : String) -> void:
 	# File > Open File
@@ -94,7 +105,6 @@ func _on_save_dialog_file_selected(path : String) -> void:
 	# File > Save File
 	Global.file_manager.project_file = path
 	Global.file_manager.save_project(path)
-#endregion
 
 
 func _shortcut_input(event: InputEvent) -> void:
