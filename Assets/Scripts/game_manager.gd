@@ -5,11 +5,12 @@ extends Node
 
 signal note_selected(note : Array[InternalNote])
 signal note_deselected()
+signal project_was_changed(value : bool)
 
 ## Audio player gets automatically set as soon as the audioplayer enters the scene tree.
 var audio_player : AudioStreamPlayer
 ## Name of the song.
-var song_name : String = ""
+var song_name : String = "New Song"
 ## Name of the artist.
 var artist_name : String = ""
 ## Difficulty of the song (0 for [code]easy[/code], 3 for [code]extreme[/code]).
@@ -24,8 +25,6 @@ var snapping_frequency : int = 4
 var audio_offset : float = 0
 ## Checks if another window is focused, this gets set from [code]ui_controller.gd[/code].
 var is_another_window_focused : bool = false #ui_controller.gd -> check_for_window_focused()
-## If any change has been made to the project then give warnings if it hasn't been saved yet.
-var project_changed : bool
 ## The current hovered note.
 var current_hovered_note : InternalNote
 ## The current selected notes.
@@ -113,6 +112,15 @@ var current_pos : float = 0 :
 			NoteManager.play_notes(note, current_pos)
 			note.queue_redraw()
 		Global.game_scene_node.queue_redraw()
+
+## If any change has been made to the project then give warnings if it hasn't been saved yet.
+var project_changed : bool :
+	get:
+		return project_changed
+	set(value):
+		if(value != project_changed):
+			project_changed = value
+			project_was_changed.emit(value)
 #endregion
 
 

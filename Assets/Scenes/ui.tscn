@@ -636,6 +636,7 @@ autowrap_mode = 2
 script = ExtResource("6_hsjtr")
 
 [node name="About" type="Window" parent="."]
+auto_translate_mode = 2
 title = "About"
 initial_position = 1
 size = Vector2i(600, 200)
@@ -683,6 +684,7 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="Credits" type="Window" parent="."]
+auto_translate_mode = 2
 title = "Credits"
 initial_position = 1
 size = Vector2i(1025, 200)

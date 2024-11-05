@@ -88,6 +88,9 @@ bus = &"SFX"
 [node name="FileManager" type="Node" parent="GameScene"]
 script = ExtResource("12_ejln6")
 
+[node name="AutosaveTimer" type="Timer" parent="GameScene/FileManager"]
+wait_time = 10.0
+
 [node name="NodeLanes" type="Node" parent="GameScene"]
 
 [node name="Markers" parent="GameScene/NodeLanes" groups=["NodeLanes"] instance=ExtResource("9_52jsw")]
@@ -128,3 +131,5 @@ script = ExtResource("17_tqqau")
 
 [node name="ui" parent="." instance=ExtResource("1_obr5d")]
 localize_numeral_system = false
+
+[connection signal="timeout" from="GameScene/FileManager/AutosaveTimer" to="GameScene/FileManager" method="_on_autosave_timer_timeout"]

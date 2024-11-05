@@ -36,6 +36,7 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	GameManager.project_was_changed.connect(start_autosave_timer,CONNECT_ONE_SHOT)
 	if(OS.get_name() == "Windows"):
 		custom_songs_folder = OS.get_data_dir().rstrip("Roaming") + "LocalLow/Garage 51/Drums Rock/CustomSongs"
 	load_settings()
@@ -70,8 +71,18 @@ func _ready() -> void:
 				player.set_stream(audio_file)
 
 
+func start_autosave_timer(time : float):
+	$AutosaveTimer.start()
+
+
+func _on_autosave_timer_timeout() -> void:
+	var autosavepath : String = "user://notes." + str(GameManager.song_name) + ".json.autosave"
+	autosavepath = autosavepath.replace(" ", "")
+	save_project(autosavepath.to_lower(), true)
+
+
 ## Save the project into a .json file
-func save_project(path : String) -> void:
+func save_project(path : String, autosave : bool = false) -> void:
 	# Set up general json file as a dictionary
 	
 	var json_data : Dictionary = {
@@ -136,8 +147,11 @@ func save_project(path : String) -> void:
 	file.store_string(json_string)
 	file.close()
 	
-	GameManager.project_changed = false
-	Global.notification_popup.play_notification(tr("NOTIFICATION_PROJECT_SAVED_{FILE}", "File is the .json file").format({FILE = str(file.get_path())}), 2)
+	if(autosave):
+		Global.notification_popup.play_notification(tr("NOTIFICATION_PROJECT_AUTOSAVED").format({FILE = str(file.get_path())}), 2)
+	else:
+		Global.notification_popup.play_notification(tr("NOTIFICATION_PROJECT_SAVED_{FILE}", "File is the .json file").format({FILE = str(file.get_path())}), 2)
+		GameManager.project_changed = false
 
 
 ## Convert an existing .csv file to json.
