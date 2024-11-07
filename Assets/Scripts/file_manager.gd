@@ -7,6 +7,8 @@ extends Node
 ## Emits if we found any errors.
 signal errors_found(errors : String)
 
+@onready var autosave_timer : Timer = $AutosaveTimer
+
 ## The location of the custom songs folder.
 var custom_songs_folder : String = ""
 
@@ -31,12 +33,20 @@ var song_file : String = "" :
 			GameManager.setup_audio(value)
 
 
+var current_autosave_time: int = 300 :
+	set(value):
+		current_autosave_time = value
+		if(GameManager.project_changed):
+			toggle_autosave_timer(true)
+
+
 func _init() -> void:
 	Global.file_manager = self
 
 
 func _ready() -> void:
-	GameManager.project_was_changed.connect(start_autosave_timer,CONNECT_ONE_SHOT)
+	GameManager.project_was_changed.connect(toggle_autosave_timer)
+	current_autosave_time = autosave_timer.wait_time
 	if(OS.get_name() == "Windows"):
 		custom_songs_folder = OS.get_data_dir().rstrip("Roaming") + "LocalLow/Garage 51/Drums Rock/CustomSongs"
 	load_settings()
@@ -71,8 +81,12 @@ func _ready() -> void:
 				player.set_stream(audio_file)
 
 
-func start_autosave_timer(time : float):
-	$AutosaveTimer.start()
+func toggle_autosave_timer(start_timer : bool):
+	var timer : Timer = $AutosaveTimer
+	if(start_timer):
+		timer.start(current_autosave_time)
+	else:
+		timer.stop()
 
 
 func _on_autosave_timer_timeout() -> void:
@@ -305,8 +319,8 @@ func save_settings() -> void:
 	config.set_value("settings","scrollSpeed",GameManager.scroll_speed)
 	config.set_value("settings","lineOffset",NoteManager.offset)
 	config.set_value("settings","fps",Engine.max_fps)
-	config.set_value("settings","sleep",OS.low_processor_usage_mode_sleep_usec)
 	config.set_value("settings","audioOffset",GameManager.audio_offset)
+	config.set_value("settings","autoSaveInterval",current_autosave_time)
 	config.set_value("settings", "metronomeEnabled",Global.metronome.metronome_enabled)
 	config.set_value("settings", "language",TranslationServer.get_locale())
 	
@@ -344,14 +358,14 @@ func load_settings() -> void:
 	# FPS
 	if(config.has_section_key(settings,"fps")):
 		Engine.max_fps = int(config.get_value(settings, "fps"))
-		
-	# Sleep between frames
-	if(config.has_section_key(settings,"sleep")):
-		OS.low_processor_usage_mode_sleep_usec = int(config.get_value(settings, "sleep"))
-	
+
 	# Audio offset
 	if(config.has_section_key(settings,"audioOffset")):
 		GameManager.audio_offset = float(config.get_value(settings, "audioOffset"))
+
+	# Auto save interval
+	if(config.has_section_key(settings,"autoSaveInterval")):
+		Global.file_manager.current_autosave_time = float(config.get_value(settings,"autoSaveInterval"))
 	
 	# If the metronome is enabled or disabled
 	if(config.has_section_key(settings,"metronomeEnabled")):

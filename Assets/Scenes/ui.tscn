@@ -13,7 +13,7 @@
 [ext_resource type="Script" path="res://Assets/Scripts/notification_manager.gd" id="7_bt6ck"]
 [ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/speed_menu.gd" id="8_6x7ja"]
 [ext_resource type="Script" path="res://Assets/Scripts/dialog_manager.gd" id="8_om2vj"]
-[ext_resource type="Script" path="res://Assets/Scripts/language_changer.gd" id="9_wuf8q"]
+[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/language_changer.gd" id="9_wuf8q"]
 [ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/song_time_label.gd" id="10_os2gm"]
 [ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/note_settings.gd" id="11_csf8i"]
 [ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/client_settings_panel.gd" id="11_vvsc6"]
@@ -499,6 +499,23 @@ tooltip_text = "WINDOW_CLIENT_SETTINGS_AUDIO_OFFSET_DESCRIPTION"
 min_value = -100000.0
 max_value = 100000.0
 
+[node name="AutoSaveIntervalContainer" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/AutoSaveIntervalContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "WINDOW_CLIENT_SETTINGS_AUTO_SAVE_INTERVAL"
+
+[node name="AutoSaveInterval" type="SpinBox" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/AutoSaveIntervalContainer" groups=["ClientSettings"]]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+tooltip_text = "WINDOW_CLIENT_SETTINGS_AUTO_SAVE_INTERVAL_DESCRIPTION"
+min_value = -100000.0
+max_value = 100000.0
+
 [node name="LanguageSelection" type="HBoxContainer" parent="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
@@ -921,6 +938,7 @@ script = ExtResource("8_om2vj")
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/OffsetContainer/Offset" to="ClientSettings" method="_on_offset_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/MaxFPSContainer/MaxFPS" to="ClientSettings" method="_on_max_fps_value_changed"]
 [connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/AudioOffsetContainer/AudioOffset" to="ClientSettings" method="_on_audio_offset_value_changed"]
+[connection signal="value_changed" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/AutoSaveIntervalContainer/AutoSaveInterval" to="ClientSettings" method="_on_auto_save_interval_value_changed"]
 [connection signal="item_selected" from="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/LanguageSelection/Language" to="ClientSettings/ColorRect/HBoxContainer/ContainerRight/VBoxContainer/LanguageSelection/Language" method="_on_item_selected"]
 [connection signal="about_to_popup" from="ExportPanel" to="ExportPanel" method="_on_export_panel_about_to_popup"]
 [connection signal="close_requested" from="ExportPanel" to="ExportPanel" method="_on_export_panel_close_requested"]

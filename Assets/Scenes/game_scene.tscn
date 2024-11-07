@@ -27,7 +27,6 @@ z_index = -1
 script = ExtResource("1_avsu0")
 
 [node name="SongAudio" type="AudioStreamPlayer" parent="GameScene"]
-volume_db = -6.0
 bus = &"Music"
 script = ExtResource("2_w8v26")
 
@@ -89,7 +88,7 @@ bus = &"SFX"
 script = ExtResource("12_ejln6")
 
 [node name="AutosaveTimer" type="Timer" parent="GameScene/FileManager"]
-wait_time = 10.0
+wait_time = 300.0
 
 [node name="NodeLanes" type="Node" parent="GameScene"]
 

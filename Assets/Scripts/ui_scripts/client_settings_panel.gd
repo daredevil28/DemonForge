@@ -1,13 +1,21 @@
 extends Window
 
-#region Client settings panel
+
 ## When we are about to open the client settings, set the proper values.
 func _on_client_settings_about_to_popup() -> void:
 	# ClientSettings
-	Global.client_settings[0].value = GameManager.scroll_speed
-	Global.client_settings[1].value = NoteManager.offset
-	Global.client_settings[2].value = Engine.max_fps
-	Global.client_settings[3].value = GameManager.audio_offset
+	for setting : Node in get_tree().get_nodes_in_group("ClientSettings"):
+		match setting.name:
+			"ScrollSpeed":
+				setting.value = GameManager.scroll_speed
+			"Offset":
+				setting.value = NoteManager.offset
+			"MaxFPS":
+				setting.value = Engine.max_fps
+			"AudioOffset":
+				setting.value = GameManager.audio_offset
+			"AutoSaveInterval":
+				setting.value = Global.file_manager.current_autosave_time
 
 
 ## Close the client settings.
@@ -46,4 +54,7 @@ func _on_offset_value_changed(value : float) -> void:
 ## Change the audio offset.
 func _on_audio_offset_value_changed(value: float) -> void:
 	GameManager.audio_offset = value
-#endregion
+
+## Change the auto save interval
+func _on_auto_save_interval_value_changed(value: float) -> void:
+	Global.file_manager.current_autosave_time = value
