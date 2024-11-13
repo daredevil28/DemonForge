@@ -228,6 +228,7 @@ func add_new_note(time : float, color : int) -> InternalNote:
 func remove_note_at_time(time : float, color : int) -> void:
 	# Remove a note from the chart at the specified time
 	GameManager.project_changed = true
+	
 	var array : Array
 	# If it's a marker then use the marker_nodes array, else the note_nodes array will be used
 	if(color == 7):
@@ -235,12 +236,14 @@ func remove_note_at_time(time : float, color : int) -> void:
 	else:
 		array = note_nodes
 	
-	for i : int in array.size():
+	for note : InternalNote in array:
 		# If we find an exact time and color match then remove the note
-		if(array[i].time == time && array[i].color == color):
+		if(is_equal_approx(note.time,time) && note.color == color):
 			print("Deleting note at: " + str(time) + " color: " + str(color))
-			array[i].queue_free()
-			array.remove_at(i)
+			if(note.selected):
+				GameManager.deselect_note(note)
+			note.queue_free()
+			array.erase(note)
 			# Redraw the scene for if we deleted a marker note
 			Global.game_scene_node.queue_redraw()
 			break;
@@ -307,13 +310,21 @@ func sort_ascending_time(a : InternalNote, b : InternalNote) -> bool:
 	return(a.time < b.time)
 
 
-func get_lowest_note_time_in_array(note_array : Array) -> InternalNote:
-	var lowest_note : InternalNote = note_array[0]
-	for note : InternalNote in note_array:
+func get_lowest_note_time_in_array(note_array : Array) -> Dictionary:
+	var lowest_note : Dictionary = note_array[0]
+	for note : Dictionary in note_array:
 		if(note.time < lowest_note.time):
 			lowest_note = note
 	return lowest_note
-	
+
+
+func get_lowest_note_time_in_dic(note_dic : Dictionary) -> InternalNote:
+	var lowest_note : InternalNote = note_dic[0]
+	for note : InternalNote in note_dic:
+		if(note.time < lowest_note.time):
+			lowest_note = note
+	return lowest_note
+
 
 ## Removes all the [param note_nodes] and [param marker_nodes].
 func clear_all_notes() -> void:
