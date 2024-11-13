@@ -3,6 +3,7 @@ extends Node2D
 func _ready() -> void:
 	queue_redraw()
 	get_tree().get_root().size_changed.connect(queue_redraw)
+	NoteManager.offset_changed.connect(queue_redraw)
 	
 func _draw() -> void:
 	# The judgement line

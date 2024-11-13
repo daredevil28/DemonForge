@@ -3,6 +3,8 @@ extends Node
 ##
 ## Does everything related to finding notes and moving the notes.
 
+signal offset_changed()
+
 ## Array containing all the different notes.
 var note_nodes : Array[Note] = []
 ## Array containing all the different markers.
@@ -16,7 +18,7 @@ var offset : int = 200 :
 	#Whenever offset changes, redraw the scene
 	set(value):
 		offset = value
-		Global.game_scene_node.queue_redraw()
+		offset_changed.emit()
 ## Gets the note lane group as an array. For resetting size whenever window is resized.
 @onready var note_lanes : Array = get_tree().get_nodes_in_group("NodeLanes")
 
