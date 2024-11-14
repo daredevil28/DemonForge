@@ -26,6 +26,7 @@ var offset : int = 200 :
 func _ready() -> void:
 	# Reset the notes whenever the window is resized
 	get_viewport().size_changed.connect(reset_note_location)
+	get_viewport().size_changed.connect(resize_notes)
 	# Reset width of colliders
 	for i : Node in note_lanes:
 		reset_collision_location(i, i.note_color)
@@ -139,6 +140,18 @@ func reset_note_location() -> void:
 	Global.game_scene_node.queue_redraw()
 
 
+func resize_notes() -> void:
+	var size_change : float = get_viewport().get_visible_rect().size.y / 720
+	var new_size : Vector2 = Vector2(size_change,size_change)
+	
+	for note : InternalNote in note_nodes:
+		note.scale = new_size
+	for marker : Marker in marker_nodes:
+		marker.scale = new_size
+	GameManager.cursor_note.scale = new_size
+		
+
+
 ## Returns the y position depending on [param color] and sets the color of the note.
 func reset_note_y(instance : Node2D, color : int) -> float:
 	# Reset the y pos of the note and adjust the color of the note
@@ -218,6 +231,9 @@ func add_new_note(time : float, color : int) -> InternalNote:
 	add_child(instance)
 	
 	instance.position.y = reset_note_y(instance, color)
+	var size_change : float = get_viewport().get_visible_rect().size.y / 720
+	var new_size : Vector2 = Vector2(size_change,size_change)
+	instance.scale = new_size
 	# Reset the X pos of the note
 	GameManager.current_pos = GameManager.current_pos
 	
