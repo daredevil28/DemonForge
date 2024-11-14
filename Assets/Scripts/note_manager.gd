@@ -86,20 +86,17 @@ func initialise_notes(json_notes : Array) -> void:
 	for i : int in json_notes.size():
 		# Make a new note dictionary, instantiate it and add it to NoteManager as a child
 		var note : Dictionary = json_notes[i]
-		var instance : Note = note_scene.instantiate()
+		var instance : Note = add_new_note(note["time"], note["color"], false)
 		add_child(instance)
 		
 		#Set up the properties
-		instance.time = note["time"]
-		instance.color = note["color"]
 		instance.interval = note["interval"]
 		if(note.has("double_time")):
 			instance.double_time = note["double_time"]
-		instance.position.y = reset_note_y(instance, note["color"])
 		note_nodes.append(instance)
 		
 	GameManager.current_pos = 0
-	
+	GameManager.project_changed = false
 	# If the array is not empty then use the last note as the audio length temporarily
 	if(!note_nodes.is_empty()):
 		GameManager.audio_length = note_nodes.back().time
@@ -111,14 +108,13 @@ func initialise_marker(json_markers : Array) -> void:
 	# Instantiate all the markers (Similar to initialise_notes but for markers)
 	for i : int in json_markers.size():
 		var marker : Dictionary = json_markers[i]
-		var instance : Marker = marker_scene.instantiate()
+		var instance : Marker = add_new_note(marker["time"], 7, false)
 		add_child(instance)
 		
-		instance.time = marker["time"]
 		instance.bpm = marker["bpm"]
 		instance.snapping = marker["snapping"]
-		instance.position.y = get_note_lane_y(7)
 		marker_nodes.append(instance)
+	GameManager.project_changed = false
 
 
 ## Uses [param note_nodes], [param marker_nodes] and [param note_lanes] and resets their locations.
@@ -208,7 +204,7 @@ func get_note_lane_y(lane : int) -> float:
 
 
 ## Adds a new note. Returns [InternalNote].
-func add_new_note(time : float, color : int) -> InternalNote:
+func add_new_note(time : float, color : int, reset_x : bool = true) -> InternalNote:
 	# Add a new note to the chart
 	GameManager.project_changed = true
 	var instance : InternalNote
@@ -235,7 +231,8 @@ func add_new_note(time : float, color : int) -> InternalNote:
 	var new_size : Vector2 = Vector2(size_change,size_change)
 	instance.scale = new_size
 	# Reset the X pos of the note
-	GameManager.current_pos = GameManager.current_pos
+	if(reset_x):
+		GameManager.current_pos = GameManager.current_pos
 	
 	return instance
 
