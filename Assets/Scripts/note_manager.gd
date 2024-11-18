@@ -93,7 +93,6 @@ func initialise_notes(json_notes : Array) -> void:
 		instance.interval = note["interval"]
 		if(note.has("double_time")):
 			instance.double_time = note["double_time"]
-		note_nodes.append(instance)
 		
 	GameManager.current_pos = 0
 	GameManager.project_changed = false
@@ -113,7 +112,6 @@ func initialise_marker(json_markers : Array) -> void:
 		
 		instance.bpm = marker["bpm"]
 		instance.snapping = marker["snapping"]
-		marker_nodes.append(instance)
 	GameManager.project_changed = false
 
 
@@ -273,7 +271,7 @@ func get_note_at_time(time : float, color : int) -> Note:
 	
 	for i : InternalNote in array:
 		# If we find an exact time and color match then return the note
-		if(i.time == time && i.color == color):
+		if(is_equal_approx(i.time, time) && i.color == color):
 			return i
 	return null
 
@@ -290,12 +288,12 @@ func check_if_note_exists(time : float, color : int) -> bool:
 	# If the note is a marker
 	if(color == 7):
 		for i : int in marker_nodes.size():
-			if(marker_nodes[i].time == time && marker_nodes[i].color == color):
+			if(is_equal_approx(marker_nodes[i].time, time) && marker_nodes[i].color == color):
 				return true
 		return false
 	# The note is a note
 	for i : int in note_nodes.size():
-		if(note_nodes[i].time == time && note_nodes[i].color == color):
+		if(is_equal_approx(note_nodes[i].time, time) && note_nodes[i].color == color):
 			return true
 	return false
 
@@ -331,12 +329,23 @@ func get_lowest_note_time_in_array(note_array : Array) -> Dictionary:
 	return lowest_note
 
 
-func get_lowest_note_time_in_dic(note_dic : Dictionary) -> InternalNote:
-	var lowest_note : InternalNote = note_dic[0]
-	for note : InternalNote in note_dic:
-		if(note.time < lowest_note.time):
-			lowest_note = note
-	return lowest_note
+func get_highest_note_time_in_array(note_array : Array) -> Dictionary:
+	var highest_note : Dictionary = note_array[0]
+	for note : Dictionary in note_array:
+		if(note.time > highest_note.time):
+			highest_note = note
+	return highest_note
+
+
+func get_notes_in_range(start_time : float, end_time : float) -> Array[InternalNote]:
+	var note_array : Array[InternalNote] = []
+	for note : InternalNote in note_nodes:
+		if(
+			(is_equal_approx(note.time, start_time) || note.time >= start_time)
+			&&
+			(is_equal_approx(note.time,end_time) || note.time <= end_time)):
+			note_array.append(note)
+	return note_array
 
 
 ## Removes all the [param note_nodes] and [param marker_nodes].

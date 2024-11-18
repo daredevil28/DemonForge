@@ -289,15 +289,14 @@ func _shortcut_input(event: InputEvent) -> void:
 		current_copied_notes.clear()
 		for note : InternalNote in current_selected_notes:
 			var copy_note : Dictionary
+			copy_note.time = note.time
+			copy_note.color = note.color
 			if(note.color == 7):
 				# Default values for markers
 				copy_note.bpm = note.bpm
 				copy_note.snapping = note.snapping
-				copy_note.time = note.time
 				current_copied_notes.append(copy_note)
 			else:
-				copy_note.color = note.color
-				copy_note.time = note.time
 				copy_note.interval = note.interval
 				copy_note.double_time = note.double_time
 				current_copied_notes.append(copy_note)
@@ -313,8 +312,13 @@ func _shortcut_input(event: InputEvent) -> void:
 			
 			# Get the time positiion at the mouse. This is where it pastes the new notes.
 			var mouse_pos : Dictionary = _get_snapped_screen_and_time_pos(get_viewport().get_mouse_position())
+			var lowest_note : Dictionary = NoteManager.get_lowest_note_time_in_array(current_copied_notes)
+			var highest_note : Dictionary = NoteManager.get_highest_note_time_in_array(current_copied_notes)
+			
 			# The delta of the lowest note. This gets added to the new notes.
-			var lowest_note_delta : float = mouse_pos["time_pos"] - NoteManager.get_lowest_note_time_in_array(current_copied_notes).time
+			var lowest_note_delta : float = mouse_pos["time_pos"] - lowest_note.time
+			
+			var existing_notes_array : Array[InternalNote] = NoteManager.get_notes_in_range(lowest_note.time + lowest_note_delta, highest_note.time + lowest_note_delta)
 			
 			for note : Dictionary in current_copied_notes:
 				
@@ -332,14 +336,22 @@ func _shortcut_input(event: InputEvent) -> void:
 				var new_action : NoteAction = make_note_actions(Action.ActionName.NOTEADD,new_note)
 				
 				# If the array is bigger than 1 then add it to new_multi_action.
-				if(current_copied_notes.size() > 1):
+				if(current_copied_notes.size() > 1 || existing_notes_array.size() > 0):
 					new_multi_action.actions.append(new_action)
 				else:
 					add_undo_action(new_action)
 				
 				# Select the new note
 				select_note(new_note)
-			
+				
+			if(existing_notes_array.size() > 0):
+				for note : InternalNote in existing_notes_array:
+					
+					var new_delete_action : NoteAction = make_note_actions(Action.ActionName.NOTEREMOVE,note)
+					new_multi_action.actions.append(new_delete_action)
+					
+					NoteManager.remove_note_at_time(note.time,note.color)
+				
 			if(current_copied_notes.size() > 1):
 				add_undo_action(new_multi_action)
 				
