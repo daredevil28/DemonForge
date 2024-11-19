@@ -204,7 +204,7 @@ func _input(event : InputEvent) -> void:
 						
 						add_undo_action(new_action)
 						
-						NoteManager.remove_note_at_time(current_hovered_note.time, current_hovered_note.color)
+						NoteManager.remove_note_at_time(current_hovered_note)
 						current_hovered_note = null
 		
 		if(!is_another_window_focused):
@@ -244,19 +244,21 @@ func _input(event : InputEvent) -> void:
 		if(event.is_action_pressed("Delete")):
 			if(!current_selected_notes.is_empty()):
 				var new_multi_action : MultiAction = MultiAction.new(Action.ActionName.MULTIACTION)
-					
-				for note : InternalNote in current_selected_notes:
-					var new_action : NoteAction = make_note_actions(NoteAction.ActionName.NOTEREMOVE,note)
+				
+				var currently_selected_notes_size : int = current_selected_notes.size()
+				
+				for i : int in currently_selected_notes_size:
+					var new_action : NoteAction = make_note_actions(NoteAction.ActionName.NOTEREMOVE,current_selected_notes[0])
 						
 					# If the array is bigger than 1 then add it to new_multi_action	
-					if(current_selected_notes.size() > 1):
+					if(currently_selected_notes_size > 1):
 						new_multi_action.actions.append(new_action)
 					else:
 						add_undo_action(new_action)
 						
-					NoteManager.remove_note_at_time(note.time,note.color)
+					NoteManager.remove_note_at_time(current_selected_notes[0])
 					
-				if(current_selected_notes.size() > 1):
+				if(currently_selected_notes_size > 1):
 					add_undo_action(new_multi_action)
 					
 				current_selected_notes.clear()
@@ -350,7 +352,7 @@ func _shortcut_input(event: InputEvent) -> void:
 					var new_delete_action : NoteAction = make_note_actions(Action.ActionName.NOTEREMOVE,note)
 					new_multi_action.actions.append(new_delete_action)
 					
-					NoteManager.remove_note_at_time(note.time,note.color)
+					NoteManager.remove_note_at_time(note)
 				
 			if(current_copied_notes.size() > 1):
 				add_undo_action(new_multi_action)
@@ -502,7 +504,7 @@ func run_action(action : Action, add_to_undo_redo : bool = true) -> Action:
 				new_action.snapping = old_note.snapping
 			
 			# Run reverse of action
-			NoteManager.remove_note_at_time(action.time, action.color)
+			NoteManager.remove_note_at_time(old_note)
 			Global.notification_popup.play_notification(tr("NOTIFICATION_{ACTION}_NOTE_AT_{TIME}","Use {ACTION} for undo/redo and {TIME} for time")
 			.format({ACTION = tr(str(Action.ActionType.keys()[action.action_type])),TIME = str(snapped(action.time,0.01))}), 1)
 			

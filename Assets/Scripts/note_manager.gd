@@ -236,32 +236,29 @@ func add_new_note(time : float, color : int, reset_x : bool = true) -> InternalN
 
 
 ## Removes the note using the [param time] and [param color].
-func remove_note_at_time(time : float, color : int) -> void:
+func remove_note_at_time(note : InternalNote) -> void:
 	# Remove a note from the chart at the specified time
 	GameManager.project_changed = true
 	
 	var array : Array
 	# If it's a marker then use the marker_nodes array, else the note_nodes array will be used
-	if(color == 7):
+	if(note.color == 7):
 		array = marker_nodes
 	else:
 		array = note_nodes
 	
-	for note : InternalNote in array:
-		# If we find an exact time and color match then remove the note
-		if(is_equal_approx(note.time,time) && note.color == color):
-			print("Deleting note at: " + str(time) + " color: " + str(color))
-			if(note.selected):
-				GameManager.deselect_note(note)
-			note.queue_free()
-			array.erase(note)
-			# Redraw the scene for if we deleted a marker note
-			Global.game_scene_node.queue_redraw()
-			break;
+	# If we find an exact time and color match then remove the note
+	print("Deleting note at: " + str(note.time) + " color: " + str(note.color))
+	if(note.selected):
+		GameManager.deselect_note(note)
+	note.queue_free()
+	array.erase(note)
+	# Redraw the scene for if we deleted a marker note
+	Global.game_scene_node.queue_redraw()
 
 
 ## Gets the specific note at [param time] and [param color].
-func get_note_at_time(time : float, color : int) -> Note:
+func get_note_at_time(time : float, color : int) -> InternalNote:
 	var array : Array
 	
 	if(color == 7):
