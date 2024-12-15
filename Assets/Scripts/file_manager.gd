@@ -84,15 +84,35 @@ func _ready() -> void:
 func toggle_autosave_timer(start_timer : bool):
 	var timer : Timer = $AutosaveTimer
 	if(start_timer):
-		timer.start(current_autosave_time)
+		timer.start(current_autosave_time) # -> _on_autosave_timer_timeout
 	else:
 		timer.stop()
 
 
 func _on_autosave_timer_timeout() -> void:
-	var autosavepath : String = "user://notes." + str(GameManager.song_name) + ".json.autosave"
-	autosavepath = autosavepath.replace(" ", "")
-	save_project(autosavepath.to_lower(), true)
+	var current_autosave : int = 0
+	var config : ConfigFile = ConfigFile.new()
+	
+	# Check for errors
+	var err : Error = config.load("user://settings.cfg")
+	if err != OK:
+		printerr(err)
+		return
+		
+	if(config.has_section_key("autosave","currentAutosave")):
+		current_autosave = int(config.get_value("autosave","currentAutosave"))
+	else:
+		config.set_value("autosave","currentAutosave",0)
+	current_autosave += 1
+	
+	if(current_autosave == 6):
+		current_autosave = 0
+		
+	var autosave_path : String = "user://autosave" + str(current_autosave) + ".json"
+	
+	save_project(autosave_path,true)
+	config.set_value("autosave","currentAutosave",current_autosave)
+	config.save("user://settings.cfg")
 
 
 ## Save the project into a .json file
