@@ -188,6 +188,25 @@ func save_project(path : String, autosave : bool = false) -> void:
 		GameManager.project_changed = false
 
 
+func open_project(path : String) -> void:
+	# Check if path contains either .json or .csv
+	var regex : RegEx = RegEx.new()
+	regex.compile("\\.(json|csv)")
+	var result : RegExMatch = regex.search(path)
+	print("Opening file: " + path)
+	Global.notification_popup.play_notification(tr("POPUP_LOADING_{FILE}","{FILE} is the file that is being opend") + path, 2)
+	match result.get_string():
+		".json":
+			Global.file_manager.project_file = path
+			print(".json")
+			var json_file : Dictionary = JSON.parse_string(FileAccess.get_file_as_string(path))
+			GameManager.setup_project(json_file)
+		".csv":
+			print(".csv")
+			GameManager.clean_project()
+			NoteManager.initialise_notes(Global.file_manager.csv_to_json(path))
+
+
 ## Convert an existing .csv file to json.
 ## Generally not recommended for actually editing the chart (because of floating point inaccuracies) but still a possiblity
 func csv_to_json(csv_file : String) -> Array:
@@ -330,6 +349,11 @@ func save_settings() -> void:
 	# Initialise config file
 	var config : ConfigFile = ConfigFile.new()
 	
+	# Check for errors
+	var err : Error = config.load("user://settings.cfg")
+	if err != OK:
+		printerr(err)
+	
 	# Set all the variables into the config file
 	config.set_value("volume","master",Global.volume_sliders[0].value)
 	config.set_value("volume","music",Global.volume_sliders[1].value)
@@ -356,6 +380,7 @@ func load_settings() -> void:
 	var err : Error = config.load("user://settings.cfg")
 	if err != OK:
 		printerr(err)
+		save_settings()
 		return
 	
 	# Set each volume setting

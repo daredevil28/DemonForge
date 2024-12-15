@@ -82,22 +82,7 @@ func _on_about_index_pressed(index: int) -> void:
 ## When we select a file in the open dialog.
 func _on_open_dialog_file_selected(path : String) -> void:
 	# File > Open File
-	# Check if path contains either .json or .csv
-	var regex : RegEx = RegEx.new()
-	regex.compile("\\.(json|csv)")
-	var result : RegExMatch = regex.search(path)
-	print("Opening file: " + path)
-	Global.notification_popup.play_notification(tr("POPUP_LOADING_{FILE}","{FILE} is the file that is being opend") + path, 2)
-	match result.get_string():
-		".json":
-			Global.file_manager.project_file = path
-			print(".json")
-			var json_file : Dictionary = JSON.parse_string(FileAccess.get_file_as_string(path))
-			GameManager.setup_project(json_file)
-		".csv":
-			print(".csv")
-			GameManager.clean_project()
-			NoteManager.initialise_notes(Global.file_manager.csv_to_json(path))
+	Global.file_manager.open_project(path)
 
 
 ## When we select a file in the save dialog.

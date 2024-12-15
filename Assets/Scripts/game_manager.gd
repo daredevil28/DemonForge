@@ -119,6 +119,8 @@ var project_changed : bool :
 		return project_changed
 	set(value):
 		if(value != project_changed):
+			var file : FileAccess = FileAccess.open("user://closedproperly",FileAccess.WRITE)
+			file.close()
 			project_changed = value
 			project_was_changed.emit(value)
 #endregion
@@ -128,7 +130,27 @@ func _ready() -> void:
 	# Setting up translation strings for auto generation
 	tr("UNDO")
 	tr("REDO")
+	get_tree().current_scene.ready.connect(_on_scenetree_ready)
+
+
+func _on_scenetree_ready() -> void:
+	if FileAccess.file_exists("user://closedproperly"):
+		var current_autosave : int = 0
+		var config : ConfigFile = ConfigFile.new()
 	
+		# Check for errors
+		var err : Error = config.load("user://settings.cfg")
+		if err != OK:
+			printerr(err)
+			return
+			
+		if(config.has_section_key("autosave","currentAutosave")):
+			current_autosave = int(config.get_value("autosave","currentAutosave"))
+			
+			var autosave_path : String = "user://autosave" + str(current_autosave) + ".json"
+		
+			Global.popup_dialog.play_dialog(tr("WINDOW_DIALOG_BADLYCLOSED_TITLE"),tr("WINDOW_DIALOG_BADLYCLOSED_TEXT"),Global.file_manager.open_project.bind(autosave_path))
+
 
 func _process(_delta : float) -> void:
 	if(audio_player.playing):
@@ -377,10 +399,13 @@ func _notification(what : int) -> void:
 	if(what == NOTIFICATION_WM_CLOSE_REQUEST):
 		Global.file_manager.save_settings()
 		if(project_changed):
-			Global.popup_dialog.play_dialog(tr("WINDOW_DIALOG_NOTSAVED_TITLE"),tr("WINDOW_DIALOG_NOTSAVED_EXIT"),get_tree().quit)
+			Global.popup_dialog.play_dialog(tr("WINDOW_DIALOG_NOTSAVED_TITLE"),tr("WINDOW_DIALOG_NOTSAVED_EXIT"),_quit_game)
 		else:
-			get_tree().quit()
+			_quit_game()
 
+func _quit_game() -> void:
+	DirAccess.remove_absolute("user://closedproperly")
+	get_tree().quit()
 
 #region Project setup
 ## Set up a project using the provided [param jsonString]
