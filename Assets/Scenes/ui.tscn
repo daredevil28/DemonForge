@@ -88,7 +88,7 @@ use_native_dialog = true
 
 [node name="SaveDialog" type="FileDialog" parent="."]
 auto_translate_mode = 2
-size = Vector2i(452, 175)
+size = Vector2i(452, 180)
 auto_translate = false
 dialog_hide_on_ok = true
 access = 2
@@ -904,6 +904,7 @@ size = Vector2i(533, 100)
 unresizable = true
 auto_translate = false
 dialog_text = "Project has not been saved yet, are you sure you want to continue?"
+dialog_autowrap = true
 script = ExtResource("8_om2vj")
 
 [connection signal="file_selected" from="OpenDialog" to="MenuBar" method="_on_open_dialog_file_selected"]

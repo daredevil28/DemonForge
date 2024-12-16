@@ -29,7 +29,7 @@ func _on_file_index_pressed(index : int) -> void:
 				_open_dialog.popup()# > _on_open_dialog_file_selected()
 		2:
 			print("Save File")
-			if(Global.file_manager.project_file == ""):
+			if(Global.file_manager.project_file == "" || "user://" in Global.file_manager.project_file):
 				_save_dialog.popup()# > _on_save_dialog_file_selected()
 			else:
 				Global.file_manager.save_project(Global.file_manager.project_file)

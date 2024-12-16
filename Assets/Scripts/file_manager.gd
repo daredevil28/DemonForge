@@ -33,7 +33,7 @@ var song_file : String = "" :
 			GameManager.setup_audio(value)
 
 
-var current_autosave_time: int = 300 :
+var current_autosave_time: float = 300 :
 	set(value):
 		current_autosave_time = value
 		if(GameManager.project_changed):
@@ -81,7 +81,7 @@ func _ready() -> void:
 				player.set_stream(audio_file)
 
 
-func toggle_autosave_timer(start_timer : bool):
+func toggle_autosave_timer(start_timer : bool) -> void:
 	var timer : Timer = $AutosaveTimer
 	if(start_timer):
 		timer.start(current_autosave_time) # -> _on_autosave_timer_timeout
@@ -105,7 +105,7 @@ func _on_autosave_timer_timeout() -> void:
 		config.set_value("autosave","currentAutosave",0)
 	current_autosave += 1
 	
-	if(current_autosave == 6):
+	if(current_autosave >= 6):
 		current_autosave = 0
 		
 	var autosave_path : String = "user://autosave" + str(current_autosave) + ".json"
@@ -173,17 +173,30 @@ func save_project(path : String, autosave : bool = false) -> void:
 	var result : RegExMatch = regex.search(path)
 	
 	var file : FileAccess
+	
 	if(result == null || result.get_string() != ".json"):
 		file = FileAccess.open(path + ".json", FileAccess.WRITE)
 	else:
 		file = FileAccess.open(path, FileAccess.WRITE)
-
+	
+	var config : ConfigFile = ConfigFile.new()
+	
+	# Check for errors
+	var err : Error = config.load("user://settings.cfg")
+	if err != OK:
+		printerr(err)
+	else:
+		config.set_value("autosave","currentAutosave",7)
+		config.set_value("autosave","lastSave",file.get_path())
+		config.save("user://settings.cfg")
+		
 	file.store_string(json_string)
 	file.close()
 	
 	if(autosave):
 		Global.notification_popup.play_notification(tr("NOTIFICATION_PROJECT_AUTOSAVED").format({FILE = str(file.get_path())}), 2)
 	else:
+		
 		Global.notification_popup.play_notification(tr("NOTIFICATION_PROJECT_SAVED_{FILE}", "File is the .json file").format({FILE = str(file.get_path())}), 2)
 		GameManager.project_changed = false
 

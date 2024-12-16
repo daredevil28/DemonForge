@@ -137,7 +137,7 @@ func _on_scenetree_ready() -> void:
 	if FileAccess.file_exists("user://closedproperly"):
 		var current_autosave : int = 0
 		var config : ConfigFile = ConfigFile.new()
-	
+		
 		# Check for errors
 		var err : Error = config.load("user://settings.cfg")
 		if err != OK:
@@ -147,9 +147,15 @@ func _on_scenetree_ready() -> void:
 		if(config.has_section_key("autosave","currentAutosave")):
 			current_autosave = int(config.get_value("autosave","currentAutosave"))
 			
-			var autosave_path : String = "user://autosave" + str(current_autosave) + ".json"
-		
-			Global.popup_dialog.play_dialog(tr("WINDOW_DIALOG_BADLYCLOSED_TITLE"),tr("WINDOW_DIALOG_BADLYCLOSED_TEXT"),Global.file_manager.open_project.bind(autosave_path))
+			# The last save was not an auto save so ask to load a normal save
+			if current_autosave == 7:
+				if(config.has_section_key("autosave","lastSave")):
+					var last_save : String = str(config.get_value("autosave","lastSave"))
+					Global.popup_dialog.play_dialog(tr("WINDOW_DIALOG_BADLYCLOSED_TITLE"),tr("WINDOW_DIALOG_BADLYCLOSED_TEXT") + " " + last_save,Global.file_manager.open_project.bind(last_save))
+			else:
+				var autosave_path : String = "user://autosave" + str(current_autosave) + ".json"
+				
+				Global.popup_dialog.play_dialog(tr("WINDOW_DIALOG_BADLYCLOSED_TITLE"),tr("WINDOW_DIALOG_BADLYCLOSED_TEXT") + " " + autosave_path,Global.file_manager.open_project.bind(autosave_path))
 
 
 func _process(_delta : float) -> void:

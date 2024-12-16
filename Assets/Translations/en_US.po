@@ -54,6 +54,18 @@ msgid "MENUBAR_TOOLS_SPEEDADJUST"
 msgstr "Adjust Song Speed"
 
 #: Assets/Scenes/ui.tscn
+msgid "MENUBAR_ABOUT_GITREPO"
+msgstr "Git repo"
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_ABOUT_INFO"
+msgstr "About this program"
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_ABOUT_CREDITS"
+msgstr "Credits"
+
+#: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES"
 msgstr "Song Properties"
 
@@ -199,6 +211,14 @@ msgid "WINDOW_CLIENT_SETTINGS_AUDIO_OFFSET_DESCRIPTION"
 msgstr "The audio offset in miliseconds."
 
 #: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_AUTO_SAVE_INTERVAL"
+msgstr "Auto save interval"
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_AUTO_SAVE_INTERVAL_DESCRIPTION"
+msgstr "The time in seconds between autosaves."
+
+#: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_LANGUAGE"
 msgstr "Language"
 
@@ -276,37 +296,6 @@ msgstr "Snapping"
 msgid "MARKER_SETTINGS_SNAPPING_DESCRIPTION"
 msgstr "The amount of lines between each beat."
 
-#: Assets/Scripts/ui_controller.gd Assets/Scripts/game_manager.gd
-msgid "WINDOW_DIALOG_NOTSAVED_TITLE"
-msgstr "Not saved!"
-
-#: Assets/Scripts/ui_controller.gd Assets/Scripts/game_manager.gd
-msgid "WINDOW_DIALOG_NOTSAVED_EXIT"
-msgstr "The project has not been saved! Are you sure you want to exit?"
-
-#: Assets/Scripts/ui_controller.gd
-msgid "WINDOW_DIALOG_NOTSAVED_CONTINUE"
-msgstr "The project has not been saved! Are you sure you want to continue?"
-
-#: Assets/Scripts/ui_controller.gd
-msgid "WINDOW_DIALOG_DESTRUCTIVE_TITLE"
-msgstr "DESTRUCTIVE ACTION!"
-
-#: Assets/Scripts/ui_controller.gd
-msgid "WINDOW_DIALOG_WARNING_SNAP_NOTES"
-msgstr ""
-"The notes will be snapped to each tick. This can not be un-done. Are you "
-"sure you want to continue?"
-
-#: Assets/Scripts/ui_controller.gd
-msgctxt "{FILE} is the file that is being opend"
-msgid "POPUP_LOADING_{FILE}"
-msgstr "Loading file {FILE}"
-
-#: Assets/Scripts/ui_controller.gd
-msgid "-"
-msgstr ""
-
 #: Assets/Scripts/game_manager.gd
 msgid "UNDO"
 msgstr "Undo"
@@ -314,6 +303,16 @@ msgstr "Undo"
 #: Assets/Scripts/game_manager.gd
 msgid "REDO"
 msgstr "Redo"
+
+#: Assets/Scripts/game_manager.gd
+msgid "WINDOW_DIALOG_BADLYCLOSED_TITLE"
+msgstr "DemonForge was not properly closed!"
+
+#: Assets/Scripts/game_manager.gd
+msgid "WINDOW_DIALOG_BADLYCLOSED_TEXT"
+msgstr ""
+"DemonForge has not been properly closed since the last time it started. Do "
+"you want to load the last autosave?"
 
 #: Assets/Scripts/game_manager.gd
 msgid "NOTIFICATION_DELETE_MULTIPLE_NOTES"
@@ -326,6 +325,14 @@ msgstr "Copied notes"
 #: Assets/Scripts/game_manager.gd
 msgid "NOTIFICATION_PASTED_NOTES"
 msgstr "Pasted notes"
+
+#: Assets/Scripts/game_manager.gd
+msgid "WINDOW_DIALOG_NOTSAVED_TITLE"
+msgstr "Not saved!"
+
+#: Assets/Scripts/game_manager.gd
+msgid "WINDOW_DIALOG_NOTSAVED_EXIT"
+msgstr "The project has not been saved! Are you sure you want to exit?"
 
 #: Assets/Scripts/game_manager.gd
 msgid "NOTIFICATION_PROJECT_RESET"
@@ -357,9 +364,18 @@ msgid "NOTIFICATION_MUSIC_STOPPED"
 msgstr "Music stopped."
 
 #: Assets/Scripts/file_manager.gd
+msgid "NOTIFICATION_PROJECT_AUTOSAVED"
+msgstr "Project has been autosaved"
+
+#: Assets/Scripts/file_manager.gd
 msgctxt "File is the .json file"
 msgid "NOTIFICATION_PROJECT_SAVED_{FILE}"
 msgstr "Project saved to {FILE}"
+
+#: Assets/Scripts/file_manager.gd
+msgctxt "{FILE} is the file that is being opend"
+msgid "POPUP_LOADING_{FILE}"
+msgstr "Loading file {FILE}"
 
 #: Assets/Scripts/file_manager.gd
 msgctxt "{PATH} is the folder name inside the custom songs folder"
@@ -397,6 +413,17 @@ msgstr "Metronome Disabled"
 #: Assets/Scripts/metronome.gd
 msgid "NOTIFICATION_METRONOME_ENABLED"
 msgstr "Metronome enabled."
+
+#~ msgid "WINDOW_DIALOG_NOTSAVED_CONTINUE"
+#~ msgstr "The project has not been saved! Are you sure you want to continue?"
+
+#~ msgid "WINDOW_DIALOG_DESTRUCTIVE_TITLE"
+#~ msgstr "DESTRUCTIVE ACTION!"
+
+#~ msgid "WINDOW_DIALOG_WARNING_SNAP_NOTES"
+#~ msgstr ""
+#~ "The notes will be snapped to each tick. This can not be un-done. Are you "
+#~ "sure you want to continue?"
 
 #~ msgid "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES"
 #~ msgstr "Time Between Frames"

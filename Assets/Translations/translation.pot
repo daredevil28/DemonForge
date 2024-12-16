@@ -48,6 +48,18 @@ msgid "MENUBAR_TOOLS_SPEEDADJUST"
 msgstr ""
 
 #: Assets/Scenes/ui.tscn
+msgid "MENUBAR_ABOUT_GITREPO"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_ABOUT_INFO"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "MENUBAR_ABOUT_CREDITS"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
 msgid "WINDOW_SONG_PROPERTIES"
 msgstr ""
 
@@ -192,6 +204,14 @@ msgid "WINDOW_CLIENT_SETTINGS_AUDIO_OFFSET_DESCRIPTION"
 msgstr ""
 
 #: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_AUTO_SAVE_INTERVAL"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
+msgid "WINDOW_CLIENT_SETTINGS_AUTO_SAVE_INTERVAL_DESCRIPTION"
+msgstr ""
+
+#: Assets/Scenes/ui.tscn
 msgid "WINDOW_CLIENT_SETTINGS_LANGUAGE"
 msgstr ""
 
@@ -267,43 +287,20 @@ msgstr ""
 msgid "MARKER_SETTINGS_SNAPPING_DESCRIPTION"
 msgstr ""
 
-#: Assets/Scripts/ui_controller.gd
-#: Assets/Scripts/game_manager.gd
-msgid "WINDOW_DIALOG_NOTSAVED_TITLE"
-msgstr ""
-
-#: Assets/Scripts/ui_controller.gd
-#: Assets/Scripts/game_manager.gd
-msgid "WINDOW_DIALOG_NOTSAVED_EXIT"
-msgstr ""
-
-#: Assets/Scripts/ui_controller.gd
-msgid "WINDOW_DIALOG_NOTSAVED_CONTINUE"
-msgstr ""
-
-#: Assets/Scripts/ui_controller.gd
-msgid "WINDOW_DIALOG_DESTRUCTIVE_TITLE"
-msgstr ""
-
-#: Assets/Scripts/ui_controller.gd
-msgid "WINDOW_DIALOG_WARNING_SNAP_NOTES"
-msgstr ""
-
-#: Assets/Scripts/ui_controller.gd
-msgctxt "{FILE} is the file that is being opend"
-msgid "POPUP_LOADING_{FILE}"
-msgstr ""
-
-#: Assets/Scripts/ui_controller.gd
-msgid "-"
-msgstr ""
-
 #: Assets/Scripts/game_manager.gd
 msgid "UNDO"
 msgstr ""
 
 #: Assets/Scripts/game_manager.gd
 msgid "REDO"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgid "WINDOW_DIALOG_BADLYCLOSED_TITLE"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgid "WINDOW_DIALOG_BADLYCLOSED_TEXT"
 msgstr ""
 
 #: Assets/Scripts/game_manager.gd
@@ -316,6 +313,14 @@ msgstr ""
 
 #: Assets/Scripts/game_manager.gd
 msgid "NOTIFICATION_PASTED_NOTES"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgid "WINDOW_DIALOG_NOTSAVED_TITLE"
+msgstr ""
+
+#: Assets/Scripts/game_manager.gd
+msgid "WINDOW_DIALOG_NOTSAVED_EXIT"
 msgstr ""
 
 #: Assets/Scripts/game_manager.gd
@@ -346,8 +351,17 @@ msgid "NOTIFICATION_MUSIC_STOPPED"
 msgstr ""
 
 #: Assets/Scripts/file_manager.gd
+msgid "NOTIFICATION_PROJECT_AUTOSAVED"
+msgstr ""
+
+#: Assets/Scripts/file_manager.gd
 msgctxt "File is the .json file"
 msgid "NOTIFICATION_PROJECT_SAVED_{FILE}"
+msgstr ""
+
+#: Assets/Scripts/file_manager.gd
+msgctxt "{FILE} is the file that is being opend"
+msgid "POPUP_LOADING_{FILE}"
 msgstr ""
 
 #: Assets/Scripts/file_manager.gd
