@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cb08ei4oh3b8u"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/note.gd" id="1_mdck2"]
+[ext_resource type="Script" uid="uid://bw1wiy8bvyx3a" path="res://Assets/Scripts/note.gd" id="1_mdck2"]
 [ext_resource type="Texture2D" uid="uid://pokip0nsccq2" path="res://Assets/Sprites/Notes.png" id="2_spsv8"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3di50"]

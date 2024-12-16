@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bxv46rdbd272o"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/progress_bar.gd" id="1_ynsex"]
+[ext_resource type="Script" uid="uid://dwxd4awlbt3uu" path="res://Assets/Scripts/progress_bar.gd" id="1_ynsex"]
 [ext_resource type="Texture2D" uid="uid://pokip0nsccq2" path="res://Assets/Sprites/Notes.png" id="2_5ckfs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ndrta"]

@@ -326,11 +326,11 @@ msgstr "Copied notes"
 msgid "NOTIFICATION_PASTED_NOTES"
 msgstr "Pasted notes"
 
-#: Assets/Scripts/game_manager.gd
+#: Assets/Scripts/game_manager.gd Assets/Scripts/ui_scripts/menu_bar.gd
 msgid "WINDOW_DIALOG_NOTSAVED_TITLE"
 msgstr "Not saved!"
 
-#: Assets/Scripts/game_manager.gd
+#: Assets/Scripts/game_manager.gd Assets/Scripts/ui_scripts/menu_bar.gd
 msgid "WINDOW_DIALOG_NOTSAVED_EXIT"
 msgstr "The project has not been saved! Are you sure you want to exit?"
 
@@ -414,16 +414,19 @@ msgstr "Metronome Disabled"
 msgid "NOTIFICATION_METRONOME_ENABLED"
 msgstr "Metronome enabled."
 
-#~ msgid "WINDOW_DIALOG_NOTSAVED_CONTINUE"
-#~ msgstr "The project has not been saved! Are you sure you want to continue?"
+#: Assets/Scripts/ui_scripts/menu_bar.gd
+msgid "WINDOW_DIALOG_NOTSAVED_CONTINUE"
+msgstr "The project has not been saved! Are you sure you want to continue?"
 
-#~ msgid "WINDOW_DIALOG_DESTRUCTIVE_TITLE"
-#~ msgstr "DESTRUCTIVE ACTION!"
+#: Assets/Scripts/ui_scripts/menu_bar.gd
+msgid "WINDOW_DIALOG_DESTRUCTIVE_TITLE"
+msgstr "DESTRUCTIVE ACTION!"
 
-#~ msgid "WINDOW_DIALOG_WARNING_SNAP_NOTES"
-#~ msgstr ""
-#~ "The notes will be snapped to each tick. This can not be un-done. Are you "
-#~ "sure you want to continue?"
+#: Assets/Scripts/ui_scripts/menu_bar.gd
+msgid "WINDOW_DIALOG_WARNING_SNAP_NOTES"
+msgstr ""
+"The notes will be snapped to each tick. This can not be un-done. Are you "
+"sure you want to continue?"
 
 #~ msgid "WINDOW_CLIENT_SETTINGS_TIME_BETWEEN_FRAMES"
 #~ msgstr "Time Between Frames"

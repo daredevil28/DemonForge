@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b67y820c12ql7"]
 
 [ext_resource type="Texture2D" uid="uid://cxva7qvhqxmh2" path="res://Assets/Sprites/BPMMarker.png" id="1_28mof"]
-[ext_resource type="Script" path="res://Assets/Scripts/marker.gd" id="1_uied1"]
+[ext_resource type="Script" uid="uid://brp4p70sfvcpt" path="res://Assets/Scripts/marker.gd" id="1_uied1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rsil7"]
 size = Vector2(26, 32)

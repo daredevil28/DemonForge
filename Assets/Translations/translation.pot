@@ -4,6 +4,7 @@
 # res://Assets/Scripts/game_manager.gd
 # res://Assets/Scripts/file_manager.gd
 # res://Assets/Scripts/metronome.gd
+# res://Assets/Scripts/ui_scripts/menu_bar.gd
 #
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -316,10 +317,12 @@ msgid "NOTIFICATION_PASTED_NOTES"
 msgstr ""
 
 #: Assets/Scripts/game_manager.gd
+#: Assets/Scripts/ui_scripts/menu_bar.gd
 msgid "WINDOW_DIALOG_NOTSAVED_TITLE"
 msgstr ""
 
 #: Assets/Scripts/game_manager.gd
+#: Assets/Scripts/ui_scripts/menu_bar.gd
 msgid "WINDOW_DIALOG_NOTSAVED_EXIT"
 msgstr ""
 
@@ -399,4 +402,16 @@ msgstr ""
 
 #: Assets/Scripts/metronome.gd
 msgid "NOTIFICATION_METRONOME_ENABLED"
+msgstr ""
+
+#: Assets/Scripts/ui_scripts/menu_bar.gd
+msgid "WINDOW_DIALOG_NOTSAVED_CONTINUE"
+msgstr ""
+
+#: Assets/Scripts/ui_scripts/menu_bar.gd
+msgid "WINDOW_DIALOG_DESTRUCTIVE_TITLE"
+msgstr ""
+
+#: Assets/Scripts/ui_scripts/menu_bar.gd
+msgid "WINDOW_DIALOG_WARNING_SNAP_NOTES"
 msgstr ""

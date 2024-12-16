@@ -76,7 +76,8 @@ func _ready() -> void:
 		# Loading custom audio for drumkit
 		for player : AudioStreamPlayer in Global.instruments:
 			var audio_loader : WavAudioLoader = WavAudioLoader.new()
-			var audio_file : AudioStreamWAV = audio_loader.loadfile(custom_dir + "/" + player.name.to_lower() + ".wav")
+			var audio_file : AudioStreamWAV = AudioStreamWAV.load_from_file(custom_dir + "/" + player.name.to_lower() + ".wav")
+			#var audio_file : AudioStreamWAV = audio_loader.loadfile(custom_dir + "/" + player.name.to_lower() + ".wav")
 			if(audio_file != null):
 				player.set_stream(audio_file)
 

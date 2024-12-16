@@ -1,26 +1,26 @@
 [gd_scene load_steps=23 format=3 uid="uid://cdd5so8gpgl0q"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/ui_controller.gd" id="1_hk45x"]
-[ext_resource type="Script" path="res://Assets/Scripts/background_image.gd" id="2_774o7"]
+[ext_resource type="Script" uid="uid://cxitnjxdr5ela" path="res://Assets/Scripts/ui_controller.gd" id="1_hk45x"]
+[ext_resource type="Script" uid="uid://d3gg6hgju5vfx" path="res://Assets/Scripts/background_image.gd" id="2_774o7"]
 [ext_resource type="Texture2D" uid="uid://dei544185tv4o" path="res://Assets/background.jpg" id="2_g5m3y"]
 [ext_resource type="PackedScene" uid="uid://bxv46rdbd272o" path="res://Assets/Scenes/progress_bar.tscn" id="2_t6ae7"]
 [ext_resource type="Texture2D" uid="uid://cskljke58e2fj" path="res://Assets/Sprites/FolderIcon.png" id="3_m2luq"]
 [ext_resource type="Texture2D" uid="uid://cxqqsd1lraejc" path="res://Assets/Sprites/FolderIconPressed.png" id="4_6ftkc"]
 [ext_resource type="Texture2D" uid="uid://cse04ob740oo4" path="res://Assets/Sprites/FolderIconHover.png" id="5_16p63"]
-[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/menu_bar.gd" id="5_yajol"]
-[ext_resource type="Script" path="res://Assets/Scripts/errors_label.gd" id="6_hsjtr"]
-[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/song_properties_panel.gd" id="6_iw480"]
-[ext_resource type="Script" path="res://Assets/Scripts/notification_manager.gd" id="7_bt6ck"]
-[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/speed_menu.gd" id="8_6x7ja"]
-[ext_resource type="Script" path="res://Assets/Scripts/dialog_manager.gd" id="8_om2vj"]
-[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/language_changer.gd" id="9_wuf8q"]
-[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/song_time_label.gd" id="10_os2gm"]
-[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/note_settings.gd" id="11_csf8i"]
-[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/client_settings_panel.gd" id="11_vvsc6"]
-[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/export_panel.gd" id="13_cc75i"]
-[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/about.gd" id="15_d8k3u"]
+[ext_resource type="Script" uid="uid://cg6qewp03wgfu" path="res://Assets/Scripts/ui_scripts/menu_bar.gd" id="5_yajol"]
+[ext_resource type="Script" uid="uid://uoyolybawp3b" path="res://Assets/Scripts/errors_label.gd" id="6_hsjtr"]
+[ext_resource type="Script" uid="uid://hmgifkec8fy5" path="res://Assets/Scripts/ui_scripts/song_properties_panel.gd" id="6_iw480"]
+[ext_resource type="Script" uid="uid://du0ky2ihqb3d" path="res://Assets/Scripts/notification_manager.gd" id="7_bt6ck"]
+[ext_resource type="Script" uid="uid://kfr8erjm1y0r" path="res://Assets/Scripts/ui_scripts/speed_menu.gd" id="8_6x7ja"]
+[ext_resource type="Script" uid="uid://csy6rn8o1olis" path="res://Assets/Scripts/dialog_manager.gd" id="8_om2vj"]
+[ext_resource type="Script" uid="uid://csi0oo6ojfxw4" path="res://Assets/Scripts/ui_scripts/language_changer.gd" id="9_wuf8q"]
+[ext_resource type="Script" uid="uid://ddeamcbabhfc1" path="res://Assets/Scripts/ui_scripts/song_time_label.gd" id="10_os2gm"]
+[ext_resource type="Script" uid="uid://dn4d8kk74usep" path="res://Assets/Scripts/ui_scripts/note_settings.gd" id="11_csf8i"]
+[ext_resource type="Script" uid="uid://cvrfsxjly22pd" path="res://Assets/Scripts/ui_scripts/client_settings_panel.gd" id="11_vvsc6"]
+[ext_resource type="Script" uid="uid://hfjde7dhkr05" path="res://Assets/Scripts/ui_scripts/export_panel.gd" id="13_cc75i"]
+[ext_resource type="Script" uid="uid://cwggh5amcrco" path="res://Assets/Scripts/ui_scripts/about.gd" id="15_d8k3u"]
 [ext_resource type="Texture2D" uid="uid://cror8hqxo1kdx" path="res://Assets/icon.png" id="15_sxp0n"]
-[ext_resource type="Script" path="res://Assets/Scripts/ui_scripts/credits.gd" id="17_n5sro"]
+[ext_resource type="Script" uid="uid://cy3boxrlxwqpn" path="res://Assets/Scripts/ui_scripts/credits.gd" id="17_n5sro"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hp2c"]
 content_margin_left = 5.0
@@ -900,7 +900,7 @@ text = "Lorem ipsum doloses de bora"
 auto_translate_mode = 2
 title = "Project has not been saved!"
 initial_position = 1
-size = Vector2i(533, 100)
+size = Vector2i(800, 100)
 unresizable = true
 auto_translate = false
 dialog_text = "Project has not been saved yet, are you sure you want to continue?"
