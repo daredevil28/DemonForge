@@ -106,6 +106,11 @@ func _on_check_box_toggled(toggled_on: bool) -> void:
 func _on_note_selected(notes : Array[InternalNote]) -> void:# < GameManager.note_selected
 	_selected_notes = notes.duplicate()
 	var first_note : InternalNote = _selected_notes[0]
+	# Always prioritise normal notes over markers
+	for array_note : InternalNote in _selected_notes:
+		if(array_note is Note):
+			first_note = array_note
+			break
 	
 	var bpm_the_same : bool = true
 	var snapping_the_same : bool = true
@@ -114,14 +119,16 @@ func _on_note_selected(notes : Array[InternalNote]) -> void:# < GameManager.note
 	# Check if any of the notes in the _selected_notes array have the exact same variable
 	for array_note : InternalNote in _selected_notes:
 		if(array_note is Marker):
-			
-			if(array_note.bpm != first_note.bpm):
-				bpm_the_same = false
-				_note_settings[2].get_line_edit().text = "-"
-				
-			if(array_note.snapping != first_note.snapping):
-				snapping_the_same = false
-				_note_settings[3].get_line_edit().text = "-"
+			if(first_note is Note):
+				break
+			else:
+				if(array_note.bpm != first_note.bpm):
+					bpm_the_same = false
+					_note_settings[2].get_line_edit().text = "-"
+					
+				if(array_note.snapping != first_note.snapping):
+					snapping_the_same = false
+					_note_settings[3].get_line_edit().text = "-"
 				
 		if(array_note is Note):
 			
