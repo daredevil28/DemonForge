@@ -267,51 +267,99 @@ func _input(event : InputEvent) -> void:
 				if(current_pos < 0):
 					current_pos = 0
 
-
-	if(!is_another_window_focused):
-		if(event.is_action_pressed("Delete")):
-			if(!current_selected_notes.is_empty()):
-				var new_multi_action : MultiAction = MultiAction.new(Action.ActionName.MULTIACTION)
-				
-				var currently_selected_notes_size : int = current_selected_notes.size()
-				
-				for i : int in currently_selected_notes_size:
-					var new_action : NoteAction = make_note_actions(NoteAction.ActionName.NOTEREMOVE,current_selected_notes[0])
-						
-					# If the array is bigger than 1 then add it to new_multi_action	
-					if(currently_selected_notes_size > 1):
-						new_multi_action.actions.append(new_action)
-					else:
-						add_undo_action(new_action)
-						
-					NoteManager.remove_note_at_time(current_selected_notes[0])
+	if(event is InputEventKey):
+		if(!is_another_window_focused):
+			if(event.is_action_pressed("Delete")):
+				if(!current_selected_notes.is_empty()):
+					var new_multi_action : MultiAction = MultiAction.new(Action.ActionName.MULTIACTION)
 					
-				if(currently_selected_notes_size > 1):
-					add_undo_action(new_multi_action)
+					var currently_selected_notes_size : int = current_selected_notes.size()
 					
-				current_selected_notes.clear()
-				Global.notification_popup.play_notification(tr("NOTIFICATION_DELETE_MULTIPLE_NOTES"),0.5)
-				
-		if(event.is_action_pressed("TogglePlay")):
-			# Reset note selected when playing the song
-			if(!current_selected_notes.is_empty()):
-				deselect_all_notes()
-				
-			# If we are playing, then stop the music and snap to the nearest beat
-			if(audio_player.playing):
-				_stop_music()
-				current_pos = get_closest_snap_value(current_pos)
-			else:
-				# Hide all the notes that are behind the judgement line if we are going to play
-				if(audio_player.stream != null):
-					for i : Note in NoteManager.note_nodes:
-						if(i.time < current_pos):
-							i.disable_collision()
-							i.visible = false
+					for i : int in currently_selected_notes_size:
+						var new_action : NoteAction = make_note_actions(NoteAction.ActionName.NOTEREMOVE,current_selected_notes[0])
+							
+						# If the array is bigger than 1 then add it to new_multi_action	
+						if(currently_selected_notes_size > 1):
+							new_multi_action.actions.append(new_action)
 						else:
-							continue
-					_play_music()
+							add_undo_action(new_action)
+							
+						NoteManager.remove_note_at_time(current_selected_notes[0])
+						
+					if(currently_selected_notes_size > 1):
+						add_undo_action(new_multi_action)
+						
+					current_selected_notes.clear()
+					Global.notification_popup.play_notification(tr("NOTIFICATION_DELETE_MULTIPLE_NOTES"),0.5)
 					
+			if(event.is_action_pressed("TogglePlay")):
+				# Reset note selected when playing the song
+				if(!current_selected_notes.is_empty()):
+					deselect_all_notes()
+					
+				# If we are playing, then stop the music and snap to the nearest beat
+				if(audio_player.playing):
+					_stop_music()
+					current_pos = get_closest_snap_value(current_pos)
+				else:
+					# Hide all the notes that are behind the judgement line if we are going to play
+					if(audio_player.stream != null):
+						for i : Note in NoteManager.note_nodes:
+							if(i.time < current_pos):
+								i.disable_collision()
+								i.visible = false
+							else:
+								continue
+						_play_music()
+			
+			# Check for numpad or number keys
+			if(event.pressed):
+				if(current_selected_notes.size() > 0):
+					var interval_number : int
+					print(event)
+					match event.keycode:
+						# Number 0 and up
+						4194438, 48:
+							interval_number = 0
+						4194438 + 1, 48 + 1:
+							interval_number = 1
+						4194438 + 2, 48 + 2:
+							interval_number = 2
+						4194438 + 3, 48 + 3:
+							interval_number = 3
+						4194438 + 4, 48 + 4:
+							interval_number = 4
+						4194438 + 5, 48 + 5:
+							interval_number = 5
+						4194438 + 6, 48 + 6:
+							interval_number = 6
+						4194438 + 7, 48 + 7:
+							interval_number = 7
+						4194438 + 8, 48 + 8:
+							interval_number = 8
+						4194438 + 9, 48 + 9:
+							interval_number = 9
+						_:
+							return
+					
+					var new_multi_action : MultiAction = MultiAction.new(Action.ActionName.MULTIACTION)
+					for note : InternalNote in current_selected_notes:
+						if note is Note:
+							
+							var new_action : ValueAction = ValueAction.new(Action.ActionName.VALUECHANGED)
+							
+							new_action.time = note.time
+							new_action.color = note.color
+							new_action.value_type = ValueAction.ValueType.INTERVAL
+							new_action.old_value = note.interval
+							
+							note.interval = interval_number
+							
+							if(current_selected_notes.size() > 1):
+								new_multi_action.actions.append(new_action)
+							else:
+								GameManager.add_undo_action(new_action)
+						
 
 func _shortcut_input(event: InputEvent) -> void:
 	# Ctrl + C
