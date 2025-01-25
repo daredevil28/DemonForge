@@ -1,6 +1,6 @@
-[gd_scene load_steps=23 format=3 uid="uid://cdd5so8gpgl0q"]
+[gd_scene load_steps=24 format=3 uid="uid://cdd5so8gpgl0q"]
 
-[ext_resource type="Script" uid="uid://cxitnjxdr5ela" path="res://Assets/Scripts/ui_controller.gd" id="1_hk45x"]
+[ext_resource type="Script" uid="uid://cxitnjxdr5ela" path="res://Assets/Scripts/ui_scripts/ui_controller.gd" id="1_hk45x"]
 [ext_resource type="Script" uid="uid://d3gg6hgju5vfx" path="res://Assets/Scripts/background_image.gd" id="2_774o7"]
 [ext_resource type="Texture2D" uid="uid://dei544185tv4o" path="res://Assets/background.jpg" id="2_g5m3y"]
 [ext_resource type="PackedScene" uid="uid://bxv46rdbd272o" path="res://Assets/Scenes/progress_bar.tscn" id="2_t6ae7"]
@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://cwggh5amcrco" path="res://Assets/Scripts/ui_scripts/about.gd" id="15_d8k3u"]
 [ext_resource type="Texture2D" uid="uid://cror8hqxo1kdx" path="res://Assets/icon.png" id="15_sxp0n"]
 [ext_resource type="Script" uid="uid://cy3boxrlxwqpn" path="res://Assets/Scripts/ui_scripts/credits.gd" id="17_n5sro"]
+[ext_resource type="Script" uid="uid://k525frbqqaae" path="res://Assets/Scripts/ui_scripts/note_settings_spin_box.gd" id="20_sf8ok"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hp2c"]
 content_margin_left = 5.0
@@ -798,7 +799,10 @@ text = "NOTE_SETTINGS_INTERVAL"
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "NOTE_SETTINGS_INTERVAL_DESCRIPTION"
+focus_mode = 1
 mouse_filter = 1
+script = ExtResource("20_sf8ok")
+metadata/_custom_type_script = ExtResource("20_sf8ok")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="NoteSettings/NoteSettingsBox"]
 layout_mode = 2
@@ -861,6 +865,7 @@ tooltip_text = "MARKER_SETTINGS_BPM_DESCRIPTION"
 mouse_filter = 1
 max_value = 1000.0
 step = 0.0
+script = ExtResource("20_sf8ok")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="NoteSettings/BPMMarkerSettingsBox"]
 layout_mode = 2
@@ -877,6 +882,7 @@ size_flags_horizontal = 8
 size_flags_vertical = 4
 tooltip_text = "MARKER_SETTINGS_SNAPPING_DESCRIPTION"
 mouse_filter = 1
+script = ExtResource("20_sf8ok")
 
 [node name="NotificationContainer" type="PanelContainer" parent="."]
 auto_translate_mode = 2
@@ -959,9 +965,12 @@ script = ExtResource("8_om2vj")
 [connection signal="meta_clicked" from="Credits/MarginContainer/RichTextLabel" to="Credits" method="_on_rich_text_label_meta_clicked"]
 [connection signal="mouse_entered" from="NoteSettings" to="NoteSettings" method="_on_note_settings_mouse_entered"]
 [connection signal="mouse_exited" from="NoteSettings" to="NoteSettings" method="_on_note_settings_mouse_exited"]
+[connection signal="editing_toggled" from="NoteSettings/NoteSettingsBox/HBoxContainer/NoteInterval" to="." method="_on_settings_spinbox_focused"]
 [connection signal="value_changed" from="NoteSettings/NoteSettingsBox/HBoxContainer/NoteInterval" to="NoteSettings" method="_on_spin_box_value_changed" binds= ["interval"]]
 [connection signal="toggled" from="NoteSettings/NoteSettingsBox/HBoxContainer2/DoubleTime" to="NoteSettings" method="_on_check_box_toggled"]
+[connection signal="editing_toggled" from="NoteSettings/BPMMarkerSettingsBox/HBoxContainer/bpm" to="." method="_on_settings_spinbox_focused"]
 [connection signal="value_changed" from="NoteSettings/BPMMarkerSettingsBox/HBoxContainer/bpm" to="NoteSettings" method="_on_spin_box_value_changed" binds= ["bpm"]]
+[connection signal="editing_toggled" from="NoteSettings/BPMMarkerSettingsBox/HBoxContainer2/Snapping" to="." method="_on_settings_spinbox_focused"]
 [connection signal="value_changed" from="NoteSettings/BPMMarkerSettingsBox/HBoxContainer2/Snapping" to="NoteSettings" method="_on_spin_box_value_changed" binds= ["snapping"]]
 [connection signal="canceled" from="ConfirmationDialog" to="ConfirmationDialog" method="_on_canceled"]
 [connection signal="confirmed" from="ConfirmationDialog" to="ConfirmationDialog" method="_on_confirmed"]

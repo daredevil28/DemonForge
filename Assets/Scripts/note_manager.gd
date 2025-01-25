@@ -87,7 +87,6 @@ func initialise_notes(json_notes : Array) -> void:
 		# Make a new note dictionary, instantiate it and add it to NoteManager as a child
 		var note : Dictionary = json_notes[i]
 		var instance : Note = add_new_note(note["time"], note["color"], false)
-		add_child(instance)
 		
 		#Set up the properties
 		instance.interval = note["interval"]
@@ -108,7 +107,6 @@ func initialise_marker(json_markers : Array) -> void:
 	for i : int in json_markers.size():
 		var marker : Dictionary = json_markers[i]
 		var instance : Marker = add_new_note(marker["time"], 7, false)
-		add_child(instance)
 		
 		instance.bpm = marker["bpm"]
 		instance.snapping = marker["snapping"]

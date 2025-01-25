@@ -60,7 +60,7 @@ You can also download the files directly in the [custom](custom) folder
 
 # Compiling
 
-Development version is Godot v4.4-dev6.
+Development version is Godot v4.4-beta1.
 
 - Import project into godot
 - Project > Export
