@@ -197,9 +197,9 @@ func save_project(path : String, autosave : bool = false) -> void:
 	if(autosave):
 		Global.notification_popup.play_notification(tr("NOTIFICATION_PROJECT_AUTOSAVED").format({FILE = str(file.get_path())}), 2)
 	else:
-		
 		Global.notification_popup.play_notification(tr("NOTIFICATION_PROJECT_SAVED_{FILE}", "File is the .json file").format({FILE = str(file.get_path())}), 2)
 		GameManager.project_changed = false
+		DirAccess.remove_absolute("user://closedproperly")
 
 
 func open_project(path : String) -> void:
