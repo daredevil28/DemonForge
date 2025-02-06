@@ -262,6 +262,73 @@ func csv_to_json(csv_file : String) -> Array:
 				note_array.append(temp_array)
 	return note_array
 
+
+## Convert json string to CSV array
+func json_to_csv(json : Array) -> Array:
+	var csv_array : Array
+	var errors : String = check_for_errors()
+	if(errors != ""):
+		errors_found.emit(errors)
+		return []
+	else:
+		errors_found.emit(errors)
+		var double_note : bool
+		# Everything below here is adapted from https://github.com/daredevil28/drumsrockmidiparser/blob/main/drumsrockparser.py#L76
+		for i : int in json.size():
+			var note : Note = json[i]
+			
+			# If the previous was a double note then skip this iteration
+			if(double_note):
+				double_note = false
+				continue
+			 
+			var note_time : String
+			var enemy_type : String = "1"
+			var color_1 : String
+			var color_2 : String
+			var interval : String = ""
+			var aux : String
+			
+			# if interval is not 0 then it's a drumroll
+			if(note.interval != 0):
+				enemy_type = "3"
+				interval = str(note.interval)
+			
+			# If this note and the next one have the exact same time then it's a double note
+			if(i+1 < NoteManager.note_nodes.size()):
+				if(is_equal_approx(note.time,NoteManager.note_nodes[i+1].time)):
+					double_note = true
+					enemy_type = "2"
+					color_2 = str(NoteManager.note_nodes[i+1].color)
+			
+			note_time = str(note.time)
+			color_1 = str(note.color)
+			
+			if(!double_note):
+				color_2 = color_1
+			
+			if(int(color_2) < int(color_1)):
+				var temp : String = color_1
+				color_1 = color_2
+				color_2 = temp
+				
+			match color_1:
+				"2":
+					aux = "7"
+				"1":
+					aux = "6"
+				"5":
+					aux = "5"
+				"3":
+					aux = "5"
+				"6":
+					aux = "8"
+				"4":
+					aux = "8"
+			csv_array.append([note_time,enemy_type,color_1,color_2,"1",interval,aux])
+		return csv_array
+
+
 ## Exports the project to the custom songs folder
 func export_project() -> void:
 	print("Exporting project")
@@ -298,62 +365,10 @@ func export_project() -> void:
 		# Write the first line
 		var notes : FileAccess = FileAccess.open(path + "/notes.csv",FileAccess.WRITE)
 		notes.store_line("Time [s],Enemy Type,Aux Color 1,Aux Color 2,Nº Enemies,interval,Aux")
-		var double_note : bool
 		
-		# Everything below here is adapted from https://github.com/daredevil28/drumsrockmidiparser/blob/main/drumsrockparser.py#L76
-		for i : int in NoteManager.note_nodes.size():
-			var note : Note = NoteManager.note_nodes[i]
-			
-			# If the previous was a double note then skip this iteration
-			if(double_note):
-				double_note = false
-				continue
-			
-			var note_time : String
-			var enemy_type : String = "1"
-			var color_1 : String
-			var color_2 : String
-			var interval : String = ""
-			var aux : String
-			
-			# if interval is not 0 then it's a drumroll
-			if(note.interval != 0):
-				enemy_type = "3"
-				interval = str(note.interval)
-			
-			# If this note and the next one have the exact same time then it's a double note
-			if(i+1 < NoteManager.note_nodes.size()):
-				if(is_equal_approx(note.time,NoteManager.note_nodes[i+1].time)):
-					double_note = true
-					enemy_type = "2"
-					color_2 = str(NoteManager.note_nodes[i+1].color)
-			
-			note_time = str(note.time)
-			color_1 = str(note.color)
-			
-			if(!double_note):
-				color_2 = color_1
-			
-			if(int(color_2) < int(color_1)):
-				var temp : String = color_1
-				color_1 = color_2
-				color_2 = temp
-
-			match color_1:
-				"2":
-					aux = "7"
-				"1":
-					aux = "6"
-				"5":
-					aux = "5"
-				"3":
-					aux = "5"
-				"6":
-					aux = "8"
-				"4":
-					aux = "8"
-
-			notes.store_csv_line(PackedStringArray([note_time,enemy_type,color_1,color_2,"1",interval,aux]))
+		# Create the notes.csv file
+		for line in json_to_csv(NoteManager.note_nodes):
+			notes.store_csv_line(line)
 		notes.close()
 		
 		Global.notification_popup.play_notification(tr("NOTIFICATION_PROJECT_EXPORTED_{PATH}", "{PATH} is the folder name inside the custom songs folder").format({PATH = path}), 1)

@@ -131,6 +131,16 @@ file_mode = 2
 access = 2
 use_native_dialog = true
 
+[node name="CSVExportDialog" type="FileDialog" parent="."]
+auto_translate_mode = 2
+position = Vector2i(0, 36)
+size = Vector2i(392, 175)
+auto_translate = false
+access = 2
+filters = PackedStringArray("*.csv")
+show_hidden_files = true
+use_native_dialog = true
+
 [node name="MenuBar" type="MenuBar" parent="."]
 auto_translate_mode = 1
 layout_mode = 0
@@ -619,6 +629,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "WINDOW_EXPORT_PANEL_BUTTON"
 
+[node name="ExportCSVButton" type="Button" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "WINDOW_EXPORT_CSV_BUTTON"
+
 [node name="OpenCustomsButton" type="Button" parent="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -918,6 +933,7 @@ script = ExtResource("8_om2vj")
 [connection signal="file_selected" from="SongFileDialog" to="SongProperties" method="_on_song_file_dialog_file_selected"]
 [connection signal="file_selected" from="PreviewFileDialog" to="SongProperties" method="_on_preview_file_dialog_file_selected"]
 [connection signal="dir_selected" from="FolderDialog" to="ExportPanel" method="_on_folder_selected"]
+[connection signal="file_selected" from="CSVExportDialog" to="ExportPanel" method="_on_csv_export_dialog_file_selected"]
 [connection signal="index_pressed" from="MenuBar/File" to="MenuBar" method="_on_file_index_pressed"]
 [connection signal="index_pressed" from="MenuBar/Properties" to="MenuBar" method="_on_properties_index_pressed"]
 [connection signal="index_pressed" from="MenuBar/Tools" to="MenuBar" method="_on_tools_index_pressed"]
@@ -955,6 +971,7 @@ script = ExtResource("8_om2vj")
 [connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/CustomFolderLocation" to="ExportPanel" method="_on_folder_selected"]
 [connection signal="text_changed" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/FolderName" to="ExportPanel" method="_on_folder_name_text_changed"]
 [connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer3/ExportProjectButton" to="ExportPanel" method="_on_export_project_button_up"]
+[connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer3/ExportCSVButton" to="ExportPanel" method="_on_export_csv_button_up"]
 [connection signal="button_up" from="ExportPanel/ColorRect/VBoxContainer/ColorRect/HBoxContainer/VBoxContainer/HBoxContainer3/OpenCustomsButton" to="ExportPanel" method="_on_open_customs_button_button_up"]
 [connection signal="close_requested" from="About" to="About" method="_on_close_requested"]
 [connection signal="focus_entered" from="About" to="." method="_on_about_focused" binds= [true]]
