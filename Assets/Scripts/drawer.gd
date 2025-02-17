@@ -2,11 +2,17 @@ extends Node2D
 ## Draws the judgement line and the individual beats
 
 
+var default_font : Font = ThemeDB.fallback_font
+var default_font_size : int = ThemeDB.fallback_font_size
+
+var previous_line_count : int
+
 func _init() -> void:
 	Global.game_scene_node = self
 
 
 func _draw() -> void:
+	var current_line : int = 0
 	var line_color : Color = Color.WHITE
 
 	# Beat markers
@@ -35,6 +41,8 @@ func _draw() -> void:
 				
 			# If the beat line would go outside of the screen on the left then skip this iteration
 			if(marker_distance < 0):
+				if(i % (NoteManager.marker_nodes[x].snapping * NoteManager.marker_nodes[x].snapping) == 0):
+					current_line += 1
 				new_time = new_time + seconds_per_beat
 				continue
 				
@@ -48,6 +56,8 @@ func _draw() -> void:
 				line_color = Color.WHITE
 				top_point = 0.25 * DisplayServer.window_get_size().y
 				bottom_point = 0.75 * DisplayServer.window_get_size().y
+				draw_string(default_font,Vector2(marker_distance + -5,top_point + -20),str(current_line),HORIZONTAL_ALIGNMENT_CENTER,-1,default_font_size + 8)
+				current_line += 1
 				
 			elif(i % NoteManager.marker_nodes[x].snapping == 0):
 				line_color = Color.ANTIQUE_WHITE
