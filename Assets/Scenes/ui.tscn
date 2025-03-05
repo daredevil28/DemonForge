@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cdd5so8gpgl0q"]
+[gd_scene load_steps=27 format=3 uid="uid://cdd5so8gpgl0q"]
 
 [ext_resource type="Script" uid="uid://cxitnjxdr5ela" path="res://Assets/Scripts/ui_scripts/ui_controller.gd" id="1_hk45x"]
 [ext_resource type="Script" uid="uid://d3gg6hgju5vfx" path="res://Assets/Scripts/background_image.gd" id="2_774o7"]
@@ -23,6 +23,8 @@
 [ext_resource type="Script" uid="uid://cy3boxrlxwqpn" path="res://Assets/Scripts/ui_scripts/credits.gd" id="17_n5sro"]
 [ext_resource type="Script" uid="uid://k525frbqqaae" path="res://Assets/Scripts/ui_scripts/note_settings_spin_box.gd" id="20_sf8ok"]
 [ext_resource type="Script" uid="uid://oogmfo03mgx" path="res://Assets/Scripts/ui_scripts/startup_tips.gd" id="23_mjfwp"]
+[ext_resource type="Texture2D" uid="uid://2puqkaxjwifo" path="res://Assets/Sprites/ArrowR.png" id="24_04jou"]
+[ext_resource type="Texture2D" uid="uid://bmuoslhmdg2gu" path="res://Assets/Sprites/ArrowL.png" id="24_ad21k"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hp2c"]
 content_margin_left = 5.0
@@ -180,13 +182,15 @@ item_1/id = 1
 
 [node name="About" type="PopupMenu" parent="MenuBar"]
 size = Vector2i(236, 100)
-item_count = 3
+item_count = 4
 item_0/text = "MENUBAR_ABOUT_GITREPO"
 item_0/id = 0
 item_1/text = "MENUBAR_ABOUT_INFO"
 item_1/id = 1
 item_2/text = "MENUBAR_ABOUT_CREDITS"
 item_2/id = 2
+item_3/text = "MENUBAR_ABOUT_TIPOFTHEDAY"
+item_3/id = 3
 
 [node name="SongProperties" type="Window" parent="."]
 auto_translate_mode = 1
@@ -741,11 +745,68 @@ bbcode_enabled = true
 text = "ROCK DRUM KIT by albasto -- [url]https://freesound.org/s/568873/[/url] -- License: Creative Commons 0
 MetronomeUp by Druminfected -- [url]https://freesound.org/s/250551/[/url] -- License: Creative Commons 0
 Perc_MetronomeQuartz_hi by LudwigMueller -- [url]https://freesound.org/s/548518/[/url] -- License: Creative Commons 0
-GdScriptAudioImport by Gianclgar and contributors -- [url]https://github.com/Gianclgar/GDScriptAudioImport[/url] -- License: MIT License
 Gameboy drum sample set by bedroomproducersblog.com. -- [url]https://bedroomproducersblog.com/2015/04/08/game-boy-drum-kit/[/url]
 Flags by koppi maintained by lipis -- [url]https://github.com/lipis/flag-icons[/url] -- License: MIT License
 DemonForge icon by JSaurusRex -- [url]https://github.com/JSaurusRex[/url] -- License MIT License
 "
+
+[node name="StartupTips" type="Window" parent="."]
+auto_translate_mode = 2
+title = "Tip of the day:"
+position = Vector2i(140, 210)
+size = Vector2i(1000, 300)
+min_size = Vector2i(500, 100)
+max_size = Vector2i(1000, 1000)
+auto_translate = false
+script = ExtResource("23_mjfwp")
+
+[node name="ColorRect" type="ColorRect" parent="StartupTips"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.431373, 0.431373, 0.431373, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="StartupTips/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="StartupTips/ColorRect/MarginContainer"]
+layout_mode = 2
+
+[node name="TipText" type="RichTextLabel" parent="StartupTips/ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[font_size=22]"
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="StartupTips/ColorRect/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="PrevTip" type="Button" parent="StartupTips/ColorRect/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_icons/icon = ExtResource("24_ad21k")
+icon_alignment = 1
+
+[node name="CurrentTipText" type="Label" parent="StartupTips/ColorRect/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+horizontal_alignment = 1
+
+[node name="NextTip" type="Button" parent="StartupTips/ColorRect/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_icons/icon = ExtResource("24_04jou")
+icon_alignment = 1
 
 [node name="SongTimeLabel" type="Label" parent="."]
 auto_translate_mode = 2
@@ -929,33 +990,6 @@ dialog_text = "Project has not been saved yet, are you sure you want to continue
 dialog_autowrap = true
 script = ExtResource("8_om2vj")
 
-[node name="StartupTips" type="Window" parent="."]
-title = "Tip of the day:"
-position = Vector2i(140, 210)
-size = Vector2i(1000, 300)
-max_size = Vector2i(1000, 1000)
-auto_translate = false
-script = ExtResource("23_mjfwp")
-
-[node name="ColorRect" type="ColorRect" parent="StartupTips"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.431373, 0.431373, 0.431373, 1)
-
-[node name="TipText" type="RichTextLabel" parent="StartupTips/ColorRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-bbcode_enabled = true
-text = "[font_size=25]"
-vertical_alignment = 1
-
 [connection signal="file_selected" from="OpenDialog" to="MenuBar" method="_on_open_dialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="MenuBar" method="_on_save_dialog_file_selected"]
 [connection signal="file_selected" from="SongFileDialog" to="SongProperties" method="_on_song_file_dialog_file_selected"]
@@ -1008,6 +1042,10 @@ vertical_alignment = 1
 [connection signal="focus_entered" from="Credits" to="." method="_on_credits_focused" binds= [true]]
 [connection signal="focus_exited" from="Credits" to="." method="_on_credits_focused" binds= [false]]
 [connection signal="meta_clicked" from="Credits/MarginContainer/RichTextLabel" to="Credits" method="_on_rich_text_label_meta_clicked"]
+[connection signal="close_requested" from="StartupTips" to="StartupTips" method="_on_close_requested"]
+[connection signal="meta_clicked" from="StartupTips/ColorRect/MarginContainer/VBoxContainer/TipText" to="StartupTips" method="_on_tip_text_meta_clicked"]
+[connection signal="pressed" from="StartupTips/ColorRect/MarginContainer/VBoxContainer/HBoxContainer/PrevTip" to="StartupTips" method="_on_prev_tip_pressed"]
+[connection signal="pressed" from="StartupTips/ColorRect/MarginContainer/VBoxContainer/HBoxContainer/NextTip" to="StartupTips" method="_on_next_tip_pressed"]
 [connection signal="mouse_entered" from="NoteSettings" to="NoteSettings" method="_on_note_settings_mouse_entered"]
 [connection signal="mouse_exited" from="NoteSettings" to="NoteSettings" method="_on_note_settings_mouse_exited"]
 [connection signal="editing_toggled" from="NoteSettings/NoteSettingsBox/HBoxContainer/NoteInterval" to="." method="_on_settings_spinbox_focused"]
@@ -1019,4 +1057,3 @@ vertical_alignment = 1
 [connection signal="value_changed" from="NoteSettings/BPMMarkerSettingsBox/HBoxContainer2/Snapping" to="NoteSettings" method="_on_spin_box_value_changed" binds= ["snapping"]]
 [connection signal="canceled" from="ConfirmationDialog" to="ConfirmationDialog" method="_on_canceled"]
 [connection signal="confirmed" from="ConfirmationDialog" to="ConfirmationDialog" method="_on_confirmed"]
-[connection signal="meta_clicked" from="StartupTips/ColorRect/TipText" to="StartupTips" method="_on_tip_text_meta_clicked"]

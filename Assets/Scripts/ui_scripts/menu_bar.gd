@@ -9,6 +9,7 @@ extends MenuBar
 @onready var _client_settings_panel : Window = $"../ClientSettings"
 @onready var _about_panel : Window = $"../About"
 @onready var _credits : Window = $"../Credits"
+@onready var _tip_of_the_day_panel : Window = $"../StartupTips"
 
 
 ## When we press anything in the File menu bar.
@@ -77,6 +78,8 @@ func _on_about_index_pressed(index: int) -> void:
 			_about_panel.popup()
 		2:
 			_credits.popup()
+		3:
+			_tip_of_the_day_panel.popup()
 
 
 ## When we select a file in the open dialog.

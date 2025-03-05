@@ -1,8 +1,9 @@
 Use ctrl + scrollwheel to change the speed of the notes!
 You can adjust the speed of the chart by opening the Adjust Speed tool!\nOpen it under [i]Tools>Adjust Song Speed[/i].
 Found a bug? Report it at the [url=https://github.com/daredevil28/DemonForge/issues]Github[/url].
-You can hover over a selected [b]note[/b] and change the interval using your number keys.
+You can hover over a [b]selected note[/b] and change the interval using your number keys.
 Hold shift to select multiple notes. Click anywhere else to deselect all the notes.
 Demon Forge autosaves after a set time. Change the time between autosaves in the settings [i]Properties>Client Settings>Auto save interval[/i].
 Press [b]M[/b] to turn on/off the metronome.
 Did you know you can provide your own sounds and background image? Check out how to do it on the [url=https://github.com/daredevil28/DemonForge?tab=readme-ov-file#custom-assets]GitHub[/url] page!
+Need help? Post a discussion on [url=https://github.com/daredevil28/DemonForge/discussions]Github[/url] or join the official [url=https://discord.com/invite/nQsJjfKQN8]Drums Rock Discord[/url]!

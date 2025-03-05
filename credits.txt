@@ -1,7 +1,6 @@
 ROCK DRUM KIT by albasto -- https://freesound.org/s/568873/ -- License: Creative Commons 0
 MetronomeUp by Druminfected -- https://freesound.org/s/250551/ -- License: Creative Commons 0
 Perc_MetronomeQuartz_hi by LudwigMueller -- https://freesound.org/s/548518/ -- License: Creative Commons 0
-GdScriptAudioImport by Gianclgar and contributors -- https://github.com/Gianclgar/GDScriptAudioImport -- License: MIT License
 Gameboy drum sample set by bedroomproducersblog.com. -- https://bedroomproducersblog.com/2015/04/08/game-boy-drum-kit/
 Flags by koppi maintained by lipis -- https://github.com/lipis/flag-icons -- License: MIT License
 DemonForge icon by JSaurusRex -- https://github.com/JSaurusRex -- License MIT License
