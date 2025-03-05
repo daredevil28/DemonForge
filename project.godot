@@ -38,6 +38,7 @@ gdscript/warnings/inferred_declaration=1
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/energy_saving/keep_screen_on=false
 window/stretch/scale_mode="integer"
 window/vsync/vsync_mode=0
 
@@ -135,7 +136,12 @@ locale/translations_pot_files=PackedStringArray("res://Assets/Scenes/ui.tscn", "
 2d_physics/layer_1="Note"
 2d_physics/layer_2="Mouse"
 
+[physics]
+
+common/physics_jitter_fix=0.0
+
 [rendering]
 
+occlusion_culling/bvh_build_quality=0
 textures/canvas_textures/default_texture_filter=0
 textures/vram_compression/import_etc2_astc=true
